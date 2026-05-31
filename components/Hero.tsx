@@ -106,13 +106,13 @@ export default function Hero({ onNavigate }: { onNavigate?: (view: string) => vo
           <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform"></div>
         </button>
 
+        <MouseIcon />
+
         {/* Animation Element Placeholder */}
-        <div className="flex flex-col items-center mt-8 animate-bounce">
+        <div className="flex flex-col items-center mt-2 animate-bounce">
              <ChevronDown className="w-6 h-6 text-white" />
              <ChevronDown className="w-6 h-6 text-white -mt-4" />
         </div>
-
-        <MouseIcon />
       </div>
     </div>
   );

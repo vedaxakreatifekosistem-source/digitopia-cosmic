@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 
 // Assets reused from other components for consistency
-const bgImage = "../src/assets/images/login-3.png"; 
+import bgImage from "../src/assets/images/login-3.png"; 
 
 export default function Login({ onNavigate, onLogin }: { onNavigate?: (view: string) => void, onLogin?: () => void }) {
   const [showPassword, setShowPassword] = useState(false);
