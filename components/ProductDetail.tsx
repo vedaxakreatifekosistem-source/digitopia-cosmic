@@ -64,7 +64,7 @@ export default function ProductDetail({ product, onBack, isLoggedIn, onAuthRedir
   };
 
   return (
-    <div className="h-screen w-full bg-black pt-[70px] md:pt-[80px] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-500">
+    <div className="min-h-screen lg:h-screen w-full bg-black pt-[70px] md:pt-[80px] flex flex-col overflow-y-auto lg:overflow-hidden animate-in fade-in zoom-in-95 duration-500">
       
       <div className="flex-1 w-full max-w-[1100px] mx-auto p-4 md:p-6 flex flex-col h-full">
         
@@ -80,10 +80,10 @@ export default function ProductDetail({ product, onBack, isLoggedIn, onAuthRedir
         </div>
 
         {/* Main Layout - Fits remaining height */}
-        <div className="flex-1 flex flex-col lg:flex-row gap-5 lg:gap-10 min-h-0 pb-2">
+        <div className="flex-1 flex flex-col lg:flex-row gap-5 lg:gap-10 lg:min-h-0 pb-2">
           
           {/* Left Side: Image */}
-          <div className="w-full lg:w-[45%] h-[40vh] lg:h-full flex-shrink-0 relative rounded-[16px] lg:rounded-[20px] overflow-hidden border border-[#27272a] bg-[#0c0c0c]">
+          <div className="w-full lg:w-[45%] h-[300px] sm:h-[400px] lg:h-full flex-shrink-0 relative rounded-[16px] lg:rounded-[20px] overflow-hidden border border-[#27272a] bg-[#0c0c0c]">
               <img 
                 src={currentProduct.image} 
                 alt={currentProduct.title} 
@@ -106,10 +106,10 @@ export default function ProductDetail({ product, onBack, isLoggedIn, onAuthRedir
           </div>
 
           {/* Right Side: Details - Scrollable internally if needed */}
-          <div className="flex flex-col flex-1 lg:h-full min-h-0">
+          <div className="flex flex-col flex-1 lg:h-full lg:min-h-0">
             
             {/* Scrollable Content Container */}
-            <div className="flex-1 overflow-y-auto pr-1 lg:pr-2 scrollbar-none">
+            <div className="flex-1 lg:overflow-y-auto pr-1 lg:pr-2 scrollbar-none">
                 <div className="flex flex-col gap-4">
                     
                     {/* Creator Profile - More Compact */}

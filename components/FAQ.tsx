@@ -40,7 +40,7 @@ const faqs = [
 
 export default function FAQ() {
   return (
-    <div className="relative w-full min-h-screen py-20 overflow-hidden bg-black flex flex-col justify-center">
+    <div className="relative w-full py-20 overflow-hidden bg-black flex flex-col justify-center">
       {/* Background Image removed */}
       
       <div className="relative z-10 max-w-4xl w-full mx-auto px-6">

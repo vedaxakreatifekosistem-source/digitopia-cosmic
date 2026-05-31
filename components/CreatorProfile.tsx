@@ -825,7 +825,7 @@ export default function CreatorProfile({ onNavigate, onProductSelect, onCustomiz
         </div>
 
         {/* Tabs */}
-        <div className="border-b border-gray-800 mb-8 sticky top-[80px] bg-black/80 backdrop-blur-md z-40 mx-[-16px] px-[16px] md:mx-0 md:px-0">
+        <div className="border-b border-gray-800 mb-8 sticky top-[60px] md:top-[80px] bg-black/80 backdrop-blur-md z-40 mx-[-16px] px-[16px] md:mx-0 md:px-0">
             <div className="flex justify-start md:justify-center gap-8 px-4 overflow-x-auto scrollbar-none">
                 {tabs.map((tab) => (
                     <button key={tab} onClick={() => setActiveTab(tab)} className={`pb-5 text-base md:text-lg font-medium transition-colors relative cursor-pointer whitespace-nowrap ${activeTab === tab ? 'text-white font-bold' : 'text-gray-500 hover:text-gray-300'}`}>

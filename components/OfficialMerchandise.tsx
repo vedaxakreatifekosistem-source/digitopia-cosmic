@@ -1,8 +1,8 @@
 import React from "react";
 
 // Using the background image URL from the reference code
-const bgImage = "https://lh3.googleusercontent.com/d/1C09ceIm0XPgpY-FqMe-G3Pj9DfllUpv4";
-const overlayImage = "https://lh3.googleusercontent.com/d/1IjF8YQB8RGOfdwHfaeqmGbBMqbwZIH9K";
+const bgImage = "../src/assets/images/banner-2.jpg";
+const overlayImage = "../src/assets/images/Oshiverse.png";
 
 export default function OfficialMerchandise() {
   return (

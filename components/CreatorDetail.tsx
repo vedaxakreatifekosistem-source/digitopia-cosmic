@@ -505,7 +505,7 @@ export default function CreatorDetail({ creator, onProductSelect, onCreatorSelec
         </div>
 
         {/* Tabs */}
-        <div className="border-b border-gray-800 mb-8 sticky top-[80px] bg-black/80 backdrop-blur-md z-40 mx-[-16px] px-[16px] md:mx-0 md:px-0">
+        <div className="border-b border-gray-800 mb-8 sticky top-[60px] md:top-[80px] bg-black/80 backdrop-blur-md z-40 mx-[-16px] px-[16px] md:mx-0 md:px-0">
             <div className="flex justify-start md:justify-center gap-6 md:gap-8 px-4 overflow-x-auto scrollbar-none">
                 {['Home', 'Feeds', 'Products', 'Subscription', 'Followers', 'Supporters'].map((tab) => (
                     <button
@@ -610,7 +610,7 @@ export default function CreatorDetail({ creator, onProductSelect, onCreatorSelec
                         </div>
 
                         {/* Membership Section */}
-                        <div className="bg-[#0c0c0c] border border-[#27272a] rounded-[24px] p-4 md:p-6 sticky top-[100px]">
+                        <div className="bg-[#0c0c0c] border border-[#27272a] rounded-[24px] p-4 md:p-6 lg:sticky lg:top-[160px]">
                             <h3 className="text-lg md:text-xl font-bold mb-6">Membership</h3>
                             
                             {/* Membership Stack Carousel */}

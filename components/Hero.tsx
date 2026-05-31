@@ -8,7 +8,8 @@ const imgRectangle4 = "../src/assets/images/hero-3.jpg";
 const imgRectangle5 = "../src/assets/images/hero-4.jpg";
 const imgRectangle6 = "../src/assets/images/hero-5.jpg";
 const imgCosmic072 = "../src/assets/images/cosmic-logo.png";
-import svgPaths from "../imports/svg-tbkish0gf2";
+// @ts-ignore
+import svgPaths from "../src/assets/images/cosmic.png";
 
 function MouseIcon() {
   return (
@@ -19,12 +20,12 @@ function MouseIcon() {
         viewBox="0 0 36 36"
       >
         <path
-          d={svgPaths.p2f3ca00}
+          d="M7.5 13.5C7.5 7.70101 12.201 3 18 3C23.799 3 28.5 7.70101 28.5 13.5V22.5C28.5 28.299 23.799 33 18 33C12.201 33 7.5 28.299 7.5 22.5V13.5Z"
           stroke="white"
           strokeWidth="1.5"
         />
         <path
-          d={svgPaths.p26311000}
+          d="M15.75 12.75C15.75 11.5074 16.7574 10.5 18 10.5C19.2426 10.5 20.25 11.5074 20.25 12.75V15.75C20.25 16.9926 19.2426 18 18 18C16.7574 18 15.75 16.9926 15.75 15.75V12.75Z"
           stroke="white"
           strokeWidth="1.5"
         />

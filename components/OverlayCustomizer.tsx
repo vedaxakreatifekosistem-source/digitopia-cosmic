@@ -67,9 +67,9 @@ export default function OverlayCustomizer({ onNavigate, overlayData }: OverlayCu
   }
 
   return (
-    <div className="min-h-screen bg-black text-white pt-[80px] pb-20 font-sans">
+    <div className="min-h-screen bg-black text-white pt-[60px] md:pt-[80px] pb-20 font-sans">
       {/* Header */}
-      <div className="fixed top-[80px] left-0 right-0 z-40 bg-black/80 backdrop-blur-md border-b border-[#27272a] px-6 py-4 flex items-center justify-between">
+      <div className="fixed top-[60px] md:top-[80px] left-0 right-0 z-40 bg-black/80 backdrop-blur-md border-b border-[#27272a] px-4 md:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-4">
             <button 
                 onClick={() => onNavigate('creator-profile')}

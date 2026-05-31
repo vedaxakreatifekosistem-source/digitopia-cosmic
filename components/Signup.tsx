@@ -72,7 +72,7 @@ export default function Signup({ onNavigate }: { onNavigate?: (view: string) => 
       <div className="relative w-full max-w-[1440px] h-full lg:h-[795px] mx-auto bg-black flex flex-col lg:block justify-center">
         
         {/* Background Group */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 scale-[0.45] sm:scale-60 lg:scale-100 opacity-20 lg:opacity-70 lg:top-0 lg:left-[820px] lg:translate-x-0 lg:z-0 origin-top pointer-events-none">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 scale-[0.45] sm:scale-60 lg:scale-100 opacity-20 lg:opacity-75 lg:top-[40px] lg:right-[40px] xl:right-[80px] lg:left-auto lg:translate-x-0 lg:z-0 origin-top pointer-events-none">
           
           <div className="relative w-[540px] h-[715px]">
              {/* Rectangle 0 */}
@@ -103,7 +103,7 @@ export default function Signup({ onNavigate }: { onNavigate?: (view: string) => 
 
         {/* Content/Form Container */}
         {/* Adjusted: Removed large padding, centering via flex, reduced gaps for fit-to-screen */}
-        <div className="relative w-full max-w-[500px] mx-auto px-6 z-10 flex flex-col items-center justify-center h-full gap-4 md:gap-8 lg:absolute lg:w-[540px] lg:max-w-none lg:top-1/2 lg:left-[160px] lg:-translate-y-1/2 lg:p-0 lg:my-0 lg:mx-0 lg:gap-[40px] lg:h-auto lg:block">
+        <div className="relative w-full max-w-[500px] mx-auto px-6 z-10 flex flex-col items-center justify-center h-full gap-4 md:gap-8 lg:absolute lg:w-[540px] lg:max-w-none lg:top-1/2 lg:left-[60px] xl:left-[120px] lg:-translate-y-1/2 lg:p-0 lg:my-0 lg:mx-0 lg:gap-[40px] lg:h-auto lg:block">
           
           <div className="flex flex-col items-center gap-2 lg:gap-3 w-full text-center lg:items-start lg:text-left shrink-0">
             <span className="text-white text-center text-[26px] md:text-[38px] lg:text-[42px] font-extrabold leading-tight w-full">Welcome Aboard!</span>

@@ -1,8 +1,8 @@
 import React from "react";
 
 // Using the background image URL from the reference code
-const bgImage = "https://lh3.googleusercontent.com/d/1t30Xzoc7XkH3Ijg8NikzKofhNrspOt5i";
-const overlayImage = "https://lh3.googleusercontent.com/d/1yY5MPQY4U1s_abvLrjicH9NXWByRueb9";
+const bgImage = "../src/assets/images/banner.jpg";
+const overlayImage = "../src/assets/images/Artboard 5a.png";
 
 export default function RentCostume() {
   return (
