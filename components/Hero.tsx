@@ -9,7 +9,7 @@ import imgRectangle5 = "../src/assets/images/hero-4.jpg";
 import imgRectangle6 = "../src/assets/images/hero-5.jpg";
 import imgCosmic072 = "../src/assets/images/cosmic-logo.png";
 // @ts-ignore
-import svgPaths from "../src/assets/images/cosmic.png";
+import svgPaths = "../src/assets/images/cosmic.png";
 
 function MouseIcon() {
   return (
