@@ -5,18 +5,18 @@ import Footer from "./Footer";
 import { getProducts } from "../src/services/dataService";
 
 // Placeholder images for varied products
-const imgCostume1 = "../src/assets/images/Sub Hero 1.jpg";
-const imgMerchandise1 = "../src/assets/images/Sub Hero 2.jpg";
-const imgService1 = "../src/assets/images/Sub Hero 3a.jpg";
-const imgDigital1 = "../src/assets/images/Sign Up 1.jpg";
-const imgProp1 = "../src/assets/images/Sub Hero 4.jpg";
-const imgDigital2 = "../src/assets/images/Sign Up 5.jpg";
-const imgCostume2 = "../src/assets/images/Sub Hero 5a.jpg";
-const imgDigital3 = "../src/assets/images/Sign Up 2.jpg";
-const imgMerchandise2 = "../src/assets/images/Sub Hero 6a.jpg";
-const imgDigital4 = "../src/assets/images/Sign Up 6.jpg";
-const imgDigital5 = "../src/assets/images/Sign Up 3.jpg";
-const imgCostume3 = "../src/assets/images/hero-2.jpg";
+import imgCostume1 from "../src/assets/images/Sub Hero 1.jpg";
+import imgMerchandise1 from "../src/assets/images/Sub Hero 2.jpg";
+import imgService1 from "../src/assets/images/Sub Hero 3a.jpg";
+import imgDigital1 from "../src/assets/images/Sign Up 1.jpg";
+import imgProp1 from "../src/assets/images/Sub Hero 4.jpg";
+import imgDigital2 from "../src/assets/images/Sign Up 5.jpg";
+import imgCostume2 from "../src/assets/images/Sub Hero 5a.jpg";
+import imgDigital3 from "../src/assets/images/Sign Up 2.jpg";
+import imgMerchandise2 from "../src/assets/images/Sub Hero 6a.jpg";
+import imgDigital4 from "../src/assets/images/Sign Up 6.jpg";
+import imgDigital5 from "../src/assets/images/Sign Up 3.jpg";
+import imgCostume3 from "../src/assets/images/hero-2.jpg";
 
 // Dummy Data for Products with Rating
 export const productsData = [

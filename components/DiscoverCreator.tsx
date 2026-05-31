@@ -5,8 +5,8 @@ import Footer from "./Footer";
 import { getCreators } from "../src/services/dataService";
 
 // Placeholder images
-const imgBanner1 = "../src/assets/images/banner.jpg"; // Creator Banner
-const imgAvatar1 = "../src/assets/images/dummy.jpg"; // Creator Avatar
+import imgBanner1 from "../src/assets/images/banner.jpg"; // Creator Banner
+import imgAvatar1 from "../src/assets/images/dummy.jpg"; // Creator Avatar
 
 // Dummy Data untuk simulasi sorting
 const creatorsData = [
