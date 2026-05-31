@@ -10,8 +10,8 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu.tsx";
 
-const imgRectangle1 = "../src/assets/images/cosmic.png";
-const imgAvatar = "../src/assets/images/dummy.jpg"; // Reused user avatar
+import imgRectangle1 from "../src/assets/images/cosmic.png";
+import imgAvatar from "../src/assets/images/dummy.jpg"; // Reused user avatar
 
 export default function Navbar({
   onNavigate,

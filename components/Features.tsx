@@ -10,12 +10,12 @@ import {
 } from "./ui/carousel.tsx";
 
 // Use placeholders for missing assets
-const imgRectangle9 = "../src/assets/images/Sub Hero 1.jpg";
-const imgRectangle10 = "../src/assets/images/Sub Hero 2.jpg";
-const imgRectangle11 = "../src/assets/images/Sub Hero 3a.jpg";
-const imgRectangle12 = "../src/assets/images/Sub Hero 4.jpg";
-const imgRectangle13 = "../src/assets/images/Sub Hero 5a.jpg";
-const imgRectangle14 = "../src/assets/images/Sub Hero 6a.jpg";
+import imgRectangle9 from "../src/assets/images/Sub Hero 1.jpg";
+import imgRectangle10 from "../src/assets/images/Sub Hero 2.jpg";
+import imgRectangle11 from "../src/assets/images/Sub Hero 3a.jpg";
+import imgRectangle12 from "../src/assets/images/Sub Hero 4.jpg";
+import imgRectangle13 from "../src/assets/images/Sub Hero 5a.jpg";
+import imgRectangle14 from "../src/assets/images/Sub Hero 6a.jpg";
 
 const features = [
   {
