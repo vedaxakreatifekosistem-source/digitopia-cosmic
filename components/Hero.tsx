@@ -2,14 +2,13 @@ import React from "react";
 import { MousePointer2, ChevronDown } from "lucide-react";
 
 // Valid image links provided in the file
-import imgRectangle2 = "../src/assets/images/hero-1.jpg";
-import imgRectangle3 = "../src/assets/images/hero-2.jpg";
-import imgRectangle4 = "../src/assets/images/hero-3.jpg";
-import imgRectangle5 = "../src/assets/images/hero-4.jpg";
-import imgRectangle6 = "../src/assets/images/hero-5.jpg";
-import imgCosmic072 = "../src/assets/images/cosmic-logo.png";
-// @ts-ignore
-import svgPaths = "../src/assets/images/cosmic.png";
+import imgRectangle2 from "../src/assets/images/hero-1.jpg";
+import imgRectangle3 from "../src/assets/images/hero-2.jpg";
+import imgRectangle4 from "../src/assets/images/hero-3.jpg";
+import imgRectangle5 from "../src/assets/images/hero-4.jpg";
+import imgRectangle6 from "../src/assets/images/hero-5.jpg";
+import imgCosmic072 from "../src/assets/images/cosmic-logo.png";
+import svgPaths from "../src/assets/images/cosmic.png";
 
 function MouseIcon() {
   return (
