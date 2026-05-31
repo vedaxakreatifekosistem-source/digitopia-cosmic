@@ -19,112 +19,162 @@ import imgRectangle14 from "../src/assets/images/Sub Hero 6a.jpg";
 
 const features = [
   {
+    title: "Build Your Creative Ecosystem",
+    description:
+      "You are not just a content creator, but a space organizer, brand owner, and leader of your own community. The control is entirely yours.",
+    image: imgRectangle9,
+  },
+  {
     title: "Time for your work to Shine!",
     description:
       "We help you manage your work, build your community, and open up a direct line of income from your fans, all from one place.",
-    images: [imgRectangle9, imgRectangle10, imgRectangle11],
+    image: imgRectangle10,
   },
   {
     title: "Instant Support with Real Impact",
     description:
-      "Make it easy for your fans to show appreciation for your content with our real-time tipping system. It’s simple, fast, and meaningful.",
-    images: [imgRectangle10, imgRectangle11, imgRectangle12],
+      "Make it easy for your fans to show appreciation for your content with our real-time tipping system. It's simple, fast, and meaningful.",
+    image: imgRectangle11,
   },
   {
     title: "Manage Your Digital Storefront",
     description:
       "Sell merchandise, digital creations, or creative services. All transactions are handled within a single, easy-to-use dashboard.",
-    images: [imgRectangle11, imgRectangle12, imgRectangle13],
+    image: imgRectangle12,
   },
   {
     title: "Offer Exclusive Memberships",
     description:
       "You can create a membership system with custom benefits like private content, early access, or closed communities.",
-    images: [imgRectangle12, imgRectangle13, imgRectangle14],
+    image: imgRectangle13,
   },
   {
     title: "Get Paid Easily with QRIS",
     description:
-      "You can receive payments instantly through QRIS, It’s seamless, secure, and fan-friendly. Just scan and support.",
-    images: [imgRectangle13, imgRectangle14, imgRectangle9],
-  },
-  {
-    title: "Build Your Creative Ecosystem",
-    description:
-      "You are not just a content creator, but a space organizer, brand owner, and leader of your own community. The control is entirely yours.",
-    images: [imgRectangle14, imgRectangle9, imgRectangle10],
+      "You can receive payments instantly through QRIS. It's seamless, secure, and fan-friendly. Just scan and support.",
+    image: imgRectangle14,
   },
 ];
 
 export default function Features() {
+  const [api, setApi] = React.useState<any>();
+  const [activeIndex, setActiveIndex] = React.useState(0);
+
+  React.useEffect(() => {
+    if (!api) return;
+
+    const onSelect = () => {
+      setActiveIndex(api.selectedScrollSnap());
+    };
+
+    onSelect(); // Initial call
+    api.on("select", onSelect);
+    api.on("reInit", onSelect);
+
+    return () => {
+      api.off("select", onSelect);
+    };
+  }, [api]);
+
   return (
-    <div className="w-full h-screen py-12 relative overflow-hidden bg-black flex flex-col justify-center">
-      <Carousel
-        className="w-full max-w-none px-4 md:px-12 mx-auto"
-        opts={{ loop: true, align: "center" }}
-        plugins={[
-          Autoplay({
-            delay: 3000,
-          }),
-        ]}
-      >
-        <CarouselContent>
-          {features.map((feature, index) => (
-            <CarouselItem key={index} className="basis-full">
-              <div className="flex flex-col items-center justify-center text-center px-4">
-                {/* Text Content */}
-                <div className="max-w-[700px]">
-                  <h2 className="text-[32px] md:text-[40px] font-bold text-white mb-4 leading-tight">
-                    {feature.title}
-                  </h2>
-                  <p className="text-[16px] md:text-[20px] text-gray-300 leading-relaxed mb-8">
-                    {feature.description}
-                  </p>
-                </div>
+    <div className="w-full min-h-screen py-20 px-6 relative overflow-hidden bg-black flex flex-col justify-center">
+      {/* Title & Introduction */}
+      <div className="text-center mb-12 md:mb-16 px-4 animate-in fade-in duration-750">
+        <h2 className="text-[36px] md:text-[54px] font-extrabold text-white tracking-tight mb-4 leading-tight">
+          Everything You Need to Scale
+        </h2>
+        <p className="text-[20px] md:text-[24px] text-gray-400 max-w-[750px] mx-auto leading-relaxed">
+          Cosmic provides the tools for creators to grow their own ecosystem, engage
+          with fans, and monetize their passion effortlessly.
+        </p>
+      </div>
 
-                {/* Images Container */}
-                <div className="flex items-end justify-center gap-4 md:gap-6 w-full max-w-[90vw] md:max-w-[70vw] mx-auto h-[45vh] md:h-[50vh]">
-                  {/* Left Image (Smaller, Dimmed) */}
-                  <div className="hidden md:block flex-1 max-w-[20vw] h-[80%] rounded-[20px] md:rounded-[32px] overflow-hidden relative opacity-50 transition-all duration-500 shrink-0">
-                    <img
-                      src={feature.images[0]}
-                      alt=""
-                      className="w-full h-full object-cover"
+      {/* Responsive Carousel */}
+      <div className="w-full max-w-[1440px] mx-auto px-2 md:px-12 relative group">
+        <Carousel
+          className="w-full"
+          opts={{ loop: true, align: "center" }}
+          setApi={setApi}
+          plugins={[
+            Autoplay({
+              delay: 4000,
+              stopOnInteraction: true,
+            }),
+          ]}
+        >
+          <CarouselContent className="-ml-6 items-center">
+            {features.map((feature, index) => {
+              const isActive = index === activeIndex;
+              return (
+                <CarouselItem
+                  key={index}
+                  className="pl-6 basis-full sm:basis-1/2 lg:basis-1/3 flex items-center justify-center py-10"
+                >
+                  <div
+                    onClick={() => api?.scrollTo(index)}
+                    className={`relative w-full aspect-[3/4.2] sm:aspect-[3/4.5] md:aspect-[3/4] lg:aspect-[3/4] xl:aspect-[3/4.2] min-h-[480px] rounded-[32px] overflow-hidden border bg-[#0c0c0c] flex flex-col justify-end p-8 group/card cursor-pointer transition-all duration-500 ease-in-out h-full
+                      ${isActive 
+                        ? "scale-105 md:scale-112 border-[#d032e5]/80 shadow-[0_0_35px_rgba(208,50,229,0.3)] z-10" 
+                        : "scale-90 border-[#27272a] hover:border-white/10"
+                      }`}
+                  >
+                    {/* Darkening / Dimming 70% Overlay for non-active cards */}
+                    <div className={`absolute inset-0 bg-black transition-opacity duration-500 pointer-events-none z-20 
+                      ${isActive ? "opacity-0" : "opacity-70"}`} 
                     />
-                    <div className="absolute inset-0 bg-black/50" />
-                  </div>
 
-                  {/* Center Image (Main) */}
-                  <div className="w-[80vw] md:flex-[1.5] max-w-[80vw] md:max-w-[28vw] h-full rounded-[20px] md:rounded-[32px] overflow-hidden relative shadow-2xl scale-105 z-10 shrink-0">
+                    {/* Image Background */}
                     <img
-                      src={feature.images[1]}
-                      alt=""
-                      className="w-full h-full object-cover"
+                      src={feature.image}
+                      alt={feature.title}
+                      className="absolute inset-0 w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-700 brightness-[0.7] md:brightness-[0.75]"
                     />
-                    <div className="absolute inset-0 ring-1 ring-white/10" />
-                  </div>
 
-                  {/* Right Image (Smaller, Dimmed) */}
-                  <div className="hidden md:block flex-1 max-w-[20vw] h-[80%] rounded-[20px] md:rounded-[32px] overflow-hidden relative opacity-50 transition-all duration-500 shrink-0">
-                    <img
-                      src={feature.images[2]}
-                      alt=""
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black/50" />
-                  </div>
-                </div>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
+                    {/* Elegant Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent opacity-95 group-hover/card:opacity-100 transition-opacity duration-500" />
 
-        {/* Navigation Buttons */}
-        <div className="hidden md:block">
-          <CarouselPrevious className="left-10 bg-white/10 border-none hover:bg-white/20 text-white" />
-          <CarouselNext className="right-10 bg-white/10 border-none hover:bg-white/20 text-white" />
+                    {/* Card Content stacked at bottom */}
+                    <div className="relative z-10 flex flex-col items-start text-left">
+                      <h3 className="text-white text-[24px] md:text-[30px] font-extrabold tracking-tight mb-3 leading-tight select-none">
+                        {feature.title}
+                      </h3>
+                      <p className="text-gray-400 text-[13px] md:text-[14px] leading-relaxed font-normal select-none">
+                        {feature.description}
+                      </p>
+                    </div>
+                  </div>
+                </CarouselItem>
+              );
+            })}
+          </CarouselContent>
+
+          {/* Custom premium navigation buttons - shown on overall hover with transition */}
+          <div className="hidden md:block opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+            <CarouselPrevious className="absolute left-[-20px] lg:left-[-40px] top-1/2 -translate-y-1/2 z-30 size-12 rounded-full border-none bg-[#d032e5] hover:bg-[#b022c5] text-white shadow-[0_0_20px_rgba(208,50,229,0.4)] transition-all duration-300 flex items-center justify-center cursor-pointer pointer-events-auto" />
+            <CarouselNext className="absolute right-[-20px] lg:right-[-40px] top-1/2 -translate-y-1/2 z-30 size-12 rounded-full border border-white/10 bg-white/10 hover:bg-white/20 text-white backdrop-blur-md transition-all duration-300 flex items-center justify-center cursor-pointer pointer-events-auto" />
+          </div>
+        </Carousel>
+
+        {/* Pagination Dots / Slider Dots below carousel */}
+        <div className="flex justify-center items-center gap-2 mt-6">
+          {features.map((_, index) => {
+            const isActive = index === activeIndex;
+            return (
+              <button
+                key={index}
+                onClick={() => api?.scrollTo(index)}
+                className={`h-2.5 rounded-full transition-all duration-500 cursor-pointer ${
+                  isActive 
+                    ? "w-10 bg-[#d032e5] shadow-[0_0_12px_rgba(208,50,229,0.6)]" 
+                    : "w-2.5 bg-[#27272a] hover:bg-gray-600"
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            );
+          })}
         </div>
-      </Carousel>
+      </div>
     </div>
   );
 }
+

@@ -9,6 +9,35 @@ import imgRectangle5 from "../src/assets/images/hero-4.jpg";
 import imgRectangle6 from "../src/assets/images/hero-5.jpg";
 import imgCosmic072 from "../src/assets/images/cosmic-logo.png";
 
+function MouseIcon() {
+  return (
+    <div className="relative shrink-0 w-[36px] h-[36px] animate-bounce mt-8">
+      <svg
+        className="block w-full h-full"
+        fill="none"
+        viewBox="0 0 36 36"
+      >
+        <path
+          d="M7.5 13.5C7.5 7.70101 12.201 3 18 3C23.799 3 28.5 7.70101 28.5 13.5V22.5C28.5 28.299 23.799 33 18 33C12.201 33 7.5 28.299 7.5 22.5V13.5Z"
+          stroke="white"
+          strokeWidth="1.5"
+        />
+        <path
+          d="M15.75 12.75C15.75 11.5074 16.7574 10.5 18 10.5C19.2426 10.5 20.25 11.5074 20.25 12.75V15.75C20.25 16.9926 19.2426 18 18 18C16.7574 18 15.75 16.9926 15.75 15.75V12.75Z"
+          stroke="white"
+          strokeWidth="1.5"
+        />
+        <path
+          d="M18 3V10.5"
+          stroke="white"
+          strokeLinecap="round"
+          strokeWidth="1.5"
+        />
+      </svg>
+    </div>
+  );
+}
+
 export default function Hero({ onNavigate }: { onNavigate?: (view: string) => void }) {
   return (
     <div className="relative w-full h-screen flex items-center justify-center overflow-hidden">
@@ -55,7 +84,7 @@ export default function Hero({ onNavigate }: { onNavigate?: (view: string) => vo
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 flex flex-col items-center text-center w-full max-w-[800px] px-4 pt-20">
+      <div className="relative z-10 flex flex-col items-center text-center w-full max-w-[1000px] px-4 pt-20">
         {/* Cosmic Logo Image */}
         <div className="w-full max-w-[400px] md:max-w-none md:w-[875px] mb-6">
           <img
@@ -82,6 +111,8 @@ export default function Hero({ onNavigate }: { onNavigate?: (view: string) => vo
              <ChevronDown className="w-6 h-6 text-white" />
              <ChevronDown className="w-6 h-6 text-white -mt-4" />
         </div>
+
+        <MouseIcon />
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import React from "react";
 import { Instagram, Twitter, Facebook, MessageCircle, Send, Phone } from "lucide-react";
 
 // Valid image link from Hero/Navbar or placeholder
-const imgCosmic072 = "../src/assets/images/cosmic-logo.png";
+import imgCosmic072 from "../src/assets/images/cosmic-logo.png";
 
 export default function Footer({ onNavigate }: { onNavigate?: (view: string) => void }) {
   return (
