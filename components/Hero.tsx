@@ -2,7 +2,7 @@ import React from "react";
 import { MousePointer2, ChevronDown } from "lucide-react";
 
 // Valid image links provided in the file
-const imgRectangle2 = "../src/assets/images/hero-1.jpg";
+import imgRectangle2 = "../src/assets/images/hero-1.jpg";
 const imgRectangle3 = "../src/assets/images/hero-2.jpg";
 const imgRectangle4 = "../src/assets/images/hero-3.jpg";
 const imgRectangle5 = "../src/assets/images/hero-4.jpg";
