@@ -2,6 +2,13 @@
 import React, { useState } from "react";
 import { Check } from "lucide-react";
 
+import signUp1 from "../src/assets/images/Sign Up 3.jpg";
+import signUp2 from "../src/assets/images/Sign Up 5.jpg";
+import signUp3 from "../src/assets/images/Sign Up 4.jpg";
+import signUp4 from "../src/assets/images/Sign Up 2.jpg";
+import signUp5 from "../src/assets/images/Sign Up 1.jpg";
+import signUp6 from "../src/assets/images/Sign Up 6.jpg";
+
 export default function Signup({ onNavigate }: { onNavigate?: (view: string) => void }) {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -68,42 +75,11 @@ export default function Signup({ onNavigate }: { onNavigate?: (view: string) => 
   };
 
   return (
-    <div className="w-full bg-black pt-[60px] md:pt-[80px] flex justify-center items-center h-[100dvh] lg:h-screen overflow-hidden">
-      <div className="relative w-full max-w-[1440px] h-full lg:h-[795px] mx-auto bg-black flex flex-col lg:block justify-center">
+    <div className="w-full bg-black pt-[70px] md:pt-[90px] pb-10 flex justify-center items-center h-full min-h-screen lg:h-screen lg:overflow-hidden">
+      <div className="relative w-full max-w-[1440px] h-full mx-auto bg-black flex flex-col lg:flex-row lg:items-center lg:justify-between px-6 lg:px-16 xl:px-24 gap-8 justify-center">
         
-        {/* Background Group */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 scale-[0.45] sm:scale-60 lg:scale-100 opacity-20 lg:opacity-75 lg:top-[40px] lg:right-[40px] xl:right-[80px] lg:left-auto lg:translate-x-0 lg:z-0 origin-top pointer-events-none">
-          
-          <div className="relative w-[540px] h-[715px]">
-             {/* Rectangle 0 */}
-             <div className="absolute w-[165px] h-[350px] top-0 right-[187px] bg-black/10 bg-cover bg-center rounded-b-[100px] -z-10" 
-                  style={{ backgroundImage: 'url(https://codia-f2c.s3.us-west-1.amazonaws.com/image/2026-01-01/8V0Ut5m9GP.png)' }} />
-             
-             {/* Rectangle 1 */}
-             <div className="absolute w-[165px] h-[475px] top-0 right-[374px] bg-black/10 bg-cover bg-center rounded-[100px] z-10"
-                  style={{ backgroundImage: 'url(https://codia-f2c.s3.us-west-1.amazonaws.com/image/2026-01-01/sYtVsOcgzp.png)' }} />
-             
-             {/* Rectangle 2 */}
-             <div className="absolute w-[165px] h-[425px] top-[50px] right-0 bg-black/10 bg-cover bg-center rounded-[100px] z-10"
-                  style={{ backgroundImage: 'url(https://codia-f2c.s3.us-west-1.amazonaws.com/image/2026-01-01/E5QjLCkHPR.png)' }} />
-             
-             {/* Rectangle 3 */}
-             <div className="absolute w-[165px] h-[350px] bottom-0 right-[187px] bg-black/10 bg-cover bg-center rounded-t-[100px] z-0"
-                  style={{ backgroundImage: 'url(https://codia-f2c.s3.us-west-1.amazonaws.com/image/2026-01-01/nRLyZxdEbU.png)' }} />
-                  
-             {/* Rectangle 4 */}
-             <div className="absolute w-[165px] h-[200px] bottom-0 right-[374px] bg-black/10 bg-cover bg-center rounded-t-[100px] z-20"
-                  style={{ backgroundImage: 'url(https://codia-f2c.s3.us-west-1.amazonaws.com/image/2026-01-01/hWHzGz11gQ.png)' }} />
-                  
-             {/* Rectangle 5 */}
-             <div className="absolute w-[165px] h-[200px] bottom-0 right-0 bg-black/10 bg-cover bg-center rounded-t-[100px] z-0"
-                  style={{ backgroundImage: 'url(https://codia-f2c.s3.us-west-1.amazonaws.com/image/2026-01-01/x9jVsSYuxM.png)' }} />
-          </div>
-        </div>
-
         {/* Content/Form Container */}
-        {/* Adjusted: Removed large padding, centering via flex, reduced gaps for fit-to-screen */}
-        <div className="relative w-full max-w-[500px] mx-auto px-6 z-10 flex flex-col items-center justify-center h-full gap-4 md:gap-8 lg:absolute lg:w-[540px] lg:max-w-none lg:top-1/2 lg:left-[60px] xl:left-[120px] lg:-translate-y-1/2 lg:p-0 lg:my-0 lg:mx-0 lg:gap-[40px] lg:h-auto lg:block">
+        <div className="relative w-full max-w-[500px] mx-auto z-10 flex flex-col items-center justify-center gap-4 lg:w-[48%] xl:w-[45%] lg:max-w-none lg:items-start lg:text-left">
           
           <div className="flex flex-col items-center gap-2 lg:gap-3 w-full text-center lg:items-start lg:text-left shrink-0">
             <span className="text-white text-center text-[26px] md:text-[38px] lg:text-[42px] font-extrabold leading-tight w-full">Welcome Aboard!</span>
@@ -112,10 +88,10 @@ export default function Signup({ onNavigate }: { onNavigate?: (view: string) => 
             </span>
           </div>
 
-          <div className="flex flex-col gap-3 md:gap-4 lg:gap-[20px] w-full shrink-0 my-[2rem]">
+          <div className="flex flex-col gap-3 md:gap-4 lg:gap-[20px] w-full shrink-0 my-4">
             {errors.auth && <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-500 text-xs text-center">{errors.auth}</div>}
             {/* Row 1: Full Name & Username */}
-            <div className="flex flex-col md:flex-row items-start gap-3 md:gap-4 lg:gap-[20px] w-full">
+            <div className="flex flex-col sm:flex-row items-start gap-3 md:gap-4 lg:gap-[20px] w-full">
               <div className="flex flex-col items-start gap-1 flex-1 w-full">
                 <label className="text-gray-300 text-[12px] md:text-[14px] font-medium leading-[18px] ml-1">Full Name</label>
                 <div className={`flex items-center w-full h-[40px] md:h-[46px] px-4 bg-[#1e1e1e] border ${errors.fullName ? 'border-red-500' : 'border-[#3f3f46] focus-within:border-[#8700a2]'} rounded-xl transition-all`}>
@@ -147,7 +123,7 @@ export default function Signup({ onNavigate }: { onNavigate?: (view: string) => 
             </div>
 
             {/* Row 2: Email & Phone */}
-            <div className="flex flex-col md:flex-row items-start gap-3 md:gap-4 lg:gap-[20px] w-full">
+            <div className="flex flex-col sm:flex-row items-start gap-3 md:gap-4 lg:gap-[20px] w-full">
               <div className="flex flex-col items-start gap-1 flex-1 w-full">
                 <label className="text-gray-300 text-[12px] md:text-[14px] font-medium leading-[18px] ml-1">Email</label>
                 <div className={`flex items-center w-full h-[40px] md:h-[46px] px-4 bg-[#1e1e1e] border ${errors.email ? 'border-red-500' : 'border-[#3f3f46] focus-within:border-[#8700a2]'} rounded-xl transition-all`}>
@@ -179,7 +155,7 @@ export default function Signup({ onNavigate }: { onNavigate?: (view: string) => 
             </div>
 
             {/* Row 3: Password & Confirm */}
-            <div className="flex flex-col md:flex-row items-start gap-3 md:gap-4 lg:gap-[20px] w-full">
+            <div className="flex flex-col sm:flex-row items-start gap-3 md:gap-4 lg:gap-[20px] w-full">
               <div className="flex flex-col items-start gap-1 flex-1 w-full">
                 <label className="text-gray-300 text-[12px] md:text-[14px] font-medium leading-[18px] ml-1">Password</label>
                 <div className={`flex items-center w-full h-[40px] md:h-[46px] px-4 bg-[#1e1e1e] border ${errors.password ? 'border-red-500' : 'border-[#3f3f46] focus-within:border-[#8700a2]'} rounded-xl transition-all`}>
@@ -249,7 +225,7 @@ export default function Signup({ onNavigate }: { onNavigate?: (view: string) => 
             {errors.agreed && <span className="text-red-500 text-[10px] md:text-[11px] ml-[30px]">{errors.agreed}</span>}
           </div>
 
-          <div className="w-full flex justify-center mt-8">
+          <div className="w-full flex justify-center mt-4">
             <button 
               onClick={handleSubmit}
               disabled={loading}
@@ -260,6 +236,36 @@ export default function Signup({ onNavigate }: { onNavigate?: (view: string) => 
           </div>
 
         </div>
+
+        {/* Background Group - Scaled perfectly according to screen resolution */}
+        <div className="absolute top-[8%] sm:top-[12%] left-1/2 -translate-x-1/2 w-[350px] sm:w-[480px] lg:w-[42%] xl:w-[46%] max-w-[540px] aspect-[540/715] opacity-10 lg:opacity-85 lg:relative lg:top-0 lg:left-auto lg:translate-x-0 z-0 pointer-events-none transition-all duration-300">
+          <div className="relative w-full h-screen">
+             {/* Rectangle 0 */}
+             <div className="absolute w-[30.5%] h-[49%] top-0 right-[34.6%] bg-black/10 bg-cover bg-center rounded-b-[40px] lg:rounded-b-[100px] -z-10" 
+                  style={{ backgroundImage: `url(${signUp1})` }} />
+             
+             {/* Rectangle 1 */}
+             <div className="absolute w-[30.5%] h-[66.4%] top-0 right-[69.2%] bg-black/10 bg-cover bg-center rounded-[40px] lg:rounded-[100px] z-10"
+                  style={{ backgroundImage: `url(${signUp5})` }} />
+             
+             {/* Rectangle 2 */}
+             <div className="absolute w-[30.5%] h-[59.4%] top-[7%] right-0 bg-black/10 bg-cover bg-center rounded-[40px] lg:rounded-[100px] z-10"
+                  style={{ backgroundImage: `url(${signUp2})` }} />
+             
+             {/* Rectangle 3 */}
+             <div className="absolute w-[30.5%] h-[49%] bottom-0 right-[34.6%] bg-black/10 bg-cover bg-center rounded-t-[40px] lg:rounded-t-[100px] z-0"
+                  style={{ backgroundImage: `url(${signUp3})` }} />
+                   
+             {/* Rectangle 4 */}
+             <div className="absolute w-[30.5%] h-[28%] bottom-0 right-[69.2%] bg-black/10 bg-cover bg-center rounded-t-[40px] lg:rounded-t-[100px] z-20"
+                  style={{ backgroundImage: `url(${signUp4})` }} />
+                   
+             {/* Rectangle 5 */}
+             <div className="absolute w-[30.5%] h-[28%] bottom-0 right-0 bg-black/10 bg-cover bg-center rounded-t-[40px] lg:rounded-t-[100px] z-0"
+                  style={{ backgroundImage: `url(${signUp6})` }} />
+          </div>
+        </div>
+
       </div>
     </div>
   );
