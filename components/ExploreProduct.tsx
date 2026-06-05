@@ -332,7 +332,7 @@ export default function ExploreProduct({ onProductSelect }: { onProductSelect?: 
             </p>
         </div>
 
-      <div className="w-full max-w-[1440px] px-6 md:px-20 pb-20 flex flex-col gap-10">
+      <div className="w-full max-w-screen px-6 md:px-20 pb-20 flex flex-col gap-10">
         <div className="flex flex-col gap-4">
             <FilterBar 
                 currentSort={sortBy} 

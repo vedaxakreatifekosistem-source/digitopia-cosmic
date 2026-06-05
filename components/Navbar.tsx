@@ -38,7 +38,7 @@ export default function Navbar({
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 flex justify-center bg-black/40 backdrop-blur-sm">
-      <div className="w-full max-w-[1440px] h-[60px] md:h-[80px] flex items-center justify-between px-6 md:justify-center md:gap-6 lg:gap-[60px] xl:gap-[80px]">
+      <div className="w-full max-w-screen h-[60px] md:h-[80px] flex items-center justify-between px-6 md:justify-center md:gap-6 lg:gap-[60px] xl:gap-[80px]">
         {/* Mobile Spacer (for centering logo) */}
         <div className="md:hidden w-[22px]"></div>
 

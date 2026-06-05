@@ -83,7 +83,7 @@ export default function Login({ onNavigate, onLogin }: { onNavigate?: (view: str
       {/* Main Content Container */}
       {/* pt-[80px] allows space for the navbar. flex-1 + justify-center centers vertically in the remaining space. */}
       {/* lg:px-24 ensures the form isn't too close to the right edge. items-end pushes it to the right on desktop. */}
-      <div className="flex-1 w-full max-w-[1440px] mx-auto px-6 md:px-12 lg:px-24 flex flex-col justify-center items-center lg:items-end pt-[80px]">
+      <div className="flex-1 w-full max-w-screen mx-auto px-6 md:px-12 lg:px-24 flex flex-col justify-center items-center lg:items-end pt-[80px]">
         
         {/* Login Card */}
         <div className="relative z-10 w-full max-w-[320px] sm:max-w-[360px] md:max-w-[400px] animate-in fade-in slide-in-from-bottom-8 duration-700">

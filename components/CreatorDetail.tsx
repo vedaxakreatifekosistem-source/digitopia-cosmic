@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Star, MessageCircle, Share2, Heart, Send, Check, MoreHorizontal, UserPlus, UserCheck, Image as ImageIcon, Instagram, Twitter, Youtube, Globe, Crown, Zap, Shield, Bookmark, Smile, X, Search, SortAsc, ShoppingBag, ChevronRight, Trophy, Copy, Facebook, Linkedin, Link as LinkIcon } from "lucide-react";
 import { Progress } from "./ui/progress";
 import Autoplay from "embla-carousel-autoplay";
@@ -10,15 +10,15 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 
 // Placeholder images reusing existing assets
-const imgBanner = "https://lh3.googleusercontent.com/d/1nGaMCnUeumJTB6-P96n9ntMSi87FDXdf"; 
-const imgAvatar = "https://lh3.googleusercontent.com/d/1h3GWacwUbXO7_PUSNWaWXFqygtqZs4V3";
-const imgFan = "https://lh3.googleusercontent.com/d/1vzPTInYqz8nNJ35tz2TzjY1QUX7P0BbR";
-const imgGrid1 = "https://lh3.googleusercontent.com/d/1h3GWacwUbXO7_PUSNWaWXFqygtqZs4V3";
-const imgGrid2 = "https://lh3.googleusercontent.com/d/1nGaMCnUeumJTB6-P96n9ntMSi87FDXdf";
-const imgGrid3 = "https://lh3.googleusercontent.com/d/1dpOwrgiwfee0M2R_kQtFlTJqu-GKLYXS";
-const imgGrid4 = "https://lh3.googleusercontent.com/d/13wi6zNzDTnNyQwIOlapuAQkjQI_xB2YT";
-const imgGrid5 = "https://lh3.googleusercontent.com/d/139h177kzzKVtlJsldCkfDS3Bf0L3KUIE";
-const imgGrid6 = "https://lh3.googleusercontent.com/d/1GlcgkoSnH7h5V41SCFVwHA81WnM4ZoTn";
+import imgBanner from "../src/assets/images/banner.jpg"; 
+import imgAvatar from "../src/assets/images/Dummy 2.jpg";
+import imgFan from "../src/assets/images/dummy.jpg";
+import imgGrid1 from "../src/assets/images/Sub Hero 1.jpg";
+import imgGrid2 from "../src/assets/images/Sub Hero 2.jpg";
+import imgGrid3 from "../src/assets/images/Sub Hero 4.jpg";
+import imgGrid4 from "../src/assets/images/Sub Hero 1a.jpg";
+import imgGrid5 from "../src/assets/images/Sub Hero 3a.jpg";
+import imgGrid6 from "../src/assets/images/Sub Hero 5a.jpg";
 
 // Mock Data for Support Board
 const supportData = [
@@ -226,9 +226,9 @@ const PRICE_RANGES = [
 ];
 
 const mockComments = [
-    { id: 1, user: "cosplay_lover", text: "This is absolutely stunning! The details are insane 😍", time: "2h" },
-    { id: 2, user: "gaming_wizard", text: "Can't wait to see more of this set!", time: "5h" },
-    { id: 3, user: "artistic_soul", text: "Lighting on point 🔥", time: "1d" },
+    { id: 1, user: "cosplay_lover", text: "This is absolutely stunning! The details are insane 😍", time: "2h", isLiked: false, likes: 0 },
+    { id: 2, user: "gaming_wizard", text: "Can't wait to see more of this set!", time: "5h", isLiked: false, likes: 0 },
+    { id: 3, user: "artistic_soul", text: "Lighting on point 🔥", time: "1d", isLiked: false, likes: 0 },
 ];
 
 // Helper for formatting price
@@ -269,6 +269,10 @@ export default function CreatorDetail({ creator, onProductSelect, onCreatorSelec
   const [membershipIndex, setMembershipIndex] = useState(0);
   const [selectedPost, setSelectedPost] = useState<typeof feedGridData[0] | null>(null);
   const [isPostDialogOpen, setIsPostDialogOpen] = useState(false);
+  
+  const [postComments, setPostComments] = useState(mockComments);
+  const [newComment, setNewComment] = useState("");
+  const commentInputRef = useRef<HTMLInputElement>(null);
   
   // Follow State
   const [isFollowing, setIsFollowing] = useState(false);
@@ -350,6 +354,23 @@ export default function CreatorDetail({ creator, onProductSelect, onCreatorSelec
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const handlePostComment = () => {
+    if (!newComment.trim()) return;
+    setPostComments([{ id: postComments.length + 1, user: "You", text: newComment, time: "Just now", isLiked: false, likes: 0 }, ...postComments]);
+    setNewComment("");
+  };
+
+  const handleCommentLike = (commentId: number) => {
+    setPostComments(prev => prev.map(c => 
+      c.id === commentId ? { ...c, isLiked: !c.isLiked, likes: c.isLiked ? (c.likes || 1) - 1 : (c.likes || 0) + 1 } : c
+    ));
+  };
+
+  const handleCommentReply = (username: string) => {
+    setNewComment(`@${username} `);
+    commentInputRef.current?.focus();
+  };
+
   // Post Interactive Functions
   const handleLike = (postId: number) => {
     setPosts(currentPosts => currentPosts.map(post => {
@@ -407,9 +428,9 @@ export default function CreatorDetail({ creator, onProductSelect, onCreatorSelec
   });
 
   return (
-    <div className="bg-black min-h-screen w-full pt-[80px] text-white font-sans animate-in fade-in zoom-in-95 duration-500 flex flex-col items-center">
+    <div className="bg-black min-h-screen w-full pt-[80px] text-white font-sans animate-in fade-in duration-500 flex flex-col items-center">
       
-      <div className="w-full max-w-[1440px] px-4 md:px-10 pb-20">
+      <div className="w-full max-w-screen px-4 md:px-10 pb-20">
         
         {/* Banner Area */}
         <div className="relative w-full h-[120px] md:h-[300px] rounded-b-[24px] md:rounded-[24px] overflow-hidden bg-gray-900 mt-0 md:mt-6">
@@ -511,7 +532,7 @@ export default function CreatorDetail({ creator, onProductSelect, onCreatorSelec
                     <button
                         key={tab}
                         onClick={() => setActiveTab(tab === 'Supporters' ? 'Supporting' : tab)}
-                        className={`pb-4 md:pb-5 text-sm md:text-lg font-medium transition-colors relative cursor-pointer whitespace-nowrap ${
+                        className={`pb-4 md:pb-5 text-sm sm:text-base md:text-lg font-medium transition-colors relative cursor-pointer whitespace-nowrap ${
                             activeTab === (tab === 'Supporters' ? 'Supporting' : tab) ? 'text-white' : 'text-gray-500 hover:text-gray-300'
                         }`}
                     >
@@ -1177,96 +1198,125 @@ export default function CreatorDetail({ creator, onProductSelect, onCreatorSelec
       {/* Post Detail Dialog */}
       {selectedPost && (
         <Dialog open={isPostDialogOpen} onOpenChange={setIsPostDialogOpen}>
-            <DialogContent className="max-w-[100vw] h-screen sm:max-w-[95vw] md:max-w-[900px] sm:h-[85vh] p-0 bg-[#0c0c0c] border-[#27272a] text-white overflow-hidden gap-0 flex flex-col sm:flex-row">
+            <DialogContent className="max-w-[100vw] h-screen sm:max-w-[700px] sm:h-auto sm:max-h-[85vh] p-0 bg-[#242526] border-none text-white overflow-hidden gap-0 rounded-none sm:rounded-xl flex flex-col">
                 <DialogTitle className="sr-only">Post Detail</DialogTitle>
                 
-                {/* Left: Image Container */}
-                <div className="w-full sm:w-[55%] h-[40vh] sm:h-full bg-black flex items-center justify-center relative border-b sm:border-b-0 sm:border-r border-[#27272a]">
-                    <img 
-                        src={selectedPost.image} 
-                        alt="Post Detail" 
-                        className="max-w-full max-h-full object-contain"
-                    />
-                    <div className="absolute top-4 left-4 sm:hidden">
-                        <DialogClose className="bg-black/50 p-2 rounded-full text-white">
-                            <X size={20} />
-                        </DialogClose>
-                    </div>
+                {/* Header */}
+                <div className="relative flex items-center justify-center p-4 border-b border-[#3e4042] shrink-0 bg-[#242526]">
+                    <h2 className="text-xl font-bold text-[#e4e6eb] m-0">Fareye Closhartt&apos;s Post</h2>
+                    <DialogClose className="absolute right-4 top-1/2 -translate-y-1/2 bg-[#3a3b3c] hover:bg-[#4e4f50] p-2 rounded-full transition-colors text-[#b0b3b8] [&>svg]:size-5 opacity-100">
+                        <X size={20} />
+                        <span className="sr-only">Close</span>
+                    </DialogClose>
                 </div>
 
-                {/* Right: Interaction Panel */}
-                <div className="w-full sm:w-[45%] h-full flex flex-col bg-[#0c0c0c]">
-                    
-                    {/* Header */}
-                    <div className="flex items-center justify-between p-4 border-b border-[#27272a] shrink-0 pr-12">
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full border border-gray-700 bg-black overflow-hidden">
-                                <img src={imgAvatar} className="w-full h-full object-cover" alt="avatar" />
+                {/* Main scrollable content */}
+                <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-[#3a3b3c] scrollbar-track-transparent flex flex-col">
+                    {/* Post Author Info */}
+                    <div className="p-4 flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                            <img src={imgAvatar} className="w-10 h-10 rounded-full" alt="avatar" loading="lazy" decoding="async" />
+                            <div>
+                                <h3 className="font-semibold text-[15px] text-[#e4e6eb]">Fareye Closhartt</h3>
+                                <p className="text-[13px] text-[#b0b3b8] flex items-center gap-1">Cosmic Creator · {selectedPost.time} · <Globe size={12} /></p>
                             </div>
-                            <span className="font-bold text-base md:text-lg">Fareye Closhartt</span>
+                        </div>
+                        <button className="text-[#b0b3b8] hover:bg-[#3a3b3c] p-2 rounded-full transition-colors">
+                            <MoreHorizontal size={20} />
+                        </button>
+                    </div>
+
+                    {/* Post Content */}
+                    <div className="px-4 pb-2 text-[15px] text-[#e4e6eb]">
+                        {selectedPost.caption}
+                    </div>
+
+                    {/* Post Image */}
+                    {selectedPost.image && (
+                        <div className="w-full bg-black flex items-center justify-center border-y border-[#3e4042]">
+                            <img src={selectedPost.image} className="w-full h-auto object-contain max-h-[500px]" alt="Post Detail" loading="lazy" decoding="async" />
+                        </div>
+                    )}
+
+                    {/* Action Bar */}
+                    <div className="px-4 py-2 border-b border-[#3e4042]">
+                        <div className="flex items-center gap-2 sm:gap-6 text-[#b0b3b8] py-1">
+                            <button className="flex items-center gap-2 transition-colors hover:bg-[#3a3b3c] px-3 py-1.5 rounded-md hover:text-[#e4e6eb]">
+                                <Heart size={20} /> <span className="text-[15px] hidden sm:inline">Like</span>
+                            </button>
+                            <button className="flex items-center gap-2 hover:text-[#e4e6eb] transition-colors hover:bg-[#3a3b3c] px-3 py-1.5 rounded-md">
+                                <MessageCircle size={20} /> <span className="text-[15px]">{postComments.length}</span>
+                            </button>
+                            <button className="flex items-center gap-2 hover:text-[#e4e6eb] transition-colors hover:bg-[#3a3b3c] px-3 py-1.5 rounded-md">
+                                <Share2 size={20} /> <span className="text-[15px] hidden sm:inline">Share</span>
+                            </button>
                         </div>
                     </div>
 
-                    {/* Scrollable Content (Caption + Comments) */}
-                    <div className="flex-1 overflow-y-auto p-4 scrollbar-thin scrollbar-thumb-[#27272a] scrollbar-track-transparent">
-                        
-                        {/* Caption */}
-                        <div className="flex gap-3 mb-6">
-                            <div className="w-10 h-10 rounded-full border border-gray-700 bg-black overflow-hidden shrink-0">
-                                <img src={imgAvatar} className="w-full h-full object-cover" alt="avatar" />
-                            </div>
-                            <div className="flex flex-col gap-1">
-                                <div className="text-base">
-                                    <span className="font-bold mr-2">Fareye Closhartt</span>
-                                    <span className="text-gray-300 text-base">{selectedPost.caption}</span>
-                                </div>
-                                <span className="text-sm text-gray-500">{selectedPost.time}</span>
-                            </div>
+                    {/* Comments Section */}
+                    <div className="p-4 pb-[2rem]">
+                        <div className="font-semibold text-[15px] text-[#b0b3b8] mb-4 flex items-center gap-1 cursor-pointer w-max hover:bg-[#3a3b3c] px-2 py-1 rounded-md">
+                            Newest <Check size={16} className="opacity-0 w-0" />
                         </div>
-
-                        {/* Comments List */}
-                        <div className="flex flex-col gap-4 border-t border-[#27272a]" >
-                            <div className="font-bold text-base md:text-base mt-[1rem]">Comments</div>
-                            {mockComments.map(comment => (
-                                <div key={comment.id} className="flex gap-3 group mt-[1rem]">
-                                    <div className="w-10 h-10 rounded-full bg-gray-800 shrink-0">
-                                        <img src={imgFan} className="w-full h-full object-cover rounded-full" alt={comment.user} />
+                        
+                        <div className="flex flex-col gap-4">
+                            {postComments.length > 0 ? (postComments.map((comment, i) => (
+                                <div key={comment.id || i} className="flex gap-2">
+                                    <div className="w-8 h-8 rounded-full bg-[#18181b] flex items-center justify-center font-bold text-xs shrink-0 overflow-hidden">
+                                        {comment.user.charAt(0).toUpperCase()}
                                     </div>
-                                    <div className="flex flex-col gap-0.5 w-full">
-                                        <div className="flex justify-between items-start">
-                                            <div className="text-base">
-                                                <span className="font-bold mr-2">{comment.user}</span>
-                                                <span className="text-gray-300 text-base">{comment.text}</span>
-                                            </div>
+                                    <div className="flex flex-col max-w-full">
+                                        <div className="bg-[#3a3b3c] rounded-2xl px-3 py-2 text-[#e4e6eb] inline-block max-w-max relative">
+                                            <span className="font-semibold text-[13px] block leading-tight mb-0.5">{comment.user}</span>
+                                            <span className="text-[15px] leading-snug">{comment.text}</span>
+                                            {comment.likes > 0 && (
+                                                <div className="absolute right-[-10px] bottom-[-10px] bg-[#242526] rounded-full p-[2px] flex items-center shadow-sm">
+                                                    <div className="bg-blue-500 rounded-full p-[2px]">
+                                                        <Heart size={10} className="fill-white text-white"/>
+                                                    </div>
+                                                    <span className="text-[#b0b3b8] text-[11px] ml-1 pr-1">{comment.likes}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="flex items-center gap-3 text-[12px] font-bold text-[#b0b3b8] mt-1 ml-2">
+                                            <span className="font-normal">{comment.time}</span>
+                                            <button onClick={() => handleCommentLike(comment.id)} className={`hover:underline ${comment.isLiked ? "text-blue-500" : ""}`}>Like</button>
+                                            <button onClick={() => handleCommentReply(comment.user)} className="hover:underline">Reply</button>
                                         </div>
                                     </div>
                                 </div>
-                            ))}
+                            ))) : (
+                                <p className="text-[15px] text-[#b0b3b8] italic pl-2">No comments yet. Be the first!</p>
+                            )}
                         </div>
                     </div>
+                </div>
 
-                    {/* Footer Actions */}
-                    <div className="p-4 border-t border-[#27272a] bg-[#0c0c0c] shrink-0">
-                        <div className="flex items-center justify-between mb-3">
-                            <div className="flex gap-4">
-                                <Heart size={24} className="cursor-pointer hover:text-red-500 hover:scale-110 transition-all" />
-                                <Share2 size={24} className="cursor-pointer hover:text-gray-300 hover:scale-110 transition-all" />
+                {/* Input Bar */}
+                <div className="p-4 border-t border-[#3e4042] bg-[#242526] shrink-0">
+                    <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-full bg-[#3a3b3c] flex items-center justify-center shrink-0">
+                            <span className="text-xs font-bold text-white">Y</span>
+                        </div>
+                        <div className="flex-1 bg-[#3a3b3c] rounded-full flex items-center px-4 py-2 gap-2">
+                            <input 
+                                ref={commentInputRef}
+                                type="text" 
+                                placeholder="Comment as You..." 
+                                className="bg-transparent border-none outline-none text-[#e4e6eb] flex-1 text-[15px] placeholder-[#b0b3b8]" 
+                                value={newComment} 
+                                onChange={(e) => setNewComment(e.target.value)} 
+                                onKeyDown={(e) => e.key === 'Enter' && handlePostComment()}
+                            />
+                            <div className="flex items-center gap-2 text-[#b0b3b8] shrink-0">
+                                <Smile size={20} className="hover:text-[#e4e6eb] cursor-pointer" />
+                                <ImageIcon size={20} className="hover:text-[#e4e6eb] cursor-pointer" />
                             </div>
                         </div>
-                        <div className="font-bold text-base mb-1">{selectedPost.likes.toLocaleString()} likes</div>
-                        <div className="text-xs text-gray-500 uppercase tracking-wide mb-3">{selectedPost.time.toUpperCase()}</div>
-                        
-                        <div className="flex items-center gap-3 pt-3 border-t border-[#27272a]">
-                            <Smile size={24} className="text-gray-400 cursor-pointer" />
-                            <input 
-                                type="text" 
-                                placeholder="Add a comment..." 
-                                className="bg-transparent border-none outline-none text-base w-full placeholder-gray-500 text-white"
-                            />
-                            <button className="text-blue-500 font-bold text-base hover:text-blue-400 cursor-pointer">Post</button>
-                        </div>
+                        <button onClick={handlePostComment} disabled={!newComment.trim()} className="hover:bg-[#3a3b3c] p-2 rounded-full transition-colors shrink-0">
+                            <Send size={20} className={newComment.trim() ? "text-[#3b5998]" : "text-[#b0b3b8]"} />
+                        </button>
                     </div>
-
                 </div>
             </DialogContent>
         </Dialog>

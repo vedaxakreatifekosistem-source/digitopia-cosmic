@@ -109,7 +109,7 @@ export default function LiveStreaming() {
       </div>
 
       {/* Main Content */}
-      <div className="w-full max-w-[1440px] px-6 md:px-10 lg:px-20 pb-20 flex flex-col gap-10">
+      <div className="w-full max-w-screen px-6 md:px-10 lg:px-20 pb-20 flex flex-col gap-10">
         
         {/* Filter Bar */}
         <div className="flex flex-col gap-2.5 w-full">

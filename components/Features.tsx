@@ -90,7 +90,7 @@ export default function Features() {
       </div>
 
       {/* Responsive Carousel */}
-      <div className="w-full max-w-[1440px] mx-auto px-2 md:px-12 relative group">
+      <div className="w-full max-w-screen mx-auto px-2 md:px-12 relative group">
         <Carousel
           className="w-full"
           opts={{ loop: true, align: "center" }}

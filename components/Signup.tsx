@@ -76,7 +76,7 @@ export default function Signup({ onNavigate }: { onNavigate?: (view: string) => 
 
   return (
     <div className="w-full bg-black pt-[70px] md:pt-[90px] pb-10 flex justify-center items-center h-full min-h-screen lg:h-screen lg:overflow-hidden">
-      <div className="relative w-full max-w-[1440px] h-full mx-auto bg-black flex flex-col lg:flex-row lg:items-center lg:justify-between px-6 lg:px-16 xl:px-24 gap-8 justify-center">
+      <div className="relative w-full max-w-screen h-full mx-auto bg-black flex flex-col lg:flex-row lg:items-center lg:justify-between px-6 lg:px-16 xl:px-24 gap-8 justify-center">
         
         {/* Content/Form Container */}
         <div className="relative w-full max-w-[500px] mx-auto z-10 flex flex-col items-center justify-center gap-4 lg:w-[48%] xl:w-[45%] lg:max-w-none lg:items-start lg:text-left">

@@ -14,15 +14,15 @@ import { SidebarSection, OrderCard, TransactionCard, SubscriptionCard, formatPri
 import { ProductForm } from "./ProductForm";
 
 // Placeholder images
-const imgBanner = "https://lh3.googleusercontent.com/d/1nGaMCnUeumJTB6-P96n9ntMSi87FDXdf"; 
-const imgAvatar = "https://lh3.googleusercontent.com/d/1GlcgkoSnH7h5V41SCFVwHA81WnM4ZoTn"; 
-const imgFan = "https://lh3.googleusercontent.com/d/1vzPTInYqz8nNJ35tz2TzjY1QUX7P0BbR";
-const imgGrid1 = "https://lh3.googleusercontent.com/d/1h3GWacwUbXO7_PUSNWaWXFqygtqZs4V3";
-const imgGrid2 = "https://lh3.googleusercontent.com/d/1nGaMCnUeumJTB6-P96n9ntMSi87FDXdf";
-const imgGrid3 = "https://lh3.googleusercontent.com/d/1dpOwrgiwfee0M2R_kQtFlTJqu-GKLYXS";
-const imgGrid4 = "https://lh3.googleusercontent.com/d/13wi6zNzDTnNyQwIOlapuAQkjQI_xB2YT";
-const imgGrid5 = "https://lh3.googleusercontent.com/d/139h177kzzKVtlJsldCkfDS3Bf0L3KUIE";
-const imgGrid6 = "https://lh3.googleusercontent.com/d/1GlcgkoSnH7h5V41SCFVwHA81WnM4ZoTn";
+import imgBanner from "../src/assets/images/banner.jpg"; 
+import imgAvatar from "../src/assets/images/Dummy 2.jpg"; 
+import imgFan from "../src/assets/images/dummy.jpg";
+import imgGrid1 from "../src/assets/images/Sub Hero 1.jpg";
+import imgGrid2 from "../src/assets/images/Sub Hero 2.jpg";
+import imgGrid3 from "../src/assets/images/Sub Hero 4.jpg";
+import imgGrid4 from "../src/assets/images/Sub Hero 1a.jpg";
+import imgGrid5 from "../src/assets/images/Sub Hero 3a.jpg";
+import imgGrid6 from "../src/assets/images/Sub Hero 5a.jpg";
 
 const PRICE_RANGES = [
     { id: 'under-50k', label: "Under 50.000", min: 0, max: 49999 },
@@ -453,7 +453,7 @@ const initialChatHistory = {
 };
 
 const initialComments = [
-    { id: 1, user: "cosplay_lover", text: "Good luck with your project!", time: "2h" },
+    { id: 1, user: "cosplay_lover", text: "Good luck with your project!", time: "2h", isLiked: false, likes: 0 },
 ];
 
 function StatCard({ label, value, icon: Icon, color, bg }: { label: string, value: string, icon: any, color: string, bg: string; key?: React.Key }) {
@@ -646,15 +646,28 @@ export default function CreatorProfile({ onNavigate, onProductSelect, onCustomiz
     setIsShareOpen(true);
   };
 
+  const commentInputRef = useRef<HTMLInputElement>(null);
+
   const handlePostComment = () => {
     if (!newComment.trim()) return;
-    setPostComments([{ id: postComments.length + 1, user: "John Doe", text: newComment, time: "Just now" }, ...postComments]);
+    setPostComments([{ id: postComments.length + 1, user: "You", text: newComment, time: "Just now", isLiked: false, likes: 0 }, ...postComments]);
     if (selectedPost) {
         setFeedPosts(prev => prev.map(p => p.id === selectedPost.id ? {...p, comments: p.comments + 1} : p));
         setMyPosts(prev => prev.map(p => p.id === selectedPost.id ? {...p, comments: p.comments + 1} : p));
         setSelectedPost((prev: any) => ({...prev, comments: prev.comments + 1}));
     }
     setNewComment("");
+  };
+
+  const handleCommentLike = (commentId: number) => {
+    setPostComments(prev => prev.map(c => 
+      c.id === commentId ? { ...c, isLiked: !c.isLiked, likes: c.isLiked ? (c.likes || 1) - 1 : (c.likes || 0) + 1 } : c
+    ));
+  };
+
+  const handleCommentReply = (username: string) => {
+    setNewComment(`@${username} `);
+    commentInputRef.current?.focus();
   };
 
   const handleQuickCommentSubmit = (postId: number) => {
@@ -776,9 +789,9 @@ export default function CreatorProfile({ onNavigate, onProductSelect, onCustomiz
   ];
 
   return (
-    <div className="bg-black min-h-screen w-full pt-[80px] text-white font-sans animate-in fade-in zoom-in-95 duration-500 flex flex-col items-center">
+    <div className="bg-black min-h-screen w-full pt-[80px] text-white font-sans animate-in fade-in duration-500 flex flex-col items-center">
       
-      <div className="w-full max-w-[1440px] px-4 md:px-10 pb-20">
+      <div className="w-full max-w-screen px-4 md:px-10 pb-20">
         
         {/* Banner Area */}
         <div className="relative w-full h-[150px] md:h-[280px] rounded-b-[24px] md:rounded-[24px] overflow-hidden bg-gray-900 mt-0 md:mt-6 group cursor-pointer">
@@ -828,7 +841,7 @@ export default function CreatorProfile({ onNavigate, onProductSelect, onCustomiz
         <div className="border-b border-gray-800 mb-8 sticky top-[60px] md:top-[80px] bg-black/80 backdrop-blur-md z-40 mx-[-16px] px-[16px] md:mx-0 md:px-0">
             <div className="flex justify-start md:justify-center gap-8 px-4 overflow-x-auto scrollbar-none">
                 {tabs.map((tab) => (
-                    <button key={tab} onClick={() => setActiveTab(tab)} className={`pb-5 text-base md:text-lg font-medium transition-colors relative cursor-pointer whitespace-nowrap ${activeTab === tab ? 'text-white font-bold' : 'text-gray-500 hover:text-gray-300'}`}>
+                    <button key={tab} onClick={() => setActiveTab(tab)} className={`pb-4 md:pb-5 text-sm sm:text-base md:text-lg font-medium transition-colors relative cursor-pointer whitespace-nowrap ${activeTab === tab ? 'text-white font-bold' : 'text-gray-500 hover:text-gray-300'}`}>
                         {tab}
                         {activeTab === tab && <div className="absolute bottom-0 left-0 w-full h-[2px] bg-white" />}
                     </button>
@@ -1142,7 +1155,7 @@ export default function CreatorProfile({ onNavigate, onProductSelect, onCustomiz
                 <div className="w-full md:w-[240px] flex flex-row md:flex-col gap-2 shrink-0 bg-[#0c0c0c] border border-[#27272a] rounded-[24px] p-4 overflow-x-auto md:overflow-x-visible scrollbar-none">
                     {dashboardMenu.map((item) => (
                         <button key={item.name} onClick={() => setDashboardView(item.name)} className={`whitespace-nowrap md:whitespace-normal text-left px-4 py-3 rounded-xl flex items-center gap-3 transition-colors shrink-0 md:shrink ${dashboardView === item.name ? 'bg-[#d032e5]/10 text-[#d032e5]' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}>
-                            <item.icon size={20} /><span className="font-medium text-sm">{item.name}</span>
+                            <item.icon size={20} /><span className="font-medium text-sm md:text-base">{item.name}</span>
                         </button>
                     ))}
                 </div>
@@ -2191,63 +2204,124 @@ export default function CreatorProfile({ onNavigate, onProductSelect, onCustomiz
       {/* Post Dialog */}
       {selectedPost && (
         <Dialog open={isPostDialogOpen} onOpenChange={setIsPostDialogOpen}>
-            <DialogContent className="max-w-[100vw] h-screen sm:max-w-[95vw] md:max-w-[900px] sm:h-[85vh] p-0 bg-[#0c0c0c] border-[#27272a] text-white overflow-hidden gap-0 flex flex-col sm:flex-row">
+            <DialogContent className="max-w-[100vw] h-screen sm:max-w-[700px] sm:h-auto sm:max-h-[85vh] p-0 bg-[#242526] border-none text-white overflow-hidden gap-0 rounded-none sm:rounded-xl flex flex-col">
                 <DialogTitle className="sr-only">Post Detail</DialogTitle>
-                <div className="w-full sm:w-[55%] h-[40vh] sm:h-full bg-black flex items-center justify-center relative border-b sm:border-b-0 sm:border-r border-[#27272a]">
-                    <img src={selectedPost.image} alt="Post Detail" className="max-w-full max-h-full object-contain" loading="lazy" decoding="async" />
-                    <div className="absolute top-4 left-4 sm:hidden"><DialogClose className="bg-black/50 p-2 rounded-full text-white"><X size={20} /></DialogClose></div>
+                
+                {/* Header */}
+                <div className="relative flex items-center justify-center p-4 border-b border-[#3e4042] shrink-0 bg-[#242526]">
+                    <h2 className="text-xl font-bold text-[#e4e6eb] m-0">{selectedPost.creator}&apos;s Post</h2>
+                    <DialogClose className="absolute right-4 top-1/2 -translate-y-1/2 bg-[#3a3b3c] hover:bg-[#4e4f50] p-2 rounded-full transition-colors text-[#b0b3b8] [&>svg]:size-5 opacity-100">
+                        <X size={20} />
+                        <span className="sr-only">Close</span>
+                    </DialogClose>
                 </div>
-                {/* ... [Rest of Post Dialog] ... */}
-                <div className="w-full sm:w-[45%] h-full flex flex-col bg-[#0c0c0c]">
-                    <div className="flex items-center justify-between p-4 border-b border-[#27272a] shrink-0">
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full border border-gray-700 bg-black overflow-hidden"><img src={selectedPost.avatar} className="w-full h-full object-cover" alt="avatar" loading="lazy" decoding="async" /></div>
-                            <span className="font-bold text-base md:text-lg">{selectedPost.creator}</span>
+
+                {/* Main scrollable content */}
+                <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-[#3a3b3c] scrollbar-track-transparent pb-4">
+                    {/* Post Author Info */}
+                    <div className="p-4 flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                            <img src={selectedPost.avatar} className="w-10 h-10 rounded-full" alt="avatar" loading="lazy" decoding="async" />
+                            <div>
+                                <h3 className="font-semibold text-[15px] text-[#e4e6eb]">{selectedPost.creator}</h3>
+                                <p className="text-[13px] text-[#b0b3b8] flex items-center gap-1">Cosmic Creator · {selectedPost.time} · <Globe size={12} /></p>
+                            </div>
                         </div>
+                        <button className="text-[#b0b3b8] hover:bg-[#3a3b3c] p-2 rounded-full transition-colors">
+                            <MoreHorizontal size={20} />
+                        </button>
                     </div>
-                    
-                    <div className="flex-1 overflow-y-auto p-4 scrollbar-thin scrollbar-thumb-[#27272a] scrollbar-track-transparent">
-                        <div className="flex flex-col gap-4">
-                            <div className="flex gap-3">
-                                <div className="w-8 h-8 rounded-full border border-gray-700 bg-black overflow-hidden shrink-0">
-                                    <img src={selectedPost.avatar} className="w-full h-full object-cover" alt="avatar" loading="lazy" decoding="async" />
-                                </div>
-                                <div className="flex flex-col">
-                                    <p className="text-sm font-bold text-white mb-0.5">{selectedPost.creator}</p>
-                                    <p className="text-sm text-gray-300 leading-relaxed">{selectedPost.content || selectedPost.caption}</p>
-                                    <span className="text-xs text-gray-500 mt-1">{selectedPost.time}</span>
-                                </div>
-                            </div>
-                            <div className="h-px bg-[#27272a] w-full" />
-                            <div className="flex flex-col gap-4">
-                                <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider">Comments</h4>
-                                {postComments.length > 0 ? (
-                                    postComments.map((comment, i) => (
-                                        <div key={comment.id || i} className="flex gap-3">
-                                            <div className="w-8 h-8 rounded-full bg-[#18181b] border border-[#27272a] shrink-0 flex items-center justify-center text-xs font-bold text-gray-400">{comment.user.charAt(0)}</div>
-                                            <div className="flex flex-col"><div className="flex items-baseline gap-2"><span className="text-sm font-bold text-white">{comment.user}</span><span className="text-[10px] text-gray-500">{comment.time}</span></div><p className="text-sm text-gray-300">{comment.text}</p></div>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <p className="text-sm text-gray-500 italic">No comments yet. Be the first!</p>
-                                )}
-                            </div>
+
+                    {/* Post Content */}
+                    <div className="px-4 pb-2 text-[15px] text-[#e4e6eb]">
+                        {selectedPost.content || selectedPost.caption}
+                    </div>
+
+                    {/* Post Image */}
+                    {selectedPost.image && (
+                        <div className="w-full bg-black flex items-center justify-center border-y border-[#3e4042]">
+                            <img src={selectedPost.image} className="w-full h-auto object-contain max-h-[500px]" alt="Post Detail" loading="lazy" decoding="async" />
+                        </div>
+                    )}
+
+                    {/* Action Bar */}
+                    <div className="px-4 py-2 border-b border-[#3e4042]">
+                        <div className="flex items-center gap-2 sm:gap-6 text-[#b0b3b8] py-1">
+                            <button onClick={() => handleLike(selectedPost.id)} className={`flex items-center gap-2 transition-colors hover:bg-[#3a3b3c] px-3 py-1.5 rounded-md ${selectedPost.isLiked ? 'text-blue-500' : 'hover:text-[#e4e6eb]'}`}>
+                                <Heart size={20} className={selectedPost.isLiked ? 'fill-blue-500' : ''} /> <span className="text-[15px] hidden sm:inline">Like</span>
+                            </button>
+                            <button className="flex items-center gap-2 hover:text-[#e4e6eb] transition-colors hover:bg-[#3a3b3c] px-3 py-1.5 rounded-md">
+                                <MessageCircle size={20} /> <span className="text-[15px]">{postComments.length}</span>
+                            </button>
+                            <button onClick={() => handleShare(selectedPost)} className="flex items-center gap-2 hover:text-[#e4e6eb] transition-colors hover:bg-[#3a3b3c] px-3 py-1.5 rounded-md">
+                                <Share2 size={20} /> <span className="text-[15px] hidden sm:inline">Share</span>
+                            </button>
                         </div>
                     </div>
 
-                    <div className="p-4 border-t border-[#27272a] bg-[#0c0c0c] shrink-0">
-                        <div className="flex gap-6 mb-3">
-                            <button onClick={() => handleLike(selectedPost.id)} className={`flex items-center gap-2 group transition-colors ${selectedPost.isLiked ? 'text-red-500' : 'text-white hover:text-gray-300'}`}><Heart size={24} className={`transition-all ${selectedPost.isLiked ? 'fill-red-500 scale-110' : 'group-hover:scale-110'}`} /></button>
-                            <button className="text-white hover:text-gray-300 transition-colors group"><MessageCircle size={24} className="group-hover:scale-110 transition-transform" /></button>
-                            <button onClick={() => handleShare(selectedPost)} className="text-white hover:text-gray-300 transition-colors group"><Share2 size={24} className="group-hover:scale-110 transition-transform" /></button>
+                    {/* Comments Section */}
+                    <div className="p-4">
+                        <div className="font-semibold text-[15px] text-[#b0b3b8] mb-4 flex items-center gap-1 cursor-pointer w-max hover:bg-[#3a3b3c] px-2 py-1 rounded-md">
+                            Newest <Check size={16} className="opacity-0 w-0" />
                         </div>
-                        <div className="font-bold text-sm mb-1">{selectedPost.likes.toLocaleString()} likes</div>
-                        <div className="text-[10px] text-gray-500 uppercase mb-4">{selectedPost.time}</div>
                         
-                        <div className="flex items-center gap-3 relative">
-                            <input type="text" placeholder="Add a comment..." className="w-full bg-transparent border-none outline-none text-sm text-white placeholder-gray-500 pr-12" value={newComment} onChange={(e) => setNewComment(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handlePostComment()}/>
-                            <button onClick={handlePostComment} disabled={!newComment.trim()} className={`text-sm font-bold transition-colors absolute right-0 ${newComment.trim() ? 'text-[#d032e5] hover:text-[#b02bc4] cursor-pointer' : 'text-gray-600 cursor-default'}`}>Post</button>
+                        <div className="flex flex-col gap-4">
+                            {postComments.length > 0 ? (postComments.map((comment, i) => (
+                                <div key={comment.id || i} className="flex gap-2">
+                                    <div className="w-8 h-8 rounded-full bg-[#18181b] flex items-center justify-center font-bold text-xs shrink-0 overflow-hidden">
+                                        {comment.user.charAt(0)}
+                                    </div>
+                                    <div className="flex flex-col max-w-full">
+                                        <div className="bg-[#3a3b3c] rounded-2xl px-3 py-2 text-[#e4e6eb] inline-block max-w-max relative">
+                                            <span className="font-semibold text-[13px] block leading-tight mb-0.5">{comment.user}</span>
+                                            <span className="text-[15px] leading-snug">{comment.text}</span>
+                                            {comment.likes > 0 && (
+                                                <div className="absolute right-[-10px] bottom-[-10px] bg-[#242526] rounded-full p-[2px] flex items-center shadow-sm">
+                                                    <div className="bg-blue-500 rounded-full p-[2px]">
+                                                        <Heart size={10} className="fill-white text-white"/>
+                                                    </div>
+                                                    <span className="text-[#b0b3b8] text-[11px] ml-1 pr-1">{comment.likes}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="flex items-center gap-3 text-[12px] font-bold text-[#b0b3b8] mt-1 ml-2">
+                                            <span className="font-normal">{comment.time}</span>
+                                            <button onClick={() => handleCommentLike(comment.id)} className={`hover:underline ${comment.isLiked ? "text-blue-500" : ""}`}>Like</button>
+                                            <button onClick={() => handleCommentReply(comment.user)} className="hover:underline">Reply</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))) : (
+                                <p className="text-[15px] text-[#b0b3b8] italic pl-2">No comments yet. Be the first!</p>
+                            )}
                         </div>
+                    </div>
+                </div>
+
+                {/* Input Bar */}
+                <div className="p-4 border-t border-[#3e4042] bg-[#242526] shrink-0">
+                    <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-full bg-[#3a3b3c] flex items-center justify-center shrink-0">
+                            <span className="text-xs font-bold text-white">Y</span>
+                        </div>
+                        <div className="flex-1 bg-[#3a3b3c] rounded-full flex items-center px-4 py-2 gap-2">
+                            <input 
+                                ref={commentInputRef}
+                                type="text" 
+                                placeholder="Comment as You..." 
+                                className="bg-transparent border-none outline-none text-[#e4e6eb] flex-1 text-[15px] placeholder-[#b0b3b8]" 
+                                value={newComment} 
+                                onChange={(e) => setNewComment(e.target.value)} 
+                                onKeyDown={(e) => e.key === 'Enter' && handlePostComment()}
+                            />
+                            <div className="flex items-center gap-2 text-[#b0b3b8] shrink-0">
+                                <Smile size={20} className="hover:text-[#e4e6eb] cursor-pointer" />
+                                <ImageIcon size={20} className="hover:text-[#e4e6eb] cursor-pointer" />
+                            </div>
+                        </div>
+                        <button onClick={handlePostComment} disabled={!newComment.trim()} className="hover:bg-[#3a3b3c] p-2 rounded-full transition-colors shrink-0">
+                            <Send size={20} className={newComment.trim() ? "text-[#3b5998]" : "text-[#b0b3b8]"} />
+                        </button>
                     </div>
                 </div>
             </DialogContent>
