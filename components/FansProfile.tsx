@@ -226,6 +226,41 @@ const followersData = [
   { id: 3, name: "Fareye Closhartt", role: "Illustrator", rating: 5, verified: true, image: imgGrid5, banner: imgGrid6 },
 ];
 
+const mockStories = [
+  {
+    id: 1,
+    creator: "Zenyth Prime",
+    avatar: imgGrid1,
+    media: imgGrid4,
+    caption: "WIP: Styling the Raiden Shogun wig for the upcoming photoshoot! ⚡💜",
+    seen: false
+  },
+  {
+    id: 2,
+    creator: "Avianna Skylark",
+    avatar: imgGrid3,
+    media: imgGrid3,
+    caption: "Endurance karaoke playlist is ready! See you guys in an hour 🎤🎶",
+    seen: false
+  },
+  {
+    id: 3,
+    creator: "Fareye Closhartt",
+    avatar: imgGrid5,
+    media: imgGrid5,
+    caption: "New sticker designs sneak peek... what do you think? 👀💖",
+    seen: false
+  },
+  {
+    id: 4,
+    creator: "Celeste Moon",
+    avatar: imgGrid6,
+    media: imgGrid6,
+    caption: "Moonlight VIP photoshoot sneak peek! 🌕✨ Exclusive content is ready.",
+    seen: false
+  }
+];
+
 // Mock Data for Supporting Leaderboard (My Top Supported)
 const supportingLeaderboard = [
     { id: 1, name: "Zenyth Prime", total: 5500000, image: imgGrid1 },
@@ -298,6 +333,26 @@ export default function FansProfile({ onProductSelect, onNavigate }: { onProduct
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [feedPosts, setFeedPosts] = useState(initialCreatorFeedData);
   const [selectedPost, setSelectedPost] = useState<any>(null);
+
+  // Stories State & useEffect
+  const [activeStoryIndex, setActiveStoryIndex] = useState<number | null>(null);
+  const [stories, setStories] = useState(mockStories);
+
+  useEffect(() => {
+    if (activeStoryIndex === null) return;
+    
+    const timer = setTimeout(() => {
+      if (activeStoryIndex < stories.length - 1) {
+        const nextIndex = activeStoryIndex + 1;
+        setStories(prev => prev.map((s, i) => i === nextIndex ? { ...s, seen: true } : s));
+        setActiveStoryIndex(nextIndex);
+      } else {
+        setActiveStoryIndex(null);
+      }
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [activeStoryIndex, stories.length]);
   const [isPostDialogOpen, setIsPostDialogOpen] = useState(false);
   const [postComments, setPostComments] = useState(initialComments);
   const [newComment, setNewComment] = useState("");
@@ -706,6 +761,36 @@ export default function FansProfile({ onProductSelect, onNavigate }: { onProduct
 
                     {/* Middle Column (Filters, and Feed Posts) */}
                     <div className="lg:col-span-2 flex flex-col gap-6 order-1 lg:order-2">
+
+                        {/* Creator Stories Row Inside Middle Column */}
+                        <div className="bg-[#0b0a10] border border-[#221e35] rounded-[24px] p-5">
+                            <div className="flex gap-4 overflow-x-auto scrollbar-none pb-2">
+                                {stories.map((story, idx) => (
+                                    <button
+                                        key={story.id}
+                                        onClick={() => {
+                                            setActiveStoryIndex(idx);
+                                            setStories(prev => prev.map((s, i) => i === idx ? { ...s, seen: true } : s));
+                                        }}
+                                        className="flex flex-col items-center gap-2 group shrink-0 outline-none cursor-pointer"
+                                    >
+                                        <div className={`relative p-[3px] rounded-full transition-transform hover:scale-105 duration-300 ${story.seen ? 'bg-[#221e35]' : 'bg-gradient-to-tr from-[#9419BD] via-[#d032e5] to-[#f472b6]'}`}>
+                                            <div className="w-14 h-14 md:w-16 md:h-16 rounded-full border-2 border-black overflow-hidden bg-black">
+                                                <img src={story.avatar} className="w-full h-full object-cover" alt={story.creator} loading="lazy" decoding="async" />
+                                            </div>
+                                            {!story.seen && (
+                                                <div className="absolute -bottom-1 -right-1 bg-[#d032e5] text-white rounded-full p-[2px] border-2 border-black">
+                                                    <Sparkles size={8} className="fill-white" />
+                                                </div>
+                                            )}
+                                        </div>
+                                        <span className={`text-[11px] md:text-xs transition-colors max-w-[80px] truncate text-center ${story.seen ? 'text-gray-500' : 'text-gray-200 group-hover:text-white font-medium'}`}>
+                                            {story.creator}
+                                        </span>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
 
                         {/* Filter Tags */}
                         <div className="flex flex-wrap items-center gap-3 py-1">
@@ -1320,6 +1405,114 @@ export default function FansProfile({ onProductSelect, onNavigate }: { onProduct
             <div className="flex items-center space-x-2"><div className="grid flex-1 gap-2"><Label htmlFor="link" className="sr-only">Link</Label><Input id="link" defaultValue={shareLink} readOnly className="bg-[#18181b] border-[#27272a] text-gray-300 text-xs h-9 focus-visible:ring-[#d032e5] focus-visible:ring-offset-0" /></div><Button type="submit" size="sm" className="px-3 bg-[#27272a] hover:bg-[#3f3f46] h-9" onClick={handleCopyLink}><span className="sr-only">Copy</span>{copied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}</Button></div>
         </DialogContent>
       </Dialog>
+
+      {/* Creator Story Viewer Dialog */}
+      {activeStoryIndex !== null && (
+        <Dialog open={activeStoryIndex !== null} onOpenChange={(open) => !open && setActiveStoryIndex(null)}>
+            <DialogContent className="max-w-[100vw] h-screen sm:max-w-[420px] sm:h-[80vh] p-0 bg-neutral-950 border-none text-white overflow-hidden rounded-none sm:rounded-2xl flex flex-col justify-between relative shadow-[0_0_50px_rgba(208,50,229,0.2)]">
+                <DialogTitle className="sr-only">Creator Story</DialogTitle>
+                
+                {/* Progress Indicators */}
+                <div className="absolute top-4 left-4 right-4 flex gap-1.5 z-50">
+                    {stories.map((_, idx) => (
+                        <div key={idx} className="h-1 flex-1 bg-white/20 rounded-full overflow-hidden">
+                            <div 
+                                className={`h-full bg-white rounded-full ${
+                                    idx < activeStoryIndex 
+                                        ? "w-full" 
+                                        : idx === activeStoryIndex 
+                                            ? "w-full animate-[story-progress_5s_linear_forwards]" 
+                                            : "w-0"
+                                }`}
+                            />
+                        </div>
+                    ))}
+                </div>
+
+                {/* Header info */}
+                <div className="absolute top-8 left-4 right-4 flex items-center justify-between z-50">
+                    <div className="flex items-center gap-2.5 bg-black/55 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 shadow-lg">
+                        <img 
+                            src={stories[activeStoryIndex].avatar} 
+                            className="w-8 h-8 rounded-full border border-white/20 object-cover" 
+                            alt="avatar" 
+                        />
+                        <div className="flex flex-col">
+                            <span className="font-bold text-xs text-white leading-tight">{stories[activeStoryIndex].creator}</span>
+                            <span className="text-[9px] text-[#d032e5] font-semibold tracking-wide uppercase">Cosmic Story</span>
+                        </div>
+                    </div>
+                    <DialogClose className="bg-black/55 hover:bg-black/80 p-2 rounded-full text-white/80 hover:text-white transition-colors cursor-pointer border border-white/5 shadow-lg">
+                        <X size={16} />
+                    </DialogClose>
+                </div>
+
+                {/* Navigation Areas */}
+                <div className="absolute inset-x-0 top-16 bottom-24 flex z-30 pointer-events-none">
+                    <div 
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            if (activeStoryIndex > 0) setActiveStoryIndex(activeStoryIndex - 1);
+                        }} 
+                        className="w-1/3 h-full cursor-pointer pointer-events-auto"
+                    />
+                    <div 
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            if (activeStoryIndex < stories.length - 1) {
+                                const nextIdx = activeStoryIndex + 1;
+                                setStories(prev => prev.map((s, i) => i === nextIdx ? { ...s, seen: true } : s));
+                                setActiveStoryIndex(nextIdx);
+                            } else {
+                                setActiveStoryIndex(null);
+                            }
+                        }} 
+                        className="w-2/3 h-full cursor-pointer pointer-events-auto"
+                    />
+                </div>
+
+                {/* Media Image */}
+                <div className="flex-1 w-full h-full bg-zinc-950 flex items-center justify-center relative overflow-hidden">
+                    <img 
+                        src={stories[activeStoryIndex].media} 
+                        className="w-full h-full object-cover select-none pointer-events-none" 
+                        alt="Story" 
+                    />
+                </div>
+
+                {/* Footer and interactions */}
+                <div className="p-4 bg-gradient-to-t from-black via-black/80 to-transparent flex flex-col gap-4 z-40 relative pt-12 shrink-0">
+                    <p className="text-xs md:text-sm text-gray-200 leading-relaxed font-normal bg-black/40 backdrop-blur-sm p-3.5 rounded-xl border border-white/10 shadow-lg">
+                        {stories[activeStoryIndex].caption}
+                    </p>
+                    
+                    <div className="flex items-center gap-2">
+                        <div className="flex-1 bg-white/10 border border-white/5 rounded-full px-4 py-2 text-xs text-gray-400 select-none">
+                            Comment on this story...
+                        </div>
+                        <button 
+                            onClick={() => {
+                                setActiveStoryIndex(null);
+                                setActiveTab("Supporting");
+                            }}
+                            className="bg-[#d032e5] hover:bg-[#a61cc9] text-white font-bold text-xs px-4 py-2.5 rounded-full shrink-0 flex items-center gap-1.5 transition-colors cursor-pointer shadow-[0_0_15px_rgba(208,50,229,0.4)]"
+                        >
+                            <Coins size={14} />
+                            <span>Support</span>
+                        </button>
+                    </div>
+                </div>
+            </DialogContent>
+        </Dialog>
+      )}
+
+      {/* Dynamic Keyframes for smooth story bar */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes story-progress {
+          from { width: 0%; }
+          to { width: 100%; }
+        }
+      `}} />
     </div>
   );
 }

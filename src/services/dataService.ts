@@ -1,18 +1,31 @@
 
+import imgCostume1 from "../assets/images/Sub Hero 1.jpg";
+import imgMerchandise1 from "../assets/images/Sub Hero 2.jpg";
+import imgService1 from "../assets/images/Sub Hero 3a.jpg";
+import imgDigital1 from "../assets/images/Sign Up 1.jpg";
+import imgProp1 from "../assets/images/Sub Hero 4.jpg";
+import imgDigital2 from "../assets/images/Sign Up 5.jpg";
+import imgCostume2 from "../assets/images/Sub Hero 5a.jpg";
+import imgDigital3 from "../assets/images/Sign Up 2.jpg";
+import imgMerchandise2 from "../assets/images/Sub Hero 6a.jpg";
+import imgDigital4 from "../assets/images/Sign Up 6.jpg";
+import imgDigital5 from "../assets/images/Sign Up 3.jpg";
+import imgCostume3 from "../assets/images/hero-2.jpg";
+
 // Current dummy data from ExploreProduct.tsx mapped to clean assets
 const initialProducts = [
-  { id: 1, title: "Raiden Shogun Cosplay", category: "Costume", creator: "Zenyth Prime", username: "@zenyth", price: 1200000, image: "../src/assets/images/Sub Hero 1.jpg", verified: true, date: "2023-12-01", rating: 5 },
-  { id: 2, title: "Hololive Sticker Pack", category: "Merchandise", creator: "Fareye Closhartt", username: "@fareye", price: 45000, image: "../src/assets/images/Sub Hero 2.jpg", verified: true, date: "2023-11-20", rating: 4 },
-  { id: 3, title: "Custom Wig Styling", category: "Service", creator: "Avianna Skylark", username: "@avianna", price: 350000, image: "../src/assets/images/Sub Hero 3a.jpg", verified: true, date: "2024-01-05", rating: 5 },
-  { id: 4, title: "Digital Art Commission", category: "Digital", creator: "Braum Shield", username: "@braum", price: 500000, image: "../src/assets/images/Sign Up 1.jpg", verified: false, date: "2023-10-15", rating: 3 },
-  { id: 5, title: "Fate/Grand Order Sword", category: "Prop", creator: "Garen Might", username: "@garen", price: 850000, image: "../src/assets/images/Sub Hero 4.jpg", verified: true, date: "2023-09-10", rating: 5 },
-  { id: 6, title: "Voice Pack Vol.1", category: "Digital", creator: "Celeste Moon", username: "@celeste", price: 9000, image: "../src/assets/images/Sign Up 5.jpg", verified: true, date: "2023-12-25", rating: 4 },
-  { id: 7, title: "Spy x Family Uniform", category: "Costume", creator: "Lux Light", username: "@lux", price: 450000, image: "../src/assets/images/Sub Hero 5a.jpg", verified: true, date: "2023-11-01", rating: 4 },
-  { id: 8, title: "Chibi Avatar Set", category: "Digital", creator: "Ahri Fox", username: "@ahri", price: 20000, image: "../src/assets/images/Sign Up 2.jpg", verified: true, date: "2023-10-05", rating: 5 },
-  { id: 9, title: "Resin Vision Mondstadt", category: "Merchandise", creator: "Ezreal Explorer", username: "@ezreal", price: 120000, image: "../src/assets/images/Sub Hero 6a.jpg", verified: true, date: "2023-12-10", rating: 3 },
-  { id: 10, title: "Photo Pack: Cyberpunk", category: "Digital", creator: "Jinx Chaos", username: "@jinx", price: 75000, image: "../src/assets/images/Sign Up 6.jpg", verified: false, date: "2024-01-02", rating: 2 },
-  { id: 11, title: "Armor Foam Pattern", category: "Digital", creator: "Draven Axe", username: "@draven", price: 50000, image: "../src/assets/images/Sign Up 3.jpg", verified: false, date: "2023-08-15", rating: 4 },
-  { id: 12, title: "Bunny Girl Costume", category: "Costume", creator: "Caitlyn Sniper", username: "@caitlyn", price: 300000, image: "../src/assets/images/hero-2.jpg", verified: true, date: "2024-01-10", rating: 5 },
+  { id: 1, title: "Raiden Shogun Cosplay", category: "Costume", creator: "Zenyth Prime", username: "@zenyth", price: 1200000, image: imgCostume1, verified: true, date: "2023-12-01", rating: 5 },
+  { id: 2, title: "Hololive Sticker Pack", category: "Merchandise", creator: "Fareye Closhartt", username: "@fareye", price: 45000, image: imgMerchandise1, verified: true, date: "2023-11-20", rating: 4 },
+  { id: 3, title: "Custom Wig Styling", category: "Service", creator: "Avianna Skylark", username: "@avianna", price: 350000, image: imgService1, verified: true, date: "2024-01-05", rating: 5 },
+  { id: 4, title: "Digital Art Commission", category: "Digital", creator: "Braum Shield", username: "@braum", price: 500000, image: imgDigital1, verified: false, date: "2023-10-15", rating: 3 },
+  { id: 5, title: "Fate/Grand Order Sword", category: "Prop", creator: "Garen Might", username: "@garen", price: 850000, image: imgProp1, verified: true, date: "2023-09-10", rating: 5 },
+  { id: 6, title: "Voice Pack Vol.1", category: "Digital", creator: "Celeste Moon", username: "@celeste", price: 9000, image: imgDigital2, verified: true, date: "2023-12-25", rating: 4 },
+  { id: 7, title: "Spy x Family Uniform", category: "Costume", creator: "Lux Light", username: "@lux", price: 450000, image: imgCostume2, verified: true, date: "2023-11-01", rating: 4 },
+  { id: 8, title: "Chibi Avatar Set", category: "Digital", creator: "Ahri Fox", username: "@ahri", price: 20000, image: imgDigital3, verified: true, date: "2023-10-05", rating: 5 },
+  { id: 9, title: "Resin Vision Mondstadt", category: "Merchandise", creator: "Ezreal Explorer", username: "@ezreal", price: 120000, image: imgMerchandise2, verified: true, date: "2023-12-10", rating: 3 },
+  { id: 10, title: "Photo Pack: Cyberpunk", category: "Digital", creator: "Jinx Chaos", username: "@jinx", price: 75000, image: imgDigital4, verified: false, date: "2024-01-02", rating: 2 },
+  { id: 11, title: "Armor Foam Pattern", category: "Digital", creator: "Draven Axe", username: "@draven", price: 50000, image: imgDigital5, verified: false, date: "2023-08-15", rating: 4 },
+  { id: 12, title: "Bunny Girl Costume", category: "Costume", creator: "Caitlyn Sniper", username: "@caitlyn", price: 300000, image: imgCostume3, verified: true, date: "2024-01-10", rating: 5 },
 ];
 
 // Current dummy data from DiscoverCreator.tsx

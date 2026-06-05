@@ -1,6 +1,7 @@
 
 import React, { useState } from "react";
 import { ChevronDown, Calendar, Upload as UploadIcon, X } from "lucide-react";
+import imgHero2 from "../src/assets/images/hero-2.jpg";
 
 interface ProductFormProps {
   onClose: () => void;
@@ -117,7 +118,7 @@ export const ProductForm = ({ onClose, title = "Create Product", initialData, on
                      {formData.image ? (
                         <img src={formData.image} className="w-full h-full object-cover" alt="Preview" />
                      ) : (
-                        <div className="w-full h-full bg-[url(../src/assets/images/hero-2.jpg)] bg-cover bg-center opacity-50" />
+                        <div className="w-full h-full bg-cover bg-center opacity-50" style={{ backgroundImage: `url(${imgHero2})` }} />
                      )}
                 </div>
 

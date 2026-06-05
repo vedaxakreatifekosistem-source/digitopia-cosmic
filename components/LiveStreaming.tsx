@@ -6,7 +6,7 @@ import {
 import Footer from "./Footer";
 
 // Placeholder images
-const imgCreatorCard = "../src/assets/images/dummy.jpg";
+import imgCreatorCard from "../src/assets/images/dummy.jpg";
 
 // Dummy Data untuk Live Streaming
 const liveCreatorsData = [
