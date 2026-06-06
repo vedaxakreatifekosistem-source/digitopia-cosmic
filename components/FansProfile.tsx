@@ -717,42 +717,51 @@ export default function FansProfile({ onProductSelect, onNavigate }: { onProduct
                             </div>
                         </div>
 
-                        {/* Streak Support Widget */}
+                        {/* Rekomendasi Creator Widget */}
                         <div className="bg-[#0b0a10] border border-[#221e35] rounded-[24px] p-4 md:p-6 flex flex-col gap-6">
                             <div className="flex items-center gap-2">
-                                <Flame className="w-4 h-4 text-orange-500" />
-                                <h3 className="text-xs font-bold text-gray-400 tracking-wider uppercase">Streak Support</h3>
+                                <Sparkles className="w-4 h-4 text-violet-400" />
+                                <h3 className="text-xs font-bold text-gray-400 tracking-wider uppercase">REKOMENDASI CREATOR</h3>
                             </div>
-                            <div className="flex flex-col gap-4">
-                                {/* Streak 1 */}
+                            <div className="flex flex-col gap-5">
+                                {/* Creator 1 */}
                                 <div className="flex items-center justify-between gap-3">
-                                    <div>
-                                        <p className="font-bold text-sm text-white">Zenyth Prime</p>
-                                        <span className="text-[11px] text-gray-500">4 hari berturut-turut</span>
+                                    <div className="flex items-center gap-2 min-w-0">
+                                        <div className="w-9 h-9 rounded-full bg-zinc-800 border border-zinc-700 font-bold text-xs flex items-center justify-center text-zinc-300 shrink-0">RK</div>
+                                        <div className="min-w-0">
+                                            <p className="text-xs font-bold text-white truncate hover:underline cursor-pointer">Rika Kurosawa</p>
+                                            <p className="text-[10px] text-gray-500 truncate mt-0.5">Cosplay · Anime</p>
+                                        </div>
                                     </div>
-                                    <span className="bg-[#d032e5]/10 border border-[#d032e5]/30 text-[#d032e5] font-bold text-xs px-2.5 py-1 rounded-sm">
-                                        4 hari
-                                    </span>
+                                    <button className="px-4 py-1.5 bg-white text-black hover:bg-neutral-200 transition-colors rounded-full text-xs font-bold shrink-0 shadow-lg cursor-pointer">
+                                        Follow
+                                    </button>
                                 </div>
-                                {/* Streak 2 */}
+                                {/* Creator 2 */}
                                 <div className="flex items-center justify-between gap-3">
-                                    <div>
-                                        <p className="font-bold text-sm text-white">Avianna Skylark</p>
-                                        <span className="text-[11px] text-gray-500">2 hari berturut-turut</span>
+                                    <div className="flex items-center gap-2 min-w-0">
+                                        <div className="w-9 h-9 rounded-full bg-zinc-800 border border-zinc-700 font-bold text-xs flex items-center justify-center text-zinc-300 shrink-0">HM</div>
+                                        <div className="min-w-0">
+                                            <p className="text-xs font-bold text-white truncate hover:underline cursor-pointer">Hana Mizuki</p>
+                                            <p className="text-[10px] text-gray-500 truncate mt-0.5">Digital Art</p>
+                                        </div>
                                     </div>
-                                    <span className="bg-[#d032e5]/10 border border-[#d032e5]/30 text-[#d032e5] font-bold text-xs px-2.5 py-1 rounded-sm">
-                                        2 hari
-                                    </span>
+                                    <button className="px-4 py-1.5 bg-white text-black hover:bg-neutral-200 transition-colors rounded-full text-xs font-bold shrink-0 shadow-lg cursor-pointer">
+                                        Follow
+                                    </button>
                                 </div>
-                                {/* Streak 3 */}
+                                {/* Creator 3 */}
                                 <div className="flex items-center justify-between gap-3">
-                                    <div>
-                                        <p className="font-bold text-sm text-white">Celeste Moon</p>
-                                        <span className="text-[11px] text-gray-500">1 hari berturut-turut</span>
+                                    <div className="flex items-center gap-2 min-w-0">
+                                        <div className="w-9 h-9 rounded-full bg-zinc-800 border border-zinc-700 font-bold text-xs flex items-center justify-center text-zinc-300 shrink-0">YC</div>
+                                        <div className="min-w-0">
+                                            <p className="text-xs font-bold text-white truncate hover:underline cursor-pointer">Yuna Chen</p>
+                                            <p className="text-[10px] text-gray-500 truncate mt-0.5">Cosplay · Photographer</p>
+                                        </div>
                                     </div>
-                                    <span className="bg-[#d032e5]/10 border border-[#d032e5]/30 text-[#d032e5] font-bold text-xs px-2.5 py-1 rounded-sm">
-                                        1 hari
-                                    </span>
+                                    <button className="px-4 py-1.5 bg-white text-black hover:bg-neutral-200 transition-colors rounded-full text-xs font-bold shrink-0 shadow-lg cursor-pointer">
+                                        Follow
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -994,81 +1003,79 @@ export default function FansProfile({ onProductSelect, onNavigate }: { onProduct
                             </button>
                         </div>
 
-                        {/* Badge Koleksi Widget */}
+                        {/* Virtual Gifts Widget */}
                         <div className="bg-[#0b0a10] border border-[#221e35] rounded-[24px] p-4 md:p-6 flex flex-col gap-6">
                             <div className="flex items-center gap-2">
                                 <Award className="w-4 h-4 text-violet-400" />
-                                <h3 className="text-xs font-bold text-gray-400 tracking-wider uppercase">BADGE KOLEKSI</h3>
+                                <h3 className="text-xs font-bold text-gray-400 tracking-wider uppercase">VIRTUAL GIFTS</h3>
                             </div>
                             <div className="grid grid-cols-2 gap-3">
                                 {/* Badge slot 1 */}
-                                <div className="bg-zinc-950 border border-zinc-900 rounded-xl p-3 flex flex-col items-center text-center gap-2">
-                                    <Flame size={16} className="text-orange-500 fill-orange-500/10" />
-                                    <span className="text-[9px] font-bold text-gray-400 leading-tight">4-month streak</span>
+                                <div className="relative bg-zinc-950 border border-zinc-900 rounded-xl p-3 flex flex-col items-center text-center gap-1.5 hover:border-[#d032e5] transition-colors cursor-pointer group">
+                                    <div className="absolute top-1.5 right-1.5 bg-[#d032e5]/20 text-[#d032e5] text-[8px] font-bold px-1.5 py-0.5 rounded-full">x10</div>
+                                    <Flame size={16} className="text-orange-500 fill-orange-500/10 mb-1" />
+                                    <span className="text-[10px] font-bold text-white leading-tight">Cosmic Flame</span>
+                                    <span className="text-[8px] text-[#d032e5] font-medium leading-tight">Zenyth Prime</span>
                                 </div>
                                 {/* Badge slot 2 */}
-                                <div className="bg-zinc-950 border border-zinc-900 rounded-xl p-3 flex flex-col items-center text-center gap-2">
-                                    <Heart size={16} className="text-rose-500 fill-rose-500/10" />
-                                    <span className="text-[9px] font-bold text-gray-400 leading-tight">First tipper</span>
+                                <div className="relative bg-zinc-950 border border-zinc-900 rounded-xl p-3 flex flex-col items-center text-center gap-1.5 hover:border-[#d032e5] transition-colors cursor-pointer group">
+                                    <div className="absolute top-1.5 right-1.5 bg-[#d032e5]/20 text-[#d032e5] text-[8px] font-bold px-1.5 py-0.5 rounded-full">x5</div>
+                                    <Heart size={16} className="text-rose-500 fill-rose-500/10 mb-1" />
+                                    <span className="text-[10px] font-bold text-white leading-tight">Ruby Heart</span>
+                                    <span className="text-[8px] text-[#d032e5] font-medium leading-tight">Avianna Skylark</span>
                                 </div>
                                 {/* Badge slot 3 */}
-                                <div className="bg-zinc-950 border border-zinc-900 rounded-xl p-3 flex flex-col items-center text-center gap-2">
-                                    <Crown size={16} className="text-violet-500 fill-violet-500/10" />
-                                    <span className="text-[9px] font-bold text-gray-400 leading-tight">Early adopter</span>
+                                <div className="relative bg-zinc-950 border border-zinc-900 rounded-xl p-3 flex flex-col items-center text-center gap-1.5 hover:border-[#d032e5] transition-colors cursor-pointer group">
+                                    <div className="absolute top-1.5 right-1.5 bg-[#d032e5]/20 text-[#d032e5] text-[8px] font-bold px-1.5 py-0.5 rounded-full">x2</div>
+                                    <Crown size={16} className="text-violet-500 fill-violet-500/10 mb-1" />
+                                    <span className="text-[10px] font-bold text-white leading-tight">Golden Crown</span>
+                                    <span className="text-[8px] text-[#d032e5] font-medium leading-tight">Celeste Moon</span>
                                 </div>
                                 {/* Badge slot 4 */}
-                                <div className="bg-zinc-950/50 border border-zinc-950 rounded-xl p-3 flex flex-col items-center text-center gap-2 opacity-50">
-                                    <Lock size={16} className="text-zinc-600" />
-                                    <span className="text-[9px] font-bold text-zinc-600 leading-tight">Terkunci</span>
+                                <div className="bg-zinc-950/50 border border-zinc-950 rounded-xl p-3 flex flex-col items-center text-center gap-1.5 opacity-50">
+                                    <Lock size={16} className="text-zinc-600 mb-1" />
+                                    <span className="text-[10px] font-bold text-zinc-600 leading-tight">Locked</span>
+                                    <span className="text-[8px] text-zinc-600 font-medium leading-tight text-center">Koleksi belum<br/>tersedia</span>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Rekomendasi Creator Widget */}
+                        {/* Streak Support Widget */}
                         <div className="bg-[#0b0a10] border border-[#221e35] rounded-[24px] p-4 md:p-6 flex flex-col gap-6">
                             <div className="flex items-center gap-2">
-                                <Sparkles className="w-4 h-4 text-violet-400" />
-                                <h3 className="text-xs font-bold text-gray-400 tracking-wider uppercase">REKOMENDASI CREATOR</h3>
+                                <Flame className="w-4 h-4 text-orange-500" />
+                                <h3 className="text-xs font-bold text-gray-400 tracking-wider uppercase">Streak Support</h3>
                             </div>
-                            <div className="flex flex-col gap-5">
-                                {/* Creator 1 */}
+                            <div className="flex flex-col gap-4">
+                                {/* Streak 1 */}
                                 <div className="flex items-center justify-between gap-3">
-                                    <div className="flex items-center gap-2 min-w-0">
-                                        <div className="w-9 h-9 rounded-full bg-zinc-800 border border-zinc-700 font-bold text-xs flex items-center justify-center text-zinc-300 shrink-0">RK</div>
-                                        <div className="min-w-0">
-                                            <p className="text-xs font-bold text-white truncate hover:underline cursor-pointer">Rika Kurosawa</p>
-                                            <p className="text-[10px] text-gray-500 truncate mt-0.5">Cosplay · Anime</p>
-                                        </div>
+                                    <div>
+                                        <p className="font-bold text-sm text-white">Zenyth Prime</p>
+                                        <span className="text-[11px] text-gray-500">4 hari berturut-turut</span>
                                     </div>
-                                    <button className="px-4 py-1.5 bg-white text-black hover:bg-neutral-200 transition-colors rounded-full text-xs font-bold shrink-0 shadow-lg cursor-pointer">
-                                        Follow
-                                    </button>
+                                    <span className="bg-[#d032e5]/10 border border-[#d032e5]/30 text-[#d032e5] font-bold text-xs px-2.5 py-1 rounded-sm">
+                                        4 hari
+                                    </span>
                                 </div>
-                                {/* Creator 2 */}
+                                {/* Streak 2 */}
                                 <div className="flex items-center justify-between gap-3">
-                                    <div className="flex items-center gap-2 min-w-0">
-                                        <div className="w-9 h-9 rounded-full bg-zinc-800 border border-zinc-700 font-bold text-xs flex items-center justify-center text-zinc-300 shrink-0">HM</div>
-                                        <div className="min-w-0">
-                                            <p className="text-xs font-bold text-white truncate hover:underline cursor-pointer">Hana Mizuki</p>
-                                            <p className="text-[10px] text-gray-500 truncate mt-0.5">Digital Art</p>
-                                        </div>
+                                    <div>
+                                        <p className="font-bold text-sm text-white">Avianna Skylark</p>
+                                        <span className="text-[11px] text-gray-500">2 hari berturut-turut</span>
                                     </div>
-                                    <button className="px-4 py-1.5 bg-white text-black hover:bg-neutral-200 transition-colors rounded-full text-xs font-bold shrink-0 shadow-lg cursor-pointer">
-                                        Follow
-                                    </button>
+                                    <span className="bg-[#d032e5]/10 border border-[#d032e5]/30 text-[#d032e5] font-bold text-xs px-2.5 py-1 rounded-sm">
+                                        2 hari
+                                    </span>
                                 </div>
-                                {/* Creator 3 */}
+                                {/* Streak 3 */}
                                 <div className="flex items-center justify-between gap-3">
-                                    <div className="flex items-center gap-2 min-w-0">
-                                        <div className="w-9 h-9 rounded-full bg-zinc-800 border border-zinc-700 font-bold text-xs flex items-center justify-center text-zinc-300 shrink-0">YC</div>
-                                        <div className="min-w-0">
-                                            <p className="text-xs font-bold text-white truncate hover:underline cursor-pointer">Yuna Chen</p>
-                                            <p className="text-[10px] text-gray-500 truncate mt-0.5">Cosplay · Photographer</p>
-                                        </div>
+                                    <div>
+                                        <p className="font-bold text-sm text-white">Celeste Moon</p>
+                                        <span className="text-[11px] text-gray-500">1 hari berturut-turut</span>
                                     </div>
-                                    <button className="px-4 py-1.5 bg-white text-black hover:bg-neutral-200 transition-colors rounded-full text-xs font-bold shrink-0 shadow-lg cursor-pointer">
-                                        Follow
-                                    </button>
+                                    <span className="bg-[#d032e5]/10 border border-[#d032e5]/30 text-[#d032e5] font-bold text-xs px-2.5 py-1 rounded-sm">
+                                        1 hari
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -1228,37 +1235,40 @@ export default function FansProfile({ onProductSelect, onNavigate }: { onProduct
         {activeTab === 'Badges' && (
             <div className="w-full flex flex-col items-center gap-6">
                 <div className="text-center">
-                    <h2 className="text-3xl font-bold text-white mb-2">Badge Koleksi</h2>
-                    <p className="text-gray-400">Badge spesial yang kamu dapatkan dari mendukung kreator.</p>
+                    <h2 className="text-3xl font-bold text-white mb-2">Virtual Gifts</h2>
+                    <p className="text-gray-400">Koleksi virtual gifts eksklusif yang diproduksi dan diunggah oleh kreator favoritmu.</p>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-[800px] w-full mt-8">
-                    <div className="bg-[#0c0c0c] border border-white/10 rounded-2xl p-6 flex flex-col items-center text-center gap-3">
+                    <div className="relative bg-[#0c0c0c] border border-white/10 rounded-2xl p-6 flex flex-col items-center text-center gap-3 hover:border-[#d032e5] transition-colors cursor-pointer">
+                        <div className="absolute top-3 right-3 bg-[#d032e5]/20 border border-[#d032e5]/50 text-[#d032e5] text-[10px] font-bold px-2 py-0.5 rounded-full">x10</div>
                         <div className="w-16 h-16 rounded-full bg-orange-500/10 flex items-center justify-center text-orange-500">
                             <Flame size={32} />
                         </div>
-                        <h4 className="font-bold text-white text-base">4-month streak</h4>
-                        <p className="text-xs text-gray-400">Aktif mendukung 4 bulan berturut-turut</p>
+                        <h4 className="font-bold text-white text-base">Cosmic Flame</h4>
+                        <p className="text-xs text-[#d032e5] font-medium">Zenyth Prime</p>
                     </div>
-                    <div className="bg-[#0c0c0c] border border-white/10 rounded-2xl p-6 flex flex-col items-center text-center gap-3">
+                    <div className="relative bg-[#0c0c0c] border border-white/10 rounded-2xl p-6 flex flex-col items-center text-center gap-3 hover:border-[#d032e5] transition-colors cursor-pointer">
+                        <div className="absolute top-3 right-3 bg-[#d032e5]/20 border border-[#d032e5]/50 text-[#d032e5] text-[10px] font-bold px-2 py-0.5 rounded-full">x5</div>
                         <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center text-red-500">
                             <Heart size={32} />
                         </div>
-                        <h4 className="font-bold text-white text-base">First tipper</h4>
-                        <p className="text-xs text-gray-400">Tipping pertama kali ke kreator</p>
+                        <h4 className="font-bold text-white text-base">Ruby Heart</h4>
+                        <p className="text-xs text-[#d032e5] font-medium">Avianna Skylark</p>
                     </div>
-                    <div className="bg-[#0c0c0c] border border-white/10 rounded-2xl p-6 flex flex-col items-center text-center gap-3">
+                    <div className="relative bg-[#0c0c0c] border border-white/10 rounded-2xl p-6 flex flex-col items-center text-center gap-3 hover:border-[#d032e5] transition-colors cursor-pointer">
+                        <div className="absolute top-3 right-3 bg-[#d032e5]/20 border border-[#d032e5]/50 text-[#d032e5] text-[10px] font-bold px-2 py-0.5 rounded-full">x2</div>
                         <div className="w-16 h-16 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-500">
                             <Crown size={32} />
                         </div>
-                        <h4 className="font-bold text-white text-base">Early adopter</h4>
-                        <p className="text-xs text-gray-400">Menjadi supporter awal kreator</p>
+                        <h4 className="font-bold text-white text-base">Golden Crown</h4>
+                        <p className="text-xs text-[#d032e5] font-medium">Celeste Moon</p>
                     </div>
                     <div className="bg-[#0c0c0c] border border-white/10 rounded-2xl p-6 flex flex-col items-center text-center gap-3 opacity-50">
                         <div className="w-16 h-16 rounded-full bg-gray-500/10 flex items-center justify-center text-gray-500">
                             <Lock size={32} />
                         </div>
-                        <h4 className="font-bold text-gray-400 text-base">Terkunci</h4>
-                        <p className="text-xs text-gray-500">Badge belum terbuka</p>
+                        <h4 className="font-bold text-gray-400 text-base">Locked</h4>
+                        <p className="text-xs text-gray-500">Koleksi belum tersedia</p>
                     </div>
                 </div>
             </div>
@@ -1409,7 +1419,7 @@ export default function FansProfile({ onProductSelect, onNavigate }: { onProduct
       {/* Creator Story Viewer Dialog */}
       {activeStoryIndex !== null && (
         <Dialog open={activeStoryIndex !== null} onOpenChange={(open) => !open && setActiveStoryIndex(null)}>
-            <DialogContent className="max-w-[100vw] h-screen sm:max-w-[420px] sm:h-[80vh] p-0 bg-neutral-950 border-none text-white overflow-hidden rounded-none sm:rounded-2xl flex flex-col justify-between relative shadow-[0_0_50px_rgba(208,50,229,0.2)]">
+            <DialogContent className="w-[90vw] h-[80vh] max-w-[420px] max-h-[850px] p-0 bg-neutral-950 border-none text-white overflow-hidden rounded-2xl flex flex-col justify-between shadow-[0_0_50px_rgba(208,50,229,0.2)]">
                 <DialogTitle className="sr-only">Creator Story</DialogTitle>
                 
                 {/* Progress Indicators */}

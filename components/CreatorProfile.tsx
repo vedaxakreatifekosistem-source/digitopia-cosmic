@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from "react";
-import { Star, MessageCircle, Share2, Heart, Send, Check, MoreHorizontal, Edit, Settings, Image as ImageIcon, Instagram, Twitter, Youtube, Globe, Crown, Zap, Shield, Bookmark, Smile, X, Search, SortAsc, ShoppingBag, ChevronRight, Trophy, Copy, Facebook, Linkedin, Link as LinkIcon, Plus, DollarSign, BarChart3, Package, Users, Phone, Video, Paperclip, ArrowLeft, MoreVertical, Download, LayoutDashboard, ListOrdered, Wallet, FileText, Rss, MonitorPlay, Trash2, Upload, CreditCard, ArrowUpRight, Clock, CheckCircle2, XCircle, MessageSquare, Eye, Type, Palette, Layout, Gift, Save, QrCode } from "lucide-react";
+import { Star, MessageCircle, Share2, Heart, Send, Check, MoreHorizontal, Edit, Settings, Image as ImageIcon, Instagram, Twitter, Youtube, Globe, Crown, Zap, Shield, Bookmark, Smile, X, Search, SortAsc, ShoppingBag, ChevronRight, Trophy, Copy, Facebook, Linkedin, Link as LinkIcon, Plus, DollarSign, BarChart3, Package, Users, Phone, Video, Paperclip, ArrowLeft, MoreVertical, Download, LayoutDashboard, ListOrdered, Wallet, FileText, Rss, MonitorPlay, Trash2, Upload, CreditCard, ArrowUpRight, Clock, CheckCircle2, XCircle, MessageSquare, Eye, Type, Palette, Layout, Gift, Save, QrCode, Calendar, Sparkles, Award, Lock, Flame, Coins } from "lucide-react";
 import { Progress } from "./ui/progress";
 import { Switch } from "./ui/switch";
 import { Slider } from "./ui/slider";
@@ -128,6 +128,41 @@ const walletData = {
 };
 
 // --- FAN MOCK DATA (Ported) ---
+
+const mockStories = [
+  {
+    id: 1,
+    creator: "Zenyth Prime",
+    avatar: imgGrid1,
+    media: imgGrid4,
+    caption: "WIP: Styling the Raiden Shogun wig for the upcoming photoshoot! ⚡💜",
+    seen: false
+  },
+  {
+    id: 2,
+    creator: "Avianna Skylark",
+    avatar: imgGrid3,
+    media: imgGrid3,
+    caption: "Endurance karaoke playlist is ready! See you guys in an hour 🎤🎶",
+    seen: false
+  },
+  {
+    id: 3,
+    creator: "Fareye Closhartt",
+    avatar: imgGrid5,
+    media: imgGrid5,
+    caption: "New sticker designs sneak peek... what do you think? 👀💖",
+    seen: false
+  },
+  {
+    id: 4,
+    creator: "Celeste Moon",
+    avatar: imgGrid6,
+    media: imgGrid6,
+    caption: "Moonlight VIP photoshoot sneak peek! 🌕✨ Exclusive content is ready.",
+    seen: false
+  }
+];
 
 // Mock Data for Support Board (Fan Home)
 const fanSupportData = [
@@ -471,7 +506,7 @@ function StatCard({ label, value, icon: Icon, color, bg }: { label: string, valu
 }
 
 export default function CreatorProfile({ onNavigate, onProductSelect, onCustomizeOverlay }: { onNavigate?: (view: string) => void, onProductSelect?: (product: any) => void, onCustomizeOverlay?: (overlay: any) => void }) {
-  const tabs = ["Dashboard", "Home", "Messages", "Purchase", "Transaction", "Subscribed", "Following", "Supporting"];
+  const tabs = ["Dashboard", "Home", "Messages", "Purchase", "Transaction", "Subscribed", "Following", "Supporting", "Badges"];
   const [activeTab, setActiveTab] = useState("Home");
   const [dashboardView, setDashboardView] = useState("Overview");
   const [isShareOpen, setIsShareOpen] = useState(false);
@@ -482,6 +517,24 @@ export default function CreatorProfile({ onNavigate, onProductSelect, onCustomiz
   const [copied, setCopied] = useState(false);
   const [shareLink, setShareLink] = useState("https://cosmic.app/creator/johndoe");
   
+  // Stories State & useEffect
+  const [activeStoryIndex, setActiveStoryIndex] = useState<number | null>(null);
+  const [stories, setStories] = useState(mockStories);
+
+  useEffect(() => {
+    if (activeStoryIndex === null) return;
+    const timer = setTimeout(() => {
+      if (activeStoryIndex < stories.length - 1) {
+        const nextIndex = activeStoryIndex + 1;
+        setStories(prev => prev.map((s, i) => i === nextIndex ? { ...s, seen: true } : s));
+        setActiveStoryIndex(nextIndex);
+      } else {
+        setActiveStoryIndex(null);
+      }
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [activeStoryIndex, stories.length]);
+
   // Dashboard & Feed Interaction states
   const [feedPosts, setFeedPosts] = useState(initialCreatorFeedData);
   const [myPosts, setMyPosts] = useState(initialMyFeedData);
@@ -852,90 +905,470 @@ export default function CreatorProfile({ onNavigate, onProductSelect, onCustomiz
         {activeTab === 'Home' && (
             <div className="flex flex-col gap-10">
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                    {/* Left Column (Sticky) */}
+                    
+                    {/* Left Column (Sticky Sidebar) */}
                     <div className="flex flex-col gap-6 lg:col-span-1 order-2 lg:order-1 lg:sticky lg:top-[140px] lg:h-fit lg:self-start">
-                        {/* Support Board */}
-                        <div className="bg-[#0c0c0c] border border-[#27272a] rounded-[24px] p-4 md:p-6">
-                            <div className="flex items-center gap-2 mb-6">
-                                <h3 className="text-xl font-bold text-white">Support Board</h3>
-                                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                        
+                        {/* Activity Feed Widget */}
+                        <div className="bg-[#0b0a10] border border-[#221e35] rounded-[24px] p-4 md:p-6 flex flex-col gap-6">
+                            <div className="flex items-center gap-2">
+                                <span className="inline-block w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+                                <h3 className="text-sm font-bold text-gray-400 tracking-wider uppercase">Activity Feed</h3>
                             </div>
-                            <Carousel plugins={[Autoplay({ delay: 4000, stopOnMouseEnter: true, stopOnInteraction: false })]} opts={{ align: "start", loop: true }} className="w-full select-none">
-                                <CarouselContent>
-                                    {supportData.map((item) => (
-                                        <CarouselItem key={item.id} className="basis-full">
-                                            <div className="flex flex-col gap-3 p-4 rounded-xl bg-[#18181b] border border-white/5 hover:border-[#d032e5] transition-colors group cursor-grab active:cursor-grabbing">
-                                                <div className="flex gap-3">
-                                                    <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${item.avatarColor} shrink-0 flex items-center justify-center text-xs font-bold text-white shadow-inner`}>{item.user.charAt(0)}</div>
-                                                    <div className="flex-1">
-                                                        <p className="text-sm leading-relaxed text-gray-300"><span className="font-bold text-white">{item.user}</span> <span className="text-gray-400"> Sent </span> <span className="text-[#d032e5] font-medium">{item.type}</span></p>
-                                                        <span className="text-[10px] text-gray-500 mt-1 block">{item.time}</span>
-                                                    </div>
-                                                </div>
-                                                {item.message && (<div className="bg-black/40 p-3 rounded-lg border border-white/5 ml-[44px]"><p className="text-xs text-gray-300 italic leading-relaxed">"{item.message}"</p></div>)}
-                                                {item.reply && (<div className="flex gap-2 items-start ml-[44px] mt-1 relative animate-in fade-in slide-in-from-top-1 duration-300"><div className="shrink-0 mt-0.5"><Check size={14} className="text-white"/></div><p className="text-xs leading-relaxed text-gray-400"><span className="font-bold text-white mr-1">{item.replyUser}</span>{item.reply}</p></div>)}
-                                            </div>
-                                        </CarouselItem>
-                                    ))}
-                                </CarouselContent>
-                            </Carousel>
-                        </div>
-                    </div>
-
-                    {/* Middle Column (Feed) */}
-                    <div className="lg:col-span-2 flex flex-col gap-8 order-1 lg:order-2">
-                        <div className="flex flex-col gap-6">
-                            {feedPosts.map((post) => (
-                                <div key={post.id} className="bg-[#0c0c0c] border border-[#27272a] rounded-[24px] p-4 md:p-6">
-                                    <div className="flex items-center justify-between mb-4">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-12 h-12 rounded-full border border-gray-700 bg-black overflow-hidden cursor-pointer"><img src={post.avatar} className="w-full h-full object-cover" alt="avatar" /></div>
-                                            <div>
-                                                <div className="flex items-center gap-1"><span className="font-bold text-white text-base cursor-pointer hover:underline">{post.creator}</span>{post.verified && <div className="bg-[#d032e5] rounded-full p-[2px] flex items-center justify-center w-3 h-3 shrink-0"><Check size={8} className="text-white" strokeWidth={4} /></div>}</div>
-                                                <div className="flex items-center gap-2 text-gray-500 text-sm"><span>{post.username}</span><span>•</span><span>{post.time}</span></div>
-                                            </div>
-                                        </div>
-                                        <button className="text-gray-500 hover:text-white cursor-pointer"><MoreHorizontal size={24}/></button>
+                            <div className="flex flex-col gap-5">
+                                {/* Feed item 1 */}
+                                <div className="flex gap-3 items-start">
+                                    <div className="w-8 h-8 rounded-full bg-zinc-800 border border-zinc-700 font-bold text-xs flex items-center justify-center shrink-0 text-zinc-300">
+                                        ZP
                                     </div>
-                                    <p className="text-gray-300 text-base leading-relaxed mb-4">{post.content}</p>
-                                    {post.image && (<div className="w-full h-[300px] bg-black rounded-xl overflow-hidden mb-4 border border-[#27272a]"><img src={post.image} className="w-full h-full object-cover" alt="Post content" loading="lazy" decoding="async" /></div>)}
-                                    <div className="border-t border-white/5 py-4 flex items-center justify-between">
-                                        <div className="flex gap-8">
-                                            <button onClick={() => handleLike(post.id)} className={`flex items-center gap-2 transition-colors group cursor-pointer ${post.isLiked ? 'text-red-500' : 'text-gray-400 hover:text-red-500'}`}><Heart size={20} className={post.isLiked ? 'fill-red-500' : 'group-hover:fill-red-500'} /><span className="text-sm font-medium">{post.likes}</span></button>
-                                            <button onClick={() => handlePostClick(post)} className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors cursor-pointer"><MessageCircle size={20} /><span className="text-sm font-medium">{post.comments}</span></button>
-                                            <button onClick={() => handleShare(post)} className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors cursor-pointer"><Share2 size={20} /><span className="text-sm font-medium">{post.shares}</span></button>
-                                        </div>
-                                    </div>
-                                    <div className="flex gap-3 items-center pt-3 border-t border-white/5 mt-1">
-                                        <div className="w-8 h-8 rounded-full border border-gray-700 bg-black overflow-hidden shrink-0"><img src={imgAvatar} className="w-full h-full object-cover" alt="My Avatar" /></div>
-                                        <div className="flex-1 relative">
-                                            <input type="text" placeholder="Write a comment..." className="w-full bg-[#18181b] border border-[#27272a] rounded-full py-2 pl-4 pr-10 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#d032e5] transition-colors" value={quickComments[post.id] || ""} onChange={(e) => handleQuickCommentChange(post.id, e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleQuickCommentSubmit(post.id)}/>
-                                            <button onClick={() => handleQuickCommentSubmit(post.id)} className={`absolute right-2 top-1/2 -translate-y-1/2 p-1.5 transition-colors ${quickComments[post.id]?.trim() ? 'text-[#d032e5] hover:text-white' : 'text-gray-600 cursor-default'}`} disabled={!quickComments[post.id]?.trim()}><Send size={16} /></button>
-                                        </div>
+                                    <div className="flex flex-col">
+                                        <p className="text-sm text-gray-300 leading-tight">
+                                            <span className="font-bold text-white hover:underline cursor-pointer">Zenyth Prime</span> membalas komentar kamu
+                                        </p>
+                                        <span className="text-xs text-gray-500 mt-1">5 menit lalu</span>
                                     </div>
                                 </div>
-                            ))}
+                                {/* Feed item 2 */}
+                                <div className="flex gap-3 items-start">
+                                    <div className="w-8 h-8 rounded-full bg-zinc-800 border border-zinc-700 font-bold text-xs flex items-center justify-center shrink-0 text-zinc-300">
+                                        AS
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <p className="text-sm text-gray-300 leading-tight">
+                                            Kamu baru <span className="font-bold text-white">subscribe</span> <span className="font-semibold text-gray-200">Avianna Skylark — Angel Tier</span>
+                                        </p>
+                                        <span className="text-xs text-gray-500 mt-1">2 hari lalu</span>
+                                    </div>
+                                </div>
+                                {/* Feed item 3 */}
+                                <div className="flex gap-3 items-start">
+                                    <div className="w-8 h-8 rounded-full bg-zinc-800 border border-zinc-700 font-bold text-xs flex items-center justify-center shrink-0 text-zinc-300">
+                                        ZP
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <p className="text-sm text-gray-300 leading-tight">
+                                            Kamu <span className="font-bold text-white">tipping</span> Rp 25.000 ke Zenyth Prime
+                                        </p>
+                                        <span className="text-xs text-gray-500 mt-1">3 hari lalu</span>
+                                    </div>
+                                </div>
+                                {/* Feed item 4 */}
+                                <div className="flex gap-3 items-start">
+                                    <div className="w-8 h-8 rounded-full bg-zinc-800 border border-zinc-700 font-bold text-xs flex items-center justify-center shrink-0 text-zinc-300">
+                                        CM
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <p className="text-sm text-gray-300 leading-tight">
+                                            Kamu beli produk <span className="font-bold text-white">Moonlight Wallpack</span>
+                                        </p>
+                                        <span className="text-xs text-gray-500 mt-1">1 minggu lalu</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
+                        {/* Upcoming Events Widget */}
+                        <div className="bg-[#0b0a10] border border-[#221e35] rounded-[24px] p-4 md:p-6 flex flex-col gap-6">
+                            <div className="flex items-center gap-2">
+                                <Calendar className="w-4 h-4 text-violet-400" />
+                                <h3 className="text-xs font-bold text-gray-400 tracking-wider uppercase">Upcoming Events</h3>
+                            </div>
+                            <div className="flex flex-col gap-6">
+                                {/* Event 1 */}
+                                <div className="flex flex-col gap-1">
+                                    <h4 className="font-bold text-sm text-white hover:text-violet-400 cursor-pointer transition-colors leading-snug">Cosplay Fest Jakarta 2025</h4>
+                                    <p className="text-xs text-gray-500">14 Juli 2025 · JCC Senayan</p>
+                                    <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 bg-[#1e293b]/50 border border-violet-500/20 text-violet-400 font-bold text-[11px] rounded-full w-fit">
+                                        <Clock size={12} className="text-violet-400" />
+                                        <span>40 hari lagi</span>
+                                    </div>
+                                </div>
+                                {/* Event 2 */}
+                                <div className="flex flex-col gap-1">
+                                    <h4 className="font-bold text-sm text-white hover:text-violet-400 cursor-pointer transition-colors leading-snug">Zenyth Prime Meet & Greet</h4>
+                                    <p className="text-xs text-gray-500">22 Juni 2025 · Online</p>
+                                    <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 bg-[#1e293b]/50 border border-violet-500/20 text-violet-400 font-bold text-[11px] rounded-full w-fit">
+                                        <Clock size={12} className="text-violet-400" />
+                                        <span>18 hari lagi</span>
+                                    </div>
+                                </div>
+                                {/* Event 3 */}
+                                <div className="flex flex-col gap-1">
+                                    <h4 className="font-bold text-sm text-white hover:text-violet-400 cursor-pointer transition-colors leading-snug">Avianna Live Painting Session</h4>
+                                    <p className="text-xs text-gray-500">30 Juni 2025 · Live Stream</p>
+                                    <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 bg-[#1e293b]/50 border border-violet-500/20 text-violet-400 font-bold text-[11px] rounded-full w-fit">
+                                        <Clock size={12} className="text-violet-400" />
+                                        <span>26 hari lagi</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Rekomendasi Creator Widget */}
+                        <div className="bg-[#0b0a10] border border-[#221e35] rounded-[24px] p-4 md:p-6 flex flex-col gap-6">
+                            <div className="flex items-center gap-2">
+                                <Sparkles className="w-4 h-4 text-violet-400" />
+                                <h3 className="text-xs font-bold text-gray-400 tracking-wider uppercase">REKOMENDASI CREATOR</h3>
+                            </div>
+                            <div className="flex flex-col gap-5">
+                                {/* Creator 1 */}
+                                <div className="flex items-center justify-between gap-3">
+                                    <div className="flex items-center gap-2 min-w-0">
+                                        <div className="w-9 h-9 rounded-full bg-zinc-800 border border-zinc-700 font-bold text-xs flex items-center justify-center text-zinc-300 shrink-0">RK</div>
+                                        <div className="min-w-0">
+                                            <p className="text-xs font-bold text-white truncate hover:underline cursor-pointer">Rika Kurosawa</p>
+                                            <p className="text-[10px] text-gray-500 truncate mt-0.5">Cosplay · Anime</p>
+                                        </div>
+                                    </div>
+                                    <button className="px-4 py-1.5 bg-white text-black hover:bg-neutral-200 transition-colors rounded-full text-xs font-bold shrink-0 shadow-lg cursor-pointer">
+                                        Follow
+                                    </button>
+                                </div>
+                                {/* Creator 2 */}
+                                <div className="flex items-center justify-between gap-3">
+                                    <div className="flex items-center gap-2 min-w-0">
+                                        <div className="w-9 h-9 rounded-full bg-zinc-800 border border-zinc-700 font-bold text-xs flex items-center justify-center text-zinc-300 shrink-0">HM</div>
+                                        <div className="min-w-0">
+                                            <p className="text-xs font-bold text-white truncate hover:underline cursor-pointer">Hana Mizuki</p>
+                                            <p className="text-[10px] text-gray-500 truncate mt-0.5">Digital Art</p>
+                                        </div>
+                                    </div>
+                                    <button className="px-4 py-1.5 bg-white text-black hover:bg-neutral-200 transition-colors rounded-full text-xs font-bold shrink-0 shadow-lg cursor-pointer">
+                                        Follow
+                                    </button>
+                                </div>
+                                {/* Creator 3 */}
+                                <div className="flex items-center justify-between gap-3">
+                                    <div className="flex items-center gap-2 min-w-0">
+                                        <div className="w-9 h-9 rounded-full bg-zinc-800 border border-zinc-700 font-bold text-xs flex items-center justify-center text-zinc-300 shrink-0">YC</div>
+                                        <div className="min-w-0">
+                                            <p className="text-xs font-bold text-white truncate hover:underline cursor-pointer">Yuna Chen</p>
+                                            <p className="text-[10px] text-gray-500 truncate mt-0.5">Cosplay · Photographer</p>
+                                        </div>
+                                    </div>
+                                    <button className="px-4 py-1.5 bg-white text-black hover:bg-neutral-200 transition-colors rounded-full text-xs font-bold shrink-0 shadow-lg cursor-pointer">
+                                        Follow
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
-                    {/* Right Column (Sidebar) */}
-                    <div className="flex flex-col gap-8 lg:col-span-1 order-3 lg:sticky lg:top-[140px] lg:h-fit lg:self-start">
-                        {/* My Subscription */}
-                        <div className="bg-[#0c0c0c] border border-[#27272a] rounded-[24px] p-4 md:p-6">
-                            <h3 className="text-xl font-bold mb-6">My Subscription</h3>
-                            <div className="flex flex-col gap-4 mb-6">
-                                {subscriptionHistory.filter(sub => sub.status === 'Active').slice(0, 3).map((sub) => (
-                                    <div key={sub.id} className="flex items-center gap-3 p-2 rounded-xl hover:bg-white/5 transition-colors cursor-pointer border border-transparent hover:border-white/10">
-                                        <div className="w-10 h-10 rounded-full bg-gray-800 shrink-0 border border-gray-700 overflow-hidden"><img src={sub.image} className="w-full h-full object-cover" alt={sub.creator} /></div>
-                                        <div className="flex-1 min-w-0"><p className="text-sm font-bold text-white truncate">{sub.creator}</p><p className="text-xs text-gray-400 truncate">{sub.plan}</p></div>
-                                        <div className="shrink-0"><span className="text-[10px] font-bold text-green-500 bg-green-500/10 px-2 py-1 rounded-full border border-green-500/20">Active</span></div>
-                                    </div>
+                    {/* Middle Column (Filters, and Feed Posts) */}
+                    <div className="lg:col-span-2 flex flex-col gap-6 order-1 lg:order-2">
+
+                        {/* Creator Stories Row Inside Middle Column */}
+                        <div className="bg-[#0b0a10] border border-[#221e35] rounded-[24px] p-5">
+                            <div className="flex gap-4 overflow-x-auto scrollbar-none pb-2">
+                                {stories.map((story, idx) => (
+                                    <button
+                                        key={story.id}
+                                        onClick={() => {
+                                            setActiveStoryIndex(idx);
+                                            setStories(prev => prev.map((s, i) => i === idx ? { ...s, seen: true } : s));
+                                        }}
+                                        className="flex flex-col items-center gap-2 group shrink-0 outline-none cursor-pointer"
+                                    >
+                                        <div className={`relative p-[3px] rounded-full transition-transform hover:scale-105 duration-300 ${story.seen ? 'bg-[#221e35]' : 'bg-gradient-to-tr from-[#9419BD] via-[#d032e5] to-[#f472b6]'}`}>
+                                            <div className="w-14 h-14 md:w-16 md:h-16 rounded-full border-2 border-black overflow-hidden bg-black">
+                                                <img src={story.avatar} className="w-full h-full object-cover" alt={story.creator} loading="lazy" decoding="async" />
+                                            </div>
+                                            {!story.seen && (
+                                                <div className="absolute -bottom-1 -right-1 bg-[#d032e5] text-white rounded-full p-[2px] border-2 border-black">
+                                                    <Sparkles size={8} className="fill-white" />
+                                                </div>
+                                            )}
+                                        </div>
+                                        <span className={`text-[11px] md:text-xs transition-colors max-w-[80px] truncate text-center ${story.seen ? 'text-gray-500' : 'text-gray-200 group-hover:text-white font-medium'}`}>
+                                            {story.creator}
+                                        </span>
+                                    </button>
                                 ))}
-                                {subscriptionHistory.filter(sub => sub.status === 'Active').length === 0 && <p className="text-gray-500 text-sm italic text-center py-4">No active subscriptions</p>}
                             </div>
-                            <button onClick={() => setActiveTab('Subscribed')} className="w-full py-3 bg-[#27272a] border border-[#3f3f46] rounded-full text-white font-bold text-base hover:bg-[#3f3f46] transition-all cursor-pointer">Manage Subscriptions</button>
                         </div>
+
+                        {/* Filter Tags */}
+                        <div className="flex flex-wrap items-center gap-3 py-1">
+                            <button className="px-5 py-2 rounded-xl bg-white text-black font-semibold text-sm transition-all hover:bg-neutral-200 cursor-pointer">
+                                Semua
+                            </button>
+                            <button className="px-5 py-2 rounded-xl bg-[#0b0a10] border border-[#221e35] text-gray-300 font-semibold text-sm transition-all hover:border-zinc-600 hover:text-white cursor-pointer">
+                                Art
+                            </button>
+                            <button className="px-5 py-2 rounded-xl bg-[#0b0a10] border border-[#221e35] text-gray-300 font-semibold text-sm transition-all hover:border-zinc-600 hover:text-white cursor-pointer">
+                                Cosplay
+                            </button>
+                            <button className="px-5 py-2 rounded-xl bg-[#0b0a10] border border-[#221e35] text-gray-300 font-semibold text-sm transition-all hover:border-zinc-600 hover:text-white cursor-pointer">
+                                Live
+                            </button>
+                            <button className="px-5 py-2 rounded-xl bg-[#0b0a10] border border-[#221e35] text-gray-300 font-semibold text-sm transition-all hover:border-zinc-600 hover:text-white cursor-pointer flex items-center gap-1.5">
+                                <Lock size={12} className="text-zinc-500" />
+                                <span>Exclusive</span>
+                            </button>
+                        </div>
+
+                        {/* Feed Posts */}
+                        <div className="flex flex-col gap-6">
+                            
+                            {/* Post 1 (Zenyth Prime) */}
+                            {feedPosts[0] && (
+                                <div className="bg-[#0b0a10] border border-[#221e35] rounded-[24px] p-4 md:p-6 flex flex-col gap-4">
+                                    {/* Header */}
+                                    <div className="flex justify-between items-center">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center font-bold text-xs border border-zinc-700">ZP</div>
+                                            <div className="flex flex-col">
+                                                <div className="flex items-center gap-1">
+                                                    <span className="font-bold text-sm text-white hover:underline cursor-pointer">Zenyth Prime</span>
+                                                    <div className="bg-[#d032e5] rounded-full p-[2px] w-3.5 h-3.5 flex items-center justify-center"><Check size={8} className="text-white" strokeWidth={5} /></div>
+                                                </div>
+                                                <div className="flex items-center gap-1.5 text-xs text-gray-500">
+                                                    <span>@zenyth</span>
+                                                    <span>•</span>
+                                                    <span>2h ago</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {/* Status Badge Upper Right */}
+                                        <div className="flex items-center gap-2">
+                                            <button className="text-gray-500 hover:text-white cursor-pointer"><MoreHorizontal size={20}/></button>
+                                        </div>
+                                    </div>
+                                    {/* Description */}
+                                    <p className="text-gray-300 text-sm md:text-base leading-relaxed">
+                                        My Raiden Shogun cosplay set is finally complete! Check out the full photopack in my shop. It was a long journey crafting this armor.
+                                    </p>
+                                    {/* Post Visual Content Widget */}
+                                    <div className="w-full h-[240px] md:h-[325px] bg-[#07060a] border border-[#221e35] rounded-2xl overflow-hidden hover:border-[#d032e5]/50 transition-all cursor-pointer">
+                                        <img src={feedPosts[0].image || imgGrid4} className="w-full h-full object-cover" alt="Post content" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
+                                    </div>
+                                    {/* Actions */}
+                                    <div className="flex items-center justify-between border-t border-zinc-800/60 pt-4 mt-2">
+                                        <div className="flex gap-6 items-center">
+                                            <button onClick={() => handleLike(feedPosts[0].id)} className={`flex items-center gap-2 group cursor-pointer text-sm font-medium ${feedPosts[0].isLiked ? 'text-red-500' : 'text-gray-400 hover:text-red-500'}`}>
+                                                <Heart size={18} className={feedPosts[0].isLiked ? 'fill-red-500 text-red-500' : 'group-hover:fill-red-500 text-gray-400'} />
+                                                <span>{feedPosts[0].likes}</span>
+                                            </button>
+                                            <button onClick={() => handlePostClick(feedPosts[0])} className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors cursor-pointer text-sm font-medium">
+                                                <MessageCircle size={18} />
+                                                <span>{feedPosts[0].comments}</span>
+                                            </button>
+                                            <button onClick={() => handleShare(feedPosts[0])} className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors cursor-pointer text-sm font-medium">
+                                                <Share2 size={18} />
+                                                <span>{feedPosts[0].shares}</span>
+                                            </button>
+                                        </div>
+                                        {/* Tipping quick action */}
+                                        <button className="flex items-center gap-1.5 px-3 py-1.5 bg-[#d032e5]/10 hover:bg-[#d032e5]/20 text-[#d032e5] text-xs font-bold rounded-lg border border-[#d032e5]/30 transition-all">
+                                            <Coins size={14} className="text-[#d032e5]" />
+                                            <span>Support</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Post 2 (Avianna Skylark) */}
+                            {feedPosts[1] && (
+                                <div className="bg-[#0b0a10] border border-[#221e35] rounded-[24px] p-4 md:p-6 flex flex-col gap-4">
+                                    {/* Header */}
+                                    <div className="flex justify-between items-center">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center font-bold text-xs border border-zinc-700">AS</div>
+                                            <div className="flex flex-col">
+                                                <div className="flex items-center gap-1">
+                                                    <span className="font-bold text-sm text-white hover:underline cursor-pointer">Avianna Skylark</span>
+                                                    <div className="bg-[#d032e5] rounded-full p-[2px] w-3.5 h-3.5 flex items-center justify-center"><Check size={8} className="text-white" strokeWidth={5} /></div>
+                                                </div>
+                                                <div className="flex items-center gap-1.5 text-xs text-gray-500">
+                                                    <span>@avianna</span>
+                                                    <span>•</span>
+                                                    <span>5h ago</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button className="text-gray-500 hover:text-white cursor-pointer"><MoreHorizontal size={20}/></button>
+                                    </div>
+                                    {/* Description */}
+                                    <p className="text-gray-300 text-sm md:text-base leading-relaxed">
+                                        Speed paint session malam ini jam 8! Mau gambar fanart Oshi no Ko tema Galaxy. Jangan lupa hadir ya!
+                                    </p>
+                                    {/* Actions */}
+                                    <div className="flex items-center justify-between border-t border-zinc-800/60 pt-4 mt-2">
+                                        <div className="flex gap-6 items-center">
+                                            <button onClick={() => handleLike(feedPosts[1].id)} className={`flex items-center gap-2 group cursor-pointer text-sm font-medium ${feedPosts[1].isLiked ? 'text-red-500' : 'text-gray-400 hover:text-red-500'}`}>
+                                                <Heart size={18} className={feedPosts[1].isLiked ? 'fill-red-500 text-red-500' : 'group-hover:fill-red-500 text-gray-400'} />
+                                                <span>892</span>
+                                            </button>
+                                            <button onClick={() => handlePostClick(feedPosts[1])} className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors cursor-pointer text-sm font-medium">
+                                                <MessageCircle size={18} />
+                                                <span>134</span>
+                                            </button>
+                                            <button onClick={() => handleShare(feedPosts[1])} className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors cursor-pointer text-sm font-medium">
+                                                <Share2 size={18} />
+                                                <span>67</span>
+                                            </button>
+                                        </div>
+                                        {/* Tipping quick action */}
+                                        <button className="flex items-center gap-1.5 px-3 py-1.5 bg-[#d032e5]/10 hover:bg-[#d032e5]/20 text-[#d032e5] text-xs font-bold rounded-lg border border-[#d032e5]/30 transition-all">
+                                            <Coins size={14} className="text-[#d032e5]" />
+                                            <span>Support</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+
+                        </div>
+
                     </div>
+
+                    {/* Right Column (Sidebar Widgets) */}
+                    <div className="flex flex-col gap-6 lg:col-span-1 order-3 lg:sticky lg:top-[140px] lg:h-fit lg:self-start">
+
+                        {/* Total Monthly Support Widget */}
+                        <div className="bg-[#0b0a10] border border-[#221e35] rounded-[24px] p-4 md:p-6 flex flex-col gap-4">
+                            <div className="flex items-center gap-2">
+                                <Wallet className="w-4 h-4 text-emerald-400" />
+                                <h3 className="text-xs font-bold text-gray-400 tracking-wider uppercase">TOTAL SUPPORT BULAN INI</h3>
+                            </div>
+                            <div className="bg-[#062414] border border-[#0d502d] rounded-2xl p-4 flex flex-col">
+                                <span className="text-xs text-emerald-400 font-medium">Total dikeluarkan</span>
+                                <span className="text-xl font-bold text-emerald-400 mt-1">Rp 175.000</span>
+                                <span className="text-xs text-emerald-500 font-medium mt-1">3 subscription + 2 tipping</span>
+                            </div>
+                        </div>
+
+                        {/* My Subscription Widget */}
+                        <div className="bg-[#0b0a10] border border-[#221e35] rounded-[24px] p-4 md:p-6 flex flex-col gap-6">
+                            <div className="flex items-center gap-2">
+                                <Star className="w-4 h-4 text-yellow-500 fill-yellow-500/10" />
+                                <h3 className="text-xs font-bold text-gray-400 tracking-wider uppercase">MY SUBSCRIPTION</h3>
+                            </div>
+                            <div className="flex flex-col gap-4">
+                                {/* Sub row 1 */}
+                                <div className="flex items-center justify-between gap-3">
+                                    <div className="flex items-center gap-2 min-w-0">
+                                        <div className="w-8 h-8 rounded-full bg-zinc-800 border border-zinc-700 font-bold text-[10px] flex items-center justify-center text-zinc-300 shrink-0">ZP</div>
+                                        <div className="min-w-0">
+                                            <p className="text-xs font-bold text-white truncate max-w-[90px]">Zenyth Prime</p>
+                                            <p className="text-[10px] text-gray-500 truncate mt-0.5">Warrior Tier</p>
+                                        </div>
+                                    </div>
+                                    <span className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-bold text-[10px] px-2 py-0.5 rounded-full shrink-0">
+                                        Active
+                                    </span>
+                                </div>
+                                {/* Sub row 2 */}
+                                <div className="flex items-center justify-between gap-3">
+                                    <div className="flex items-center gap-2 min-w-0">
+                                        <div className="w-8 h-8 rounded-full bg-zinc-800 border border-zinc-700 font-bold text-[10px] flex items-center justify-center text-zinc-300 shrink-0">AS</div>
+                                        <div className="min-w-0">
+                                            <p className="text-xs font-bold text-white truncate max-w-[90px]">Avianna Skylark</p>
+                                            <p className="text-[10px] text-gray-500 truncate mt-0.5">Angel Tier</p>
+                                        </div>
+                                    </div>
+                                    <span className="bg-amber-500/10 border border-amber-500/20 text-amber-500 font-bold text-[10px] px-2 py-0.5 rounded-full shrink-0">
+                                        3 hari lagi
+                                    </span>
+                                </div>
+                                {/* Sub row 3 */}
+                                <div className="flex items-center justify-between gap-3">
+                                    <div className="flex items-center gap-2 min-w-0">
+                                        <div className="w-8 h-8 rounded-full bg-zinc-800 border border-zinc-700 font-bold text-[10px] flex items-center justify-center text-zinc-300 shrink-0">CM</div>
+                                        <div className="min-w-0">
+                                            <p className="text-xs font-bold text-white truncate max-w-[90px]">Celeste Moon</p>
+                                            <p className="text-[10px] text-gray-500 truncate mt-0.5">Moonlight VIP</p>
+                                        </div>
+                                    </div>
+                                    <span className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-bold text-[10px] px-2 py-0.5 rounded-full shrink-0">
+                                        Active
+                                    </span>
+                                </div>
+                            </div>
+                            <button onClick={() => setActiveTab('Subscribed')} className="w-full py-2.5 bg-transparent border border-zinc-800 hover:border-zinc-700 hover:bg-white/5 rounded-xl text-xs font-bold text-gray-300 hover:text-white transition-all cursor-pointer">
+                                Manage Subscriptions
+                            </button>
+                        </div>
+
+                        {/* Virtual Gifts Widget */}
+                        <div className="bg-[#0b0a10] border border-[#221e35] rounded-[24px] p-4 md:p-6 flex flex-col gap-6">
+                            <div className="flex items-center gap-2">
+                                <Award className="w-4 h-4 text-violet-400" />
+                                <h3 className="text-xs font-bold text-gray-400 tracking-wider uppercase">VIRTUAL GIFTS</h3>
+                            </div>
+                            <div className="grid grid-cols-2 gap-3">
+                                {/* Badge slot 1 */}
+                                <div className="relative bg-zinc-950 border border-zinc-900 rounded-xl p-3 flex flex-col items-center text-center gap-1.5 hover:border-[#d032e5] transition-colors cursor-pointer group">
+                                    <div className="absolute top-1.5 right-1.5 bg-[#d032e5]/20 text-[#d032e5] text-[8px] font-bold px-1.5 py-0.5 rounded-full">x10</div>
+                                    <Flame size={16} className="text-orange-500 fill-orange-500/10 mb-1" />
+                                    <span className="text-[10px] font-bold text-white leading-tight">Cosmic Flame</span>
+                                    <span className="text-[8px] text-[#d032e5] font-medium leading-tight">Zenyth Prime</span>
+                                </div>
+                                {/* Badge slot 2 */}
+                                <div className="relative bg-zinc-950 border border-zinc-900 rounded-xl p-3 flex flex-col items-center text-center gap-1.5 hover:border-[#d032e5] transition-colors cursor-pointer group">
+                                    <div className="absolute top-1.5 right-1.5 bg-[#d032e5]/20 text-[#d032e5] text-[8px] font-bold px-1.5 py-0.5 rounded-full">x5</div>
+                                    <Heart size={16} className="text-rose-500 fill-rose-500/10 mb-1" />
+                                    <span className="text-[10px] font-bold text-white leading-tight">Ruby Heart</span>
+                                    <span className="text-[8px] text-[#d032e5] font-medium leading-tight">Avianna Skylark</span>
+                                </div>
+                                {/* Badge slot 3 */}
+                                <div className="relative bg-zinc-950 border border-zinc-900 rounded-xl p-3 flex flex-col items-center text-center gap-1.5 hover:border-[#d032e5] transition-colors cursor-pointer group">
+                                    <div className="absolute top-1.5 right-1.5 bg-[#d032e5]/20 text-[#d032e5] text-[8px] font-bold px-1.5 py-0.5 rounded-full">x2</div>
+                                    <Crown size={16} className="text-violet-500 fill-violet-500/10 mb-1" />
+                                    <span className="text-[10px] font-bold text-white leading-tight">Golden Crown</span>
+                                    <span className="text-[8px] text-[#d032e5] font-medium leading-tight">Celeste Moon</span>
+                                </div>
+                                {/* Badge slot 4 */}
+                                <div className="bg-zinc-950/50 border border-zinc-950 rounded-xl p-3 flex flex-col items-center text-center gap-1.5 opacity-50">
+                                    <Lock size={16} className="text-zinc-600 mb-1" />
+                                    <span className="text-[10px] font-bold text-zinc-600 leading-tight">Locked</span>
+                                    <span className="text-[8px] text-zinc-600 font-medium leading-tight text-center">Koleksi belum<br/>tersedia</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Streak Support Widget */}
+                        <div className="bg-[#0b0a10] border border-[#221e35] rounded-[24px] p-4 md:p-6 flex flex-col gap-6">
+                            <div className="flex items-center gap-2">
+                                <Flame className="w-4 h-4 text-orange-500" />
+                                <h3 className="text-xs font-bold text-gray-400 tracking-wider uppercase">Streak Support</h3>
+                            </div>
+                            <div className="flex flex-col gap-4">
+                                {/* Streak 1 */}
+                                <div className="flex items-center justify-between gap-3">
+                                    <div>
+                                        <p className="font-bold text-sm text-white">Zenyth Prime</p>
+                                        <span className="text-[11px] text-gray-500">4 hari berturut-turut</span>
+                                    </div>
+                                    <span className="bg-[#d032e5]/10 border border-[#d032e5]/30 text-[#d032e5] font-bold text-xs px-2.5 py-1 rounded-sm">
+                                        4 hari
+                                    </span>
+                                </div>
+                                {/* Streak 2 */}
+                                <div className="flex items-center justify-between gap-3">
+                                    <div>
+                                        <p className="font-bold text-sm text-white">Avianna Skylark</p>
+                                        <span className="text-[11px] text-gray-500">2 hari berturut-turut</span>
+                                    </div>
+                                    <span className="bg-[#d032e5]/10 border border-[#d032e5]/30 text-[#d032e5] font-bold text-xs px-2.5 py-1 rounded-sm">
+                                        2 hari
+                                    </span>
+                                </div>
+                                {/* Streak 3 */}
+                                <div className="flex items-center justify-between gap-3">
+                                    <div>
+                                        <p className="font-bold text-sm text-white">Celeste Moon</p>
+                                        <span className="text-[11px] text-gray-500">1 hari berturut-turut</span>
+                                    </div>
+                                    <span className="bg-[#d032e5]/10 border border-[#d032e5]/30 text-[#d032e5] font-bold text-xs px-2.5 py-1 rounded-sm">
+                                        1 hari
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
         )}
@@ -1146,6 +1579,48 @@ export default function CreatorProfile({ onNavigate, onProductSelect, onCustomiz
                         {supportingLeaderboard[2] && <div className="flex flex-col items-center gap-3"><div className="relative"><div className="w-20 h-20 rounded-full border-[3px] border-[#CD7F32] overflow-hidden"><img src={supportingLeaderboard[2].image} className="w-full h-full object-cover" alt="Rank 3" loading="lazy" decoding="async" /></div><div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-[#CD7F32] text-black text-xs font-bold px-2 py-0.5 rounded-full">#3</div></div><div className="text-center"><h3 className="font-bold text-white text-sm">{supportingLeaderboard[2].name}</h3><p className="text-[#d032e5] font-bold text-xs">{formatPrice(supportingLeaderboard[2].total)}</p></div></div>}
                     </div>
                     <div className="flex flex-col gap-3">{supportingLeaderboard.slice(3).map((creator, index) => <div key={creator.id} className="flex items-center gap-4 p-4 rounded-xl bg-[#18181b] border border-[#27272a] hover:border-[#d032e5] transition-all group"><span className="text-gray-500 font-bold text-lg w-8 text-center">{index + 4}</span><div className="w-12 h-12 rounded-full bg-gray-800 overflow-hidden shrink-0 border border-gray-700 group-hover:border-[#d032e5] transition-colors"><img src={creator.image} className="w-full h-full object-cover" alt={creator.name} loading="lazy" decoding="async" /></div><span className="text-white font-bold flex-1">{creator.name}</span><div className="flex items-center gap-2"><Trophy size={14} className="text-gray-600 group-hover:text-[#d032e5] transition-colors" /><span className="text-[#d032e5] font-bold">{formatPrice(creator.total)}</span></div></div>)}</div>
+                </div>
+            </div>
+        )}
+
+        {activeTab === 'Badges' && (
+            <div className="w-full flex flex-col items-center gap-6">
+                <div className="text-center">
+                    <h2 className="text-3xl font-bold text-white mb-2">Virtual Gifts</h2>
+                    <p className="text-gray-400">Koleksi virtual gifts eksklusif yang diproduksi dan diunggah oleh kreator favoritmu.</p>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-[800px] w-full mt-8">
+                    <div className="relative bg-[#0c0c0c] border border-white/10 rounded-2xl p-6 flex flex-col items-center text-center gap-3 hover:border-[#d032e5] transition-colors cursor-pointer">
+                        <div className="absolute top-3 right-3 bg-[#d032e5]/20 border border-[#d032e5]/50 text-[#d032e5] text-[10px] font-bold px-2 py-0.5 rounded-full">x10</div>
+                        <div className="w-16 h-16 rounded-full bg-orange-500/10 flex items-center justify-center text-orange-500">
+                            <Flame size={32} />
+                        </div>
+                        <h4 className="font-bold text-white text-base">Cosmic Flame</h4>
+                        <p className="text-xs text-[#d032e5] font-medium">Zenyth Prime</p>
+                    </div>
+                    <div className="relative bg-[#0c0c0c] border border-white/10 rounded-2xl p-6 flex flex-col items-center text-center gap-3 hover:border-[#d032e5] transition-colors cursor-pointer">
+                        <div className="absolute top-3 right-3 bg-[#d032e5]/20 border border-[#d032e5]/50 text-[#d032e5] text-[10px] font-bold px-2 py-0.5 rounded-full">x5</div>
+                        <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center text-red-500">
+                            <Heart size={32} />
+                        </div>
+                        <h4 className="font-bold text-white text-base">Ruby Heart</h4>
+                        <p className="text-xs text-[#d032e5] font-medium">Avianna Skylark</p>
+                    </div>
+                    <div className="relative bg-[#0c0c0c] border border-white/10 rounded-2xl p-6 flex flex-col items-center text-center gap-3 hover:border-[#d032e5] transition-colors cursor-pointer">
+                        <div className="absolute top-3 right-3 bg-[#d032e5]/20 border border-[#d032e5]/50 text-[#d032e5] text-[10px] font-bold px-2 py-0.5 rounded-full">x2</div>
+                        <div className="w-16 h-16 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-500">
+                            <Crown size={32} />
+                        </div>
+                        <h4 className="font-bold text-white text-base">Golden Crown</h4>
+                        <p className="text-xs text-[#d032e5] font-medium">Celeste Moon</p>
+                    </div>
+                    <div className="bg-[#0c0c0c] border border-white/10 rounded-2xl p-6 flex flex-col items-center text-center gap-3 opacity-50">
+                        <div className="w-16 h-16 rounded-full bg-gray-500/10 flex items-center justify-center text-gray-500">
+                            <Lock size={32} />
+                        </div>
+                        <h4 className="font-bold text-gray-400 text-base">Locked</h4>
+                        <p className="text-xs text-gray-500">Koleksi belum tersedia</p>
+                    </div>
                 </div>
             </div>
         )}
@@ -2568,6 +3043,115 @@ export default function CreatorProfile({ onNavigate, onProductSelect, onCustomiz
         </DialogContent>
       </Dialog>
 
+
+
+{/* Creator Story Viewer Dialog */}
+      {activeStoryIndex !== null && (
+        <Dialog open={activeStoryIndex !== null} onOpenChange={(open) => !open && setActiveStoryIndex(null)}>
+            <DialogContent className="w-[90vw] h-[80vh] max-w-[420px] max-h-[850px] p-0 bg-neutral-950 border-none text-white overflow-hidden rounded-2xl flex flex-col justify-between shadow-[0_0_50px_rgba(208,50,229,0.2)]">
+                <DialogTitle className="sr-only">Creator Story</DialogTitle>
+                
+                {/* Progress Indicators */}
+                <div className="absolute top-4 left-4 right-4 flex gap-1.5 z-50">
+                    {stories.map((_, idx) => (
+                        <div key={idx} className="h-1 flex-1 bg-white/20 rounded-full overflow-hidden">
+                            <div 
+                                className={`h-full bg-white rounded-full ${
+                                    idx < activeStoryIndex 
+                                        ? "w-full" 
+                                        : idx === activeStoryIndex 
+                                            ? "w-full animate-[story-progress_5s_linear_forwards]" 
+                                            : "w-0"
+                                }`}
+                            />
+                        </div>
+                    ))}
+                </div>
+
+                {/* Header info */}
+                <div className="absolute top-8 left-4 right-4 flex items-center justify-between z-50">
+                    <div className="flex items-center gap-2.5 bg-black/55 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 shadow-lg">
+                        <img 
+                            src={stories[activeStoryIndex].avatar} 
+                            className="w-8 h-8 rounded-full border border-white/20 object-cover" 
+                            alt="avatar" 
+                        />
+                        <div className="flex flex-col">
+                            <span className="font-bold text-xs text-white leading-tight">{stories[activeStoryIndex].creator}</span>
+                            <span className="text-[9px] text-[#d032e5] font-semibold tracking-wide uppercase">Cosmic Story</span>
+                        </div>
+                    </div>
+                    <DialogClose className="bg-black/55 hover:bg-black/80 p-2 rounded-full text-white/80 hover:text-white transition-colors cursor-pointer border border-white/5 shadow-lg">
+                        <X size={16} />
+                    </DialogClose>
+                </div>
+
+                {/* Navigation Areas */}
+                <div className="absolute inset-x-0 top-16 bottom-24 flex z-30 pointer-events-none">
+                    <div 
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            if (activeStoryIndex > 0) setActiveStoryIndex(activeStoryIndex - 1);
+                        }} 
+                        className="w-1/3 h-full cursor-pointer pointer-events-auto"
+                    />
+                    <div 
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            if (activeStoryIndex < stories.length - 1) {
+                                const nextIdx = activeStoryIndex + 1;
+                                setStories(prev => prev.map((s, i) => i === nextIdx ? { ...s, seen: true } : s));
+                                setActiveStoryIndex(nextIdx);
+                            } else {
+                                setActiveStoryIndex(null);
+                            }
+                        }} 
+                        className="w-2/3 h-full cursor-pointer pointer-events-auto"
+                    />
+                </div>
+
+                {/* Media Image */}
+                <div className="flex-1 w-full h-full bg-zinc-950 flex items-center justify-center relative overflow-hidden">
+                    <img 
+                        src={stories[activeStoryIndex].media} 
+                        className="w-full h-full object-cover select-none pointer-events-none" 
+                        alt="Story" 
+                    />
+                </div>
+
+                {/* Footer and interactions */}
+                <div className="p-4 bg-gradient-to-t from-black via-black/80 to-transparent flex flex-col gap-4 z-40 relative pt-12 shrink-0">
+                    <p className="text-xs md:text-sm text-gray-200 leading-relaxed font-normal bg-black/40 backdrop-blur-sm p-3.5 rounded-xl border border-white/10 shadow-lg">
+                        {stories[activeStoryIndex].caption}
+                    </p>
+                    
+                    <div className="flex items-center gap-2">
+                        <div className="flex-1 bg-white/10 border border-white/5 rounded-full px-4 py-2 text-xs text-gray-400 select-none">
+                            Comment on this story...
+                        </div>
+                        <button 
+                            onClick={() => {
+                                setActiveStoryIndex(null);
+                                setActiveTab("Supporting");
+                            }}
+                            className="bg-[#d032e5] hover:bg-[#a61cc9] text-white font-bold text-xs px-4 py-2.5 rounded-full shrink-0 flex items-center gap-1.5 transition-colors cursor-pointer shadow-[0_0_15px_rgba(208,50,229,0.4)]"
+                        >
+                            <Coins size={14} />
+                            <span>Support</span>
+                        </button>
+                    </div>
+                </div>
+            </DialogContent>
+        </Dialog>
+      )}
+
+      {/* Dynamic Keyframes for smooth story bar */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes story-progress {
+          from { width: 0%; }
+          to { width: 100%; }
+        }
+      `}} />
     </div>
 </div>
   );
