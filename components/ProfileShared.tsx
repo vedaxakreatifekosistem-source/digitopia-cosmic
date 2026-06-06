@@ -47,8 +47,6 @@ export function OrderCard({
   imageUrl,
 }: any) {
   const cleanPrice = parseInt(String(price).replace(/\./g, ''), 10) || 0;
-  const cleanFee = parseInt(String(fee).replace(/\./g, ''), 10) || 0;
-  const qrisPayment = Math.round((cleanPrice + cleanFee) * 0.007);
 
   return (
     <div className="bg-white/10 rounded-[10px] p-[10px] w-full">
@@ -79,19 +77,11 @@ export function OrderCard({
             <p className="text-gray-400">Product Price</p>
             <p className="text-right">{price}</p>
           </div>
-          <div className="flex justify-between gap-[10px] text-[12px] text-white font-sans font-normal">
-            <p className="text-gray-400">Platform Fee</p>
-            <p className="text-right">{fee}</p>
-          </div>
-          <div className="flex justify-between gap-[10px] text-[12px] text-white font-sans font-normal">
-            <p className="text-gray-400">QRIS Payment (0.7%)</p>
-            <p className="text-right">{formatPrice(qrisPayment)}</p>
-          </div>
           <div className="relative pt-[5px] mt-[5px]">
             <div className="absolute top-0 left-0 right-0 h-[1px] bg-white/20" />
             <div className="flex justify-between gap-[10px] text-[12px] text-white font-sans font-bold pt-1">
               <p>Total Payment</p>
-              <p className="text-right text-[#d032e5]">{total}</p>
+              <p className="text-right text-[#d032e5]">{price}</p>
             </div>
           </div>
         </div>
@@ -102,9 +92,7 @@ export function OrderCard({
 
 export function TransactionCard({ transactionId, type, description, status, date, amount, image }: any) {
   const baseAmount = Math.abs(amount);
-  const platformFee = Math.floor(baseAmount * 0.05);
-  const qrisPayment = Math.floor((baseAmount + platformFee) * 0.007);
-  const totalPayment = baseAmount + platformFee + qrisPayment;
+  const totalPayment = baseAmount;
 
   return (
     <div className="bg-white/10 rounded-[10px] p-[10px] w-full">
@@ -132,14 +120,6 @@ export function TransactionCard({ transactionId, type, description, status, date
             <p className="text-gray-400">Price Amount</p>
             <p className="text-right">{formatPrice(baseAmount)}</p>
           </div>
-          <div className="flex justify-between gap-[10px] text-[12px] text-white font-sans font-normal">
-            <p className="text-gray-400">Platform Fee</p>
-            <p className="text-right">{formatPrice(platformFee)}</p>
-          </div>
-          <div className="flex justify-between gap-[10px] text-[12px] text-white font-sans font-normal">
-            <p className="text-gray-400">QRIS Payment</p>
-            <p className="text-right">{formatPrice(qrisPayment)}</p>
-          </div>
           <div className="relative pt-[5px] mt-[5px]">
             <div className="absolute top-0 left-0 right-0 h-[1px] bg-white/20" />
             <div className="flex justify-between gap-[10px] text-[12px] text-white font-sans font-bold pt-1">
@@ -155,9 +135,7 @@ export function TransactionCard({ transactionId, type, description, status, date
 
 export function SubscriptionCard({ id, creator, plan, status, price, purchaseDate, planDuration, renewalDate, image, features }: any) {
   const subscriptionId = `CSM-SUB-${1000 + id}`;
-  const fee = 2500;
-  const qrisPayment = Math.round((price + fee) * 0.007);
-  const total = price + fee + qrisPayment;
+  const total = price;
 
   return (
     <div className="bg-white/10 rounded-[10px] p-[10px] w-full">
@@ -187,14 +165,6 @@ export function SubscriptionCard({ id, creator, plan, status, price, purchaseDat
           <div className="flex justify-between gap-[10px] text-[12px] text-white font-sans font-normal">
             <p className="text-gray-400">Price</p>
             <p className="text-right">{formatPrice(price)}</p>
-          </div>
-          <div className="flex justify-between gap-[10px] text-[12px] text-white font-sans font-normal">
-            <p className="text-gray-400">Platform Fee</p>
-            <p className="text-right">{formatPrice(fee)}</p>
-          </div>
-          <div className="flex justify-between gap-[10px] text-[12px] text-white font-sans font-normal">
-            <p className="text-gray-400">QRIS Payment (0.7%)</p>
-            <p className="text-right">{formatPrice(qrisPayment)}</p>
           </div>
           <div className="relative pt-[5px] mt-[5px]">
             <div className="absolute top-0 left-0 right-0 h-[1px] bg-white/20" />

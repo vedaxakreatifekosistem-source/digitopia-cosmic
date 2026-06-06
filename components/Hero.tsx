@@ -95,7 +95,7 @@ export default function Hero({ onNavigate }: { onNavigate?: (view: string) => vo
         </div>
 
         <p className="text-white text-[16px] md:text-[26px] font-medium tracking-wide mb-8 px-4">
-          Creative Online Space for Market, Interaction, & Connection
+          Creative Online Space for Makers, Influencers, & Cosplayers
         </p>
 
         <button 
