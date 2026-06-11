@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from "react";
-import { Star, MessageCircle, Share2, Heart, Send, Check, MoreHorizontal, UserPlus, UserCheck, Image as ImageIcon, Instagram, Twitter, Youtube, Globe, Crown, Zap, Shield, Bookmark, Smile, X, Search, SortAsc, ShoppingBag, ChevronRight, Trophy, Copy, Facebook, Linkedin, Link as LinkIcon } from "lucide-react";
+import { Star, MessageCircle, Share2, Heart, Send, Check, MoreHorizontal, UserPlus, UserCheck, Image as ImageIcon, Instagram, Twitter, Youtube, Globe, Crown, Zap, Shield, Bookmark, Smile, X, Search, SortAsc, ShoppingBag, ChevronRight, Trophy, Copy, Facebook, Linkedin, Link as LinkIcon, TrendingUp, Calendar, Coins, Lock, Volume2, Bell } from "lucide-react";
 import { Progress } from "./ui/progress";
 import Autoplay from "embla-carousel-autoplay";
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
@@ -265,7 +265,18 @@ function SidebarSection({ title, children, defaultOpen = true }: { title: string
 }
 
 export default function CreatorDetail({ creator, onProductSelect, onCreatorSelect }: { creator?: any, onProductSelect?: (product: any) => void, onCreatorSelect?: (creator: any) => void }) {
-  const [activeTab, setActiveTab] = useState("Home");
+  const [activeTab, setActiveTab ] = useState("Home");
+  const [selectedCat, setSelectedCat] = useState("Semua");
+  const [pinnedLiked, setPinnedLiked] = useState(false);
+  const [pinnedLikes, setPinnedLikes] = useState(532);
+  const [post1Liked, setPost1Liked] = useState(false);
+  const [post1Likes, setPost1Likes] = useState(99);
+  const [post2Liked, setPost2Liked] = useState(false);
+  const [post2Likes, setPost2Likes] = useState(245);
+  const [wishAmt, setWishAmt] = useState<number>(25000);
+  const [wishMessage, setWishMessage] = useState("");
+  const [wishProgress, setWishProgress] = useState(90);
+  const [isReminded, setIsReminded] = useState(false);
   const [membershipIndex, setMembershipIndex] = useState(0);
   const [selectedPost, setSelectedPost] = useState<typeof feedGridData[0] | null>(null);
   const [isPostDialogOpen, setIsPostDialogOpen] = useState(false);
@@ -547,318 +558,582 @@ export default function CreatorDetail({ creator, onProductSelect, onCreatorSelec
 
         {/* Home Tab Content */}
         {activeTab === 'Home' && (
-            <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-8 animate-in fade-in duration-500">
                 
-                {/* Main Grid Content (Left Section, Feed, Right Sidebar) */}
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                {/* Main Grid Content (Left Column, Middle Column, Right Column) */}
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                     
-                    {/* Left Column (New Support Board & Membership Section) - Sticky */}
-                    <div className="flex flex-col gap-6 lg:col-span-1 order-2 lg:order-1 lg:sticky lg:top-[140px] lg:h-fit lg:self-start">
+                    {/* LEFT COLUMN: Sidebar 1 (Statistik Kreator, Support Board, Jadwal Konten, Membership) */}
+                    <div className="flex flex-col gap-6 lg:col-span-1 order-2 lg:order-1">
                         
-                        {/* New Support Board Section with Carousel */}
-                        <div className="bg-[#0c0c0c] border border-[#27272a] rounded-[24px] p-4 md:p-6">
-                            <div className="flex items-center gap-2 mb-6">
-                                <h3 className="text-lg md:text-xl font-bold text-white">Support Board</h3>
-                                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                        {/* Statistik Kreator */}
+                        <div className="bg-[#0c0c0c] border border-[#27272a] rounded-[24px] p-5 shadow-2xl">
+                            <div className="flex items-center gap-2 mb-4 text-gray-400">
+                                <Trophy size={14} className="text-gray-400" />
+                                <span className="text-[11px] font-bold tracking-wider uppercase">STATISTIK KREATOR</span>
                             </div>
                             
-                            <Carousel 
-                                plugins={[
-                                    Autoplay({
-                                        delay: 4000,
-                                        stopOnMouseEnter: true,
-                                        stopOnInteraction: false,
-                                    }),
-                                ]}
-                                opts={{
-                                    align: "start",
-                                    loop: true,
-                                }}
-                                className="w-full select-none"
-                            >
-                                <CarouselContent>
-                                    {supportData.map((item) => (
-                                        <CarouselItem key={item.id} className="basis-full">
-                                            <div className="flex flex-col gap-3 p-4 rounded-xl bg-[#18181b] border border-white/5 hover:border-[#d032e5] transition-colors group cursor-grab active:cursor-grabbing">
-                                                {/* Transaction Info */}
-                                                <div className="flex gap-3">
-                                                    <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${item.avatarColor} shrink-0 flex items-center justify-center text-xs font-bold text-white shadow-inner`}>
-                                                        {item.user.charAt(0)}
-                                                    </div>
-                                                    
-                                                    <div className="flex-1">
-                                                        <p className="text-sm leading-relaxed text-gray-300">
-                                                            <span className="font-bold text-white">{item.user}</span>
-                                                            <span className="text-gray-400"> Membeli </span>
-                                                            <span className="text-[#d032e5] font-medium">{item.type}</span>
-                                                            <span className="font-medium text-white"> {item.item} </span>
-                                                            <span className="text-gray-400">dengan harga </span>
-                                                            <span className="font-bold text-white">{item.price}.</span>
-                                                        </p>
-                                                        <span className="text-[10px] text-gray-500 mt-1 block">{item.time}</span>
-                                                    </div>
-                                                </div>
+                            <div className="grid grid-cols-2 gap-3 mb-4">
+                                <div className="bg-[#121214] border border-white/5 rounded-2xl p-4 flex flex-col justify-center">
+                                    <span className="text-2xl font-black text-white leading-tight">892</span>
+                                    <span className="text-[11px] text-gray-400 font-medium mt-0.5">Subscribers</span>
+                                </div>
+                                <div className="bg-[#121214] border border-white/5 rounded-2xl p-4 flex flex-col justify-center">
+                                    <span className="text-2xl font-black text-white leading-tight">48</span>
+                                    <span className="text-[11px] text-gray-400 font-medium mt-0.5">Konten</span>
+                                </div>
+                                <div className="bg-[#121214] border border-white/5 rounded-2xl p-4 flex flex-col justify-center">
+                                    <span className="text-2xl font-black text-white leading-tight">24</span>
+                                    <span className="text-[11px] text-gray-400 font-medium mt-0.5">Produk dijual</span>
+                                </div>
+                                <div className="bg-[#121214] border border-white/5 rounded-2xl p-4 flex flex-col justify-center">
+                                    <span className="text-2xl font-black text-white leading-tight">4.8</span>
+                                    <span className="text-[11px] text-gray-400 font-medium mt-0.5">Rating</span>
+                                </div>
+                            </div>
 
-                                                {/* User Message */}
-                                                {item.message && (
-                                                    <div className="bg-black/40 p-3 rounded-lg border border-white/5 ml-[44px] relative">
-                                                        <div className="absolute -top-1 left-4 w-2 h-2 bg-black/40 border-t border-l border-white/5 transform rotate-45"></div>
-                                                        <p className="text-xs text-gray-300 italic leading-relaxed">
-                                                            "{item.message}"
-                                                        </p>
-                                                    </div>
-                                                )}
-
-                                                {/* Creator Reply */}
-                                                {item.reply && (
-                                                    <div className="flex gap-2 items-start ml-[44px] mt-1 relative animate-in fade-in slide-in-from-top-1 duration-300">
-                                                        <div className="shrink-0 mt-0.5">
-                                                            <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <path fillRule="evenodd" clipRule="evenodd" d="M11.6414 14.6087C11.3973 14.3646 11.3973 13.9689 11.6414 13.7248L14.7411 10.6251L7.91667 10.6251C7.12221 10.6251 5.94443 10.3919 4.94731 9.67396C3.91832 8.93308 3.125 7.70378 3.125 5.83341C3.125 5.48824 3.40482 5.20841 3.75 5.20841C4.09518 5.20841 4.375 5.48824 4.375 5.83341C4.375 7.29638 4.97057 8.15041 5.67769 8.65954C6.41668 9.19161 7.32224 9.37508 7.91667 9.37508L14.7411 9.37508L11.6414 6.27536C11.3973 6.03128 11.3973 5.63555 11.6414 5.39147C11.8855 5.14739 12.2812 5.14739 12.5253 5.39147C12.2812 14.8528 11.8855 14.8528 11.6414 14.6087Z" fill="white"/>
-                                                            </svg>
-                                                        </div>
-                                                        <p className="text-xs leading-relaxed text-gray-400">
-                                                            <span className="font-bold text-white mr-1">{item.replyUser}</span>
-                                                            {item.reply}
-                                                        </p>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </CarouselItem>
-                                    ))}
-                                </CarouselContent>
-                            </Carousel>
+                            <div className="bg-[#052e16]/60 border border-[#22c55e]/20 text-[#4ade80] rounded-[16px] p-3 flex items-center gap-2 text-xs font-semibold">
+                                <TrendingUp size={14} className="text-[#4ade80] shrink-0" />
+                                <span>247 fans baru subscribe bulan ini</span>
+                            </div>
                         </div>
 
-                        {/* Membership Section */}
-                        <div className="bg-[#0c0c0c] border border-[#27272a] rounded-[24px] p-4 md:p-6 lg:sticky lg:top-[160px]">
-                            <h3 className="text-lg md:text-xl font-bold mb-6">Membership</h3>
+                        {/* Support Board */}
+                        <div className="bg-[#0c0c0c] border border-[#27272a] rounded-[24px] p-5 shadow-2xl">
+                            <div className="flex items-center gap-2 mb-4">
+                                <span className="w-2.5 h-2.5 rounded-full bg-[#10b981] animate-pulse" />
+                                <span className="text-[11px] font-bold text-gray-400 tracking-wider uppercase">SUPPORT BOARD</span>
+                            </div>
                             
-                            {/* Membership Stack Carousel */}
-                            <div className="relative h-[220px] w-full mb-6">
-                                {membershipTiers.map((tier, index) => {
-                                    // Calculate visual position (0 = Front, 1 = Middle, 2 = Back)
-                                    const position = (index - membershipIndex + membershipTiers.length) % membershipTiers.length;
-                                    
-                                    let positionClasses = "";
-                                    if (position === 0) positionClasses = "z-30 top-0 scale-100 opacity-100";
-                                    else if (position === 1) positionClasses = "z-20 top-4 scale-95 opacity-60";
-                                    else if (position === 2) positionClasses = "z-10 top-8 scale-90 opacity-30";
-                                    else positionClasses = "z-0 top-12 scale-80 opacity-0"; // Fallback for safety
-
-                                    return (
-                                        <div 
-                                            key={tier.id} 
-                                            className={`absolute w-full bg-[#18181b] rounded-[18px] p-4 border border-white/5 shadow-xl transition-all duration-700 ease-in-out cursor-pointer group hover:border-[#d032e5] ${positionClasses}`}
-                                        >
-                                            <div className="flex items-center justify-between mb-3">
-                                                <div className={`flex items-center gap-2 px-2.5 py-1 rounded-md ${tier.color} text-white`}>
-                                                    {tier.icon}
-                                                    <span className="text-xs font-bold">{tier.name}</span>
-                                                </div>
-                                            </div>
-                                            <div className="flex items-baseline gap-1 mb-2">
-                                                <span className="text-xl font-bold text-white">{tier.price}</span>
-                                            </div>
-                                            <div className="w-full h-px bg-white/5 mb-3" />
-                                            <div className="flex flex-col gap-1.5">
-                                                <span className="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Includes</span>
-                                                <span className="text-xs text-gray-300">Exclusive Content & Badges</span>
-                                            </div>
+                            {/* Card 1: Benz */}
+                            <div className="bg-[#121214] border border-white/5 rounded-[18px] p-4 flex flex-col gap-3 mb-4">
+                                <div className="flex items-start gap-2.5">
+                                    <div className="w-9 h-9 rounded-full bg-emerald-700 shrink-0 flex items-center justify-center text-sm font-bold text-white shadow-inner">
+                                        B
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <div className="flex items-baseline justify-between gap-1 flex-wrap">
+                                            <span className="font-bold text-sm text-white">Benz</span>
+                                            <span className="text-[10px] text-gray-500">19 hari lalu</span>
                                         </div>
-                                    );
-                                })}
+                                        <p className="text-xs text-gray-300 mt-1 leading-relaxed">
+                                            Membeli <span className="text-[#a855f7] font-semibold">Photopack Spicy Kurumi</span> seharga <span className="text-[#10b981] font-bold">Rp 100.000</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="bg-black/40 p-3 rounded-xl border border-white/5 ml-1 pt-2 pb-2">
+                                    <p className="text-xs text-gray-400 italic">"Notes: mantab"</p>
+                                </div>
                             </div>
 
-                            <button className="w-full py-3 bg-white text-black rounded-full font-bold text-sm hover:bg-gray-200 transition-colors cursor-pointer">
-                                View All Tiers
-                            </button>
+                            {/* Thread Creator Reply */}
+                            <div className="bg-transparent pl-4 border-l-2 border-white/10 flex flex-col gap-2">
+                                <div className="flex items-start gap-2.5">
+                                    <div className="w-8 h-8 rounded-full bg-zinc-800 shrink-0 flex items-center justify-center text-xs font-bold text-white border border-white/10">
+                                        F
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-xs text-white leading-relaxed">
+                                            <span className="font-bold mr-1.5 text-gray-200">Fareye Closhartt</span>
+                                            <span className="text-gray-400">Haaalllooo Im so sorry baru balik haluapp lagii</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Jadwal Konten */}
+                        <div className="bg-[#0c0c0c] border border-[#27272a] rounded-[24px] p-5 shadow-2xl">
+                            <div className="flex items-center gap-2 mb-4 text-gray-400">
+                                <Calendar size={14} />
+                                <span className="text-[11px] font-bold tracking-wider uppercase">JADWAL KONTEN</span>
+                            </div>
+                            
+                            <div className="flex flex-col gap-3">
+                                <div className="flex items-center gap-3.5">
+                                    <span className="bg-[#31151a] text-[#f43f5e] text-xs font-black px-3 py-1 rounded-[10px] w-12 text-center select-none shrink-0 border border-[#ef4444]/15">
+                                        Sen
+                                    </span>
+                                    <span className="text-xs text-gray-200 font-medium truncate">Posting fanart baru</span>
+                                </div>
+                                <div className="flex items-center gap-3.5">
+                                    <span className="bg-[#241334] text-[#b249f8] text-xs font-black px-3 py-1 rounded-[10px] w-12 text-center select-none shrink-0 border border-[#a855f7]/15">
+                                        Rab
+                                    </span>
+                                    <span className="text-xs text-gray-200 font-medium truncate">Live cosplay session</span>
+                                </div>
+                                <div className="flex items-center gap-3.5">
+                                    <span className="bg-[#14223d] text-[#3b82f6] text-xs font-black px-3 py-1 rounded-[10px] w-12 text-center select-none shrink-0 border border-[#3b82f6]/15">
+                                        Jum
+                                    </span>
+                                    <span className="text-xs text-gray-200 font-medium truncate">Q&A subscriber</span>
+                                </div>
+                                <div className="flex items-center gap-3.5">
+                                    <span className="bg-[#1c1b4e] text-[#6366f1] text-xs font-black px-3 py-1 rounded-[10px] w-12 text-center select-none shrink-0 border border-[#6366f1]/15">
+                                        Min
+                                    </span>
+                                    <span className="text-xs text-gray-200 font-medium truncate">Behind the scenes</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Produk Terlaris */}
+                        <div className="bg-[#0c0c0c] border border-[#27272a] rounded-[24px] p-5 shadow-2xl">
+                            <div className="flex items-center gap-2 mb-4 text-gray-400">
+                                <span className="text-base select-none">🛍️</span>
+                                <span className="text-[11px] font-bold tracking-wider uppercase">PRODUK TERLARIS</span>
+                            </div>
+                            
+                            <div className="flex flex-col gap-3.5">
+                                {/* Product 1 */}
+                                <div className="flex items-center gap-3 bg-[#121214] border border-white/5 rounded-2xl p-2 hover:border-white/10 transition-all cursor-pointer">
+                                    <div className="w-12 h-12 rounded-xl overflow-hidden bg-zinc-950 shrink-0">
+                                        <img src={imgGrid4} className="w-full h-full object-cover" alt="product" />
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <h5 className="font-extrabold text-xs text-white truncate">Moonlight Wallpack</h5>
+                                        <span className="text-[11px] font-extrabold text-purple-400 block mt-0.5">IDR 25.000</span>
+                                        <span className="text-[9px] text-gray-500 font-semibold block mt-0.5">847 terjual</span>
+                                    </div>
+                                </div>
+
+                                {/* Product 2 */}
+                                <div className="flex items-center gap-3 bg-[#121214] border border-white/5 rounded-2xl p-2 hover:border-white/10 transition-all cursor-pointer">
+                                    <div className="w-12 h-12 rounded-xl overflow-hidden bg-zinc-950 shrink-0">
+                                        <img src={imgGrid2} className="w-full h-full object-cover" alt="product" />
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <h5 className="font-extrabold text-xs text-white truncate">Spicy Kurumi Photopack</h5>
+                                        <span className="text-[11px] font-extrabold text-purple-400 block mt-0.5">IDR 100.000</span>
+                                        <span className="text-[9px] text-gray-500 font-semibold block mt-0.5">312 terjual</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    {/* Middle Column (Main Content - Feed) */}
-                    <div className="lg:col-span-2 flex flex-col gap-8 order-1 lg:order-2">
+                    {/* MIDDLE COLUMN: Main Content Feed (Stories, Pills, Posts) */}
+                    <div className="lg:col-span-2 flex flex-col gap-6 order-1 lg:order-2">
                         
-                        {/* Feed Posts */}
-                        <div className="flex flex-col gap-6">
-                            {posts.map((post) => (
-                                <div key={post.id} className="bg-[#0c0c0c] border border-[#27272a] rounded-[24px] p-4 md:p-6">
-                                    <div className="flex items-center justify-between mb-4">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-12 h-12 rounded-full border border-gray-700 bg-black overflow-hidden">
-                                                <img src={imgAvatar} className="w-full h-full object-cover" alt="avatar" />
-                                            </div>
-                                            <div>
-                                                <div className="flex items-center gap-1">
-                                                    <span className="font-bold text-white text-base">{creator?.name || "Fareye Closhartt"}</span>
-                                                    <div className="bg-[#0095f6] rounded-full p-[3px]">
-                                                        <Check size={10} className="text-white" strokeWidth={3} />
-                                                    </div>
-                                                </div>
-                                                <div className="flex items-center gap-2 text-gray-500 text-sm">
-                                                    <span>@{creator?.name?.toLowerCase().replace(/\s+/g, '') || "fareyecloshartt"}</span>
-                                                    <span>•</span>
-                                                    <span>{post.time}</span>
-                                                </div>
+                        {/* Highlights (Story Circles) */}
+                        <div className="flex items-center gap-4 overflow-x-auto pb-2 mb-2 scrollbar-none w-full">
+                            {[
+                                { id: 1, title: "Cosplay...", img: imgGrid1 },
+                                { id: 2, title: "Behind ...", img: imgGrid2 },
+                                { id: 3, title: "Live re...", img: imgGrid3 },
+                                { id: 4, title: "New pr...", img: imgGrid4 },
+                            ].map((story) => (
+                                <div key={story.id} className="flex flex-col items-center gap-1.5 shrink-0 select-none group cursor-pointer">
+                                    <div className="p-[2.5px] bg-gradient-to-tr from-[#9333ea] via-[#ec4899] to-[#f43f5e] rounded-full group-hover:scale-105 transition-transform duration-300">
+                                        <div className="p-[2px] bg-black rounded-full">
+                                            <div className="w-[56px] h-[56px] rounded-full overflow-hidden bg-zinc-800 flex items-center justify-center border border-white/10">
+                                                <img src={story.img} className="w-full h-full object-cover" alt="story" referrerPolicy="no-referrer" />
                                             </div>
                                         </div>
-                                        <button className="text-gray-500 hover:text-white cursor-pointer"><MoreHorizontal size={24}/></button>
                                     </div>
-
-                                    <p className="text-gray-300 text-base leading-relaxed mb-4">
-                                        {post.content}
-                                    </p>
-
-                                    <div className="border-t border-white/5 py-4 flex items-center justify-between">
-                                        <div className="flex gap-8">
-                                            <button 
-                                                onClick={() => handleLike(post.id)}
-                                                className={`flex items-center gap-2 transition-colors group cursor-pointer ${post.isLiked ? 'text-red-500' : 'text-gray-400 hover:text-red-500'}`}
-                                            >
-                                                <Heart size={20} className={`transition-all duration-300 ${post.isLiked ? 'fill-red-500 scale-110' : 'group-hover:fill-red-500'}`} />
-                                                <span className={`text-sm font-medium ${post.isLiked ? 'text-red-500' : ''}`}>{post.likes}</span>
-                                            </button>
-                                            <button className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors cursor-pointer group">
-                                                <MessageCircle size={20} className="group-hover:text-blue-400 transition-colors" />
-                                                <span className="text-sm font-medium group-hover:text-blue-400">{post.comments}</span>
-                                            </button>
-                                            <button 
-                                                onClick={() => handleSharePost(post.id)}
-                                                className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors cursor-pointer group"
-                                            >
-                                                <Share2 size={20} className="group-hover:text-green-400 transition-colors" />
-                                                <span className="text-sm font-medium group-hover:text-green-400">{post.shares}</span>
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex gap-3 items-center mt-2">
-                                        <div className="w-10 h-10 rounded-full bg-gray-800 shrink-0 overflow-hidden border border-gray-700">
-                                            <img src={imgAvatar} className="w-full h-full object-cover" alt="User" />
-                                        </div>
-                                        <div className="flex-1 relative">
-                                            <input 
-                                                type="text" 
-                                                placeholder="Type your Comment..." 
-                                                value={commentInputs[post.id] || ""}
-                                                onChange={(e) => handleCommentChange(post.id, e.target.value)}
-                                                onKeyDown={(e) => e.key === 'Enter' && handleSendComment(post.id)}
-                                                className="w-full bg-[#18181b] border border-gray-800 rounded-full py-3 pl-5 pr-12 text-sm text-white focus:outline-none focus:border-[#d032e5] transition-colors placeholder-gray-500"
-                                            />
-                                            <button 
-                                                onClick={() => handleSendComment(post.id)}
-                                                className={`absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full transition-colors ${commentInputs[post.id]?.trim() ? 'text-[#d032e5] hover:bg-[#d032e5]/10' : 'text-gray-500 cursor-default'}`}
-                                                disabled={!commentInputs[post.id]?.trim()}
-                                            >
-                                                <Send size={16} />
-                                            </button>
-                                        </div>
-                                    </div>
+                                    <span className="text-[11px] text-gray-400 font-medium tracking-wide truncate w-[64px] text-center">
+                                        {story.title}
+                                    </span>
                                 </div>
                             ))}
                         </div>
 
-                    </div>
+                        {/* Pills Filter Category Horizontal List */}
+                        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+                            {["Semua", "Free", "Exclusive", "Live", "Products"].map((cat) => {
+                                const isSel = selectedCat === cat;
+                                return (
+                                    <button
+                                        key={cat}
+                                        onClick={() => setSelectedCat(cat)}
+                                        className={`flex items-center gap-1.5 px-6 py-2 rounded-full text-xs font-black tracking-wider uppercase transition-all whitespace-nowrap border cursor-pointer ${
+                                            isSel 
+                                                ? "bg-[#18181b] border-white/20 text-white shadow-xl" 
+                                                : "bg-[#050505] border-white/5 text-gray-400 hover:text-white hover:border-white/10"
+                                        }`}
+                                    >
+                                        {cat === "Exclusive" && <Lock size={12} className="shrink-0" />}
+                                        {cat === "Live" && <span className="w-1.5 h-1.5 rounded-full bg-[#ef4444] shrink-0" />}
+                                        <span>{cat}</span>
+                                    </button>
+                                );
+                            })}
+                        </div>
 
-                    {/* Right Column (Sidebar) - Sticky */}
-                    <div className="flex flex-col gap-8 lg:col-span-1 order-3 lg:sticky lg:top-[140px] lg:h-fit lg:self-start">
-                        
-                        {/* Top Supporter */}
-                        <div className="bg-[#0c0c0c] border border-[#27272a] rounded-[24px] p-4 md:p-6">
-                            <h3 className="text-lg md:text-xl font-bold mb-14">Top Supporter</h3>
-                            
-                            <div className="flex flex-col gap-6 mb-8">
-                                {/* Top 3 Podium */}
-                                <div className="flex items-end justify-center gap-3">
-                                    {/* Rank 2 */}
-                                    <div className="flex flex-col items-center gap-2 order-1">
-                                        <div className="w-14 h-14 rounded-[18px] border-2 border-gray-600 overflow-hidden relative shadow-lg">
-                                            <img src={topSupporters[1].image} className="w-full h-full object-cover" alt="Rank 2" />
-                                            <div className="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[10px] font-bold text-center py-0.5">2</div>
+                        {/* PINNED ANNOUNCEMENT */}
+                        <div className="bg-[#0c0c0c] border border-amber-500/25 bg-gradient-to-b from-[#1c1404] to-[#0c0c0c] rounded-[24px] p-5 shadow-2xl relative">
+                            <div className="absolute top-4 right-4 flex items-center gap-1 bg-amber-500/10 border border-amber-500/20 text-amber-500 px-2.5 py-1 rounded-full text-[9px] font-black tracking-widest uppercase select-none">
+                                📌 PINNED ANNOUNCEMENT
+                            </div>
+
+                            <div className="flex items-center gap-3 mb-4 mt-2">
+                                <div className="w-11 h-11 rounded-full border border-gray-700 bg-zinc-950 overflow-hidden shrink-0">
+                                    <img src={imgAvatar} className="w-full h-full object-cover" alt="avatar" referrerPolicy="no-referrer" />
+                                </div>
+                                <div>
+                                    <div className="flex items-center gap-1">
+                                        <span className="font-extrabold text-white text-sm">Celeste Moon</span>
+                                        <div className="bg-[#0095f6] rounded-full p-[2px]">
+                                            <Check size={9} className="text-white" strokeWidth={4} />
                                         </div>
-                                        <span className="text-xs text-center text-gray-300 font-medium truncate w-[60px]">{topSupporters[1].name}</span>
                                     </div>
-
-                                    {/* Rank 1 */}
-                                    <div className="flex flex-col items-center gap-2 order-2 -mt-6">
-                                        <div className="relative">
-                                            <div className="w-[72px] h-[72px] rounded-[22px] border-2 border-[#ffd700] overflow-hidden shadow-xl shadow-yellow-900/20 z-10 relative">
-                                                <img src={topSupporters[0].image} className="w-full h-full object-cover" alt="Rank 1" />
-                                                <div className="absolute bottom-0 inset-x-0 bg-[#ffd700] text-black text-[12px] font-bold text-center py-0.5">1</div>
-                                            </div>
-                                        </div>
-                                        <span className="text-sm text-center text-[#ffd700] font-bold truncate w-[80px]">{topSupporters[0].name}</span>
-                                    </div>
-
-                                    {/* Rank 3 */}
-                                    <div className="flex flex-col items-center gap-2 order-3">
-                                        <div className="w-14 h-14 rounded-[18px] border-2 border-orange-700 overflow-hidden relative shadow-lg">
-                                            <img src={topSupporters[2].image} className="w-full h-full object-cover" alt="Rank 3" />
-                                            <div className="absolute bottom-0 inset-x-0 bg-orange-700/80 text-white text-[10px] font-bold text-center py-0.5">3</div>
-                                        </div>
-                                        <span className="text-xs text-center text-gray-300 font-medium truncate w-[60px]">{topSupporters[2].name}</span>
+                                    <div className="flex items-center gap-1.5 text-[11px] text-gray-400 font-semibold">
+                                        <span>@celestemoon</span>
+                                        <span>•</span>
+                                        <span>2 hari lalu</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <button className="w-full py-3 bg-transparent border border-gray-600 rounded-full text-white font-bold text-base hover:bg-white hover:text-black transition-colors cursor-pointer">
-                                Support {creator?.name || "Fareye Closhartt"}
+                            <p className="text-gray-200 text-sm leading-relaxed mb-5 font-sans font-normal">
+                                Hai semua! Bulan ini ada promo special — subscribe Warrior Tier dan dapatkan wallpaper eksklusif Moonlight Series gratis! Berlaku sampai akhir bulan.
+                            </p>
+
+                            <div className="border-t border-white/5 pt-4 flex items-center gap-6">
+                                <button 
+                                    onClick={() => {
+                                        setPinnedLiked(!pinnedLiked);
+                                        setPinnedLikes(prev => pinnedLiked ? prev - 1 : prev + 1);
+                                    }}
+                                    className={`flex items-center gap-1.5 transition-colors text-xs font-semibold select-none group cursor-pointer ${pinnedLiked ? 'text-red-500' : 'text-gray-400 hover:text-red-500'}`}
+                                >
+                                    <Heart size={16} className={`transition-all duration-300 ${pinnedLiked ? 'fill-red-500 scale-110' : 'group-hover:fill-red-500'}`} />
+                                    <span>{pinnedLikes}</span>
+                                </button>
+                                <button className="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors text-xs font-semibold select-none group cursor-pointer">
+                                    <MessageCircle size={16} className="group-hover:text-blue-400 transition-colors" />
+                                    <span>120</span>
+                                </button>
+                                <button className="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors text-xs font-semibold select-none group cursor-pointer">
+                                    <Share2 size={16} className="group-hover:text-green-400 transition-colors" />
+                                    <span>89</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* POST 1: Text post */}
+                        <div className="bg-[#0c0c0c] border border-[#27272a] rounded-[24px] p-5 shadow-2xl">
+                            <div className="flex items-center justify-between mb-4">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-11 h-11 rounded-full border border-gray-700 bg-zinc-950 overflow-hidden shrink-0">
+                                        <img src={imgAvatar} className="w-full h-full object-cover" alt="avatar" />
+                                    </div>
+                                    <div>
+                                        <div className="flex items-center gap-1">
+                                            <span className="font-extrabold text-white text-sm">Celeste Moon</span>
+                                            <div className="bg-[#0095f6] rounded-full p-[2px]">
+                                                <Check size={9} className="text-white" strokeWidth={4} />
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center gap-1.5 text-[11px] text-gray-400 font-semibold">
+                                            <span>@celestemoon</span>
+                                            <span>•</span>
+                                            <span>2 jam lalu</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button className="text-gray-500 hover:text-white cursor-pointer transition-colors p-1 rounded-full hover:bg-white/5">
+                                    <MoreHorizontal size={18} />
+                                </button>
+                            </div>
+
+                            <p className="text-gray-200 text-sm leading-relaxed mb-5">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur nec sapien fermentum, rhoncus arcu sit amet, aliquet risus. Curabitur nec sapien fermentum, rhoncus arcu sit amet, aliquet risus.
+                            </p>
+
+                            <div className="border-t border-white/5 pt-4 flex items-center justify-between">
+                                <div className="flex gap-6">
+                                    <button 
+                                        onClick={() => {
+                                            setPost1Liked(!post1Liked);
+                                            setPost1Likes(prev => post1Liked ? prev - 1 : prev + 1);
+                                        }}
+                                        className={`flex items-center gap-1.5 transition-colors text-xs font-semibold select-none group cursor-pointer ${post1Liked ? 'text-red-500' : 'text-gray-400 hover:text-red-500'}`}
+                                    >
+                                        <Heart size={16} className={`transition-all duration-300 ${post1Liked ? 'fill-red-500 scale-110' : 'group-hover:fill-red-500'}`} />
+                                        <span>{post1Likes}</span>
+                                    </button>
+                                    <button className="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors text-xs font-semibold select-none group cursor-pointer">
+                                        <MessageCircle size={16} className="group-hover:text-blue-400 transition-colors" />
+                                        <span>135</span>
+                                    </button>
+                                    <button className="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors text-xs font-semibold select-none group cursor-pointer">
+                                        <Share2 size={16} className="group-hover:text-green-400 transition-colors" />
+                                        <span>10</span>
+                                    </button>
+                                </div>
+                                
+                                <button className="flex items-center gap-1.5 bg-[#f59e0b]/10 border border-[#f59e0b]/20 hover:bg-[#f59e0b]/20 px-4 py-1.5 rounded-full text-xs font-bold text-[#f59e0b] cursor-pointer transition-colors select-none">
+                                    <Coins size={12} className="shrink-0" />
+                                    <span>Tip</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* POST 2: Locked Post */}
+                        <div className="bg-[#0c0c0c] border border-purple-500/10 rounded-[24px] p-5 shadow-2xl relative">
+                            <div className="flex items-center justify-between mb-4">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-11 h-11 rounded-full border border-gray-700 bg-zinc-950 overflow-hidden shrink-0">
+                                        <img src={imgAvatar} className="w-full h-full object-cover" alt="avatar" />
+                                    </div>
+                                    <div>
+                                        <div className="flex items-center gap-1">
+                                            <span className="font-extrabold text-white text-sm">Celeste Moon</span>
+                                            <div className="bg-[#0095f6] rounded-full p-[2px]">
+                                                <Check size={9} className="text-white" strokeWidth={4} />
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center gap-1.5 text-[11px] text-gray-400 font-semibold">
+                                            <span>@celestemoon</span>
+                                            <span>•</span>
+                                            <span>6 jam lalu</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div className="flex items-center gap-1 bg-[#581c87]/30 border border-[#8b5cf6]/35 text-[#d8b4fe] px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider select-none shrink-0">
+                                    <Lock size={10} className="shrink-0 text-[#d8b4fe]" />
+                                    <span>Warrior only</span>
+                                </div>
+                            </div>
+
+                            <p className="text-gray-200 text-sm leading-relaxed mb-4">
+                                Just finished a new cosplay prop! It was a challenge to get the weathering right, but I think it turned out great!
+                            </p>
+
+                            {/* Locked Card banner */}
+                            <div className="relative aspect-[16/9] w-full rounded-[18px] overflow-hidden bg-[#121214] border border-white/5 flex flex-col items-center justify-center p-6 text-center mb-5 shadow-inner">
+                                <div className="absolute inset-0 bg-black/45 backdrop-blur-[6px] z-0" />
+                                
+                                <div className="relative z-10 flex flex-col items-center gap-3 w-full max-w-sm">
+                                    <div className="w-[52px] h-[52px] rounded-full bg-purple-950/40 border border-purple-500/30 flex items-center justify-center text-[#d8b4fe]">
+                                        <Lock size={20} className="animate-pulse" />
+                                    </div>
+                                    <h5 className="font-black text-sm tracking-wide text-gray-200 uppercase">Konten eksklusif Warrior Tier</h5>
+                                    
+                                    <button 
+                                        onClick={() => setActiveTab("Subscription")}
+                                        className="mt-1 flex items-center justify-center font-black text-xs tracking-wider uppercase px-8 py-3.5 bg-gradient-to-r from-purple-700 to-indigo-600 hover:from-purple-600 hover:to-indigo-500 text-white rounded-full transition-all cursor-pointer shadow-lg shadow-purple-900/30 w-full"
+                                    >
+                                        Subscribe IDR 35k/bulan
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="border-t border-white/5 pt-4 flex items-center gap-6">
+                                <button 
+                                    onClick={() => {
+                                        setPost2Liked(!post2Liked);
+                                        setPost2Likes(prev => post2Liked ? prev - 1 : prev + 1);
+                                    }}
+                                    className={`flex items-center gap-1.5 transition-colors text-xs font-semibold select-none group cursor-pointer ${post2Liked ? 'text-red-500' : 'text-gray-400 hover:text-red-500'}`}
+                                >
+                                    <Heart size={16} className={`transition-all duration-300 ${post2Liked ? 'fill-red-500 scale-110' : 'group-hover:fill-red-500'}`} />
+                                    <span>{post2Likes}</span>
+                                </button>
+                                <button className="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors text-xs font-semibold select-none group cursor-pointer">
+                                    <MessageCircle size={16} className="group-hover:text-blue-400 transition-colors" />
+                                    <span>42</span>
+                                </button>
+                                <button className="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors text-xs font-semibold select-none group cursor-pointer">
+                                    <Share2 size={16} className="group-hover:text-green-400 transition-colors" />
+                                    <span>15</span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {/* RIGHT COLUMN: Sidebar 2 (Milestone, Top Supporter, Best Seller, Wishlist) */}
+                    <div className="flex flex-col gap-6 lg:col-span-1 order-3">
+                        
+                        {/* Milestone Kreator */}
+                        <div className="bg-[#0c0c0c] border border-[#27272a] rounded-[24px] p-5 shadow-2xl">
+                            <div className="flex items-center gap-2 mb-4 text-gray-400">
+                                <span className="text-base select-none">🎯</span>
+                                <span className="text-[11px] font-bold tracking-wider uppercase">MILESTONE KREATOR</span>
+                            </div>
+
+                            <p className="font-extrabold text-white text-sm mb-2.5">Menuju 1.000 Subscribers</p>
+                            
+                            <div className="mb-2">
+                                <Progress value={89} className="h-2 bg-[#121214] overflow-hidden rounded-full">
+                                    <div className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full" style={{ width: '89%' }} />
+                                </Progress>
+                            </div>
+
+                            <div className="flex justify-between text-[11px] font-black mb-3">
+                                <span className="text-gray-400">892 / 1.000</span>
+                                <span className="text-indigo-400">89%</span>
+                            </div>
+
+                            <p className="text-xs text-gray-400 italic">
+                                Bantu Celeste mencapai milestone-nya!
+                            </p>
+                        </div>
+
+                        {/* Top Supporter Podium */}
+                        <div className="bg-[#0c0c0c] border border-[#27272a] rounded-[24px] p-5 shadow-2xl">
+                            <div className="flex items-center gap-2 mb-6 text-gray-400">
+                                <Trophy size={14} />
+                                <span className="text-[11px] font-bold tracking-wider uppercase">TOP SUPPORTER</span>
+                            </div>
+                            
+                            <div className="flex items-end justify-center gap-2 mb-4 pt-4">
+                                {/* Rank 2 */}
+                                <div className="flex flex-col items-center gap-1.5 order-1">
+                                    <div className="relative group shrink-0">
+                                        <div className="p-[2.5px] bg-zinc-600 rounded-full">
+                                            <div className="w-11 h-11 rounded-full overflow-hidden bg-zinc-950 flex items-center justify-center border border-white/5">
+                                                <div className="text-xs font-extrabold text-white">RS</div>
+                                            </div>
+                                        </div>
+                                        <span className="absolute -top-2 -right-2 bg-zinc-600 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border border-black shadow">2</span>
+                                    </div>
+                                    <span className="text-[10px] text-gray-400 font-bold truncate w-[56px] text-center">Raja_Sa...</span>
+                                </div>
+
+                                {/* Rank 1 */}
+                                <div className="flex flex-col items-center gap-1.5 order-2 -mt-[14px]">
+                                    <div className="relative group shrink-0">
+                                        <div className="p-[3px] bg-[#ffd700] rounded-full shadow-lg shadow-yellow-500/10">
+                                            <div className="w-[52px] h-[52px] rounded-full overflow-hidden bg-zinc-950 flex items-center justify-center border border-white/5">
+                                                <div className="text-sm font-extrabold text-white">SI</div>
+                                            </div>
+                                        </div>
+                                        <span className="absolute -top-2.5 -right-2.5 bg-[#ffd700] text-black text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border border-black shadow">1</span>
+                                    </div>
+                                    <span className="text-[11px] text-[#ffd700] font-black truncate w-[72px] text-center">Sultan_...</span>
+                                </div>
+
+                                {/* Rank 3 */}
+                                <div className="flex flex-col items-center gap-1.5 order-3">
+                                    <div className="relative group shrink-0">
+                                        <div className="p-[2.5px] bg-[#b45309] rounded-full">
+                                            <div className="w-11 h-11 rounded-full overflow-hidden bg-zinc-950 flex items-center justify-center border border-white/5">
+                                                <div className="text-xs font-extrabold text-white">BM</div>
+                                            </div>
+                                        </div>
+                                        <span className="absolute -top-2 -right-2 bg-[#b45309] text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border border-black shadow">3</span>
+                                    </div>
+                                    <span className="text-[10px] text-gray-400 font-bold truncate w-[56px] text-center">Boss_...</span>
+                                </div>
+                            </div>
+
+                            <button 
+                                onClick={() => setActiveTab("Subscription")}
+                                className="w-full py-3 bg-transparent border border-white/10 hover:border-white/20 rounded-full text-white font-bold text-xs tracking-wider uppercase transition-colors cursor-pointer"
+                            >
+                                Support Celeste Moon
                             </button>
                         </div>
 
-                        {/* Wishlist */}
-                        <div className="bg-[#0c0c0c] border border-[#27272a] rounded-[24px] p-4 md:p-6">
-                            <h3 className="text-lg md:text-xl font-bold mb-6">Wishlist</h3>
+                        {/* Membership */}
+                        <div className="bg-[#0c0c0c] border border-[#27272a] rounded-[24px] p-5 shadow-2xl">
+                            <h3 className="text-[11px] font-bold text-gray-400 tracking-wider uppercase mb-4">MEMBERSHIP</h3>
                             
-                            <div className="flex gap-4 mb-6">
-                                <div className="w-24 h-24 rounded-[18px] bg-gray-800 shrink-0 border border-gray-700 flex items-center justify-center">
-                                    <ImageIcon size={32} className="text-gray-500" />
+                            <div className="flex flex-col gap-3.5 mb-5">
+                                {/* Villager */}
+                                <div className="flex items-center justify-between gap-2 p-3 bg-[#121214] border border-white/5 rounded-2xl hover:border-white/10 transition-colors">
+                                    <div>
+                                        <h4 className="text-sm font-extrabold text-white">Villager</h4>
+                                        <p className="text-[10px] text-gray-400 mt-0.5">Exclusive Content & Badges</p>
+                                    </div>
+                                    <div className="text-right shrink-0">
+                                        <span className="text-[10px] text-gray-400 block tracking-wide uppercase font-bold">IDR</span>
+                                        <span className="text-sm font-extrabold text-white">15k</span>
+                                    </div>
                                 </div>
-                                <p className="text-sm text-gray-300 leading-relaxed italic py-1">
-                                    "Bantu wujudkan wishlist-ku, yuk! ✨ Dengan dukungan kalian, mimpi ini makin dekat!"
-                                </p>
-                            </div>
-                            
-                            <div className="mb-6">
-                                <div className="flex justify-between text-sm font-bold mb-2 text-gray-400">
-                                    <span>Rp 900.000 / Rp 1.000.000</span>
-                                    <span className="text-[#006fee]">90% Fulfilled</span>
+
+                                {/* Warrior */}
+                                <div className="flex items-center justify-between gap-2 p-3 bg-[#121214] border border-white/5 rounded-2xl hover:border-white/10 transition-colors">
+                                    <div>
+                                        <h4 className="text-sm font-extrabold text-white">Warrior</h4>
+                                        <p className="text-[10px] text-gray-400 mt-0.5">Semua benefit + early access</p>
+                                    </div>
+                                    <div className="text-right shrink-0">
+                                        <span className="text-[10px] text-gray-400 block tracking-wide uppercase font-bold">IDR</span>
+                                        <span className="text-sm font-extrabold text-white">35k</span>
+                                    </div>
                                 </div>
-                                <Progress value={90} className="h-2 bg-gray-800" />
                             </div>
 
-                            {/* Donation Buttons */}
-                            <div className="flex items-center border border-gray-700 rounded-lg overflow-hidden h-[40px] mb-2 focus-within:border-[#d032e5] transition-colors">
-                                <div className="bg-gray-800 px-3 h-full flex items-center text-xs text-gray-400 font-bold border-r border-gray-700 shrink-0">IDR</div>
-                                <input 
-                                    type="number" 
-                                    placeholder="10.000" 
-                                    className="flex-1 h-full bg-transparent px-3 text-sm font-bold text-white placeholder-gray-600 focus:outline-none"
-                                />
-                            </div>
-                            
-                            <div className="grid grid-cols-4 gap-2 mb-4">
-                                {['25k', '50k', '100k', '250k'].map((amt) => (
-                                    <button key={amt} className="border border-gray-700 rounded-lg h-[40px] text-sm font-bold hover:bg-gray-800 transition-colors cursor-pointer">
-                                        {amt}
-                                    </button>
-                                ))}
+                            <button 
+                                onClick={() => setActiveTab("Subscription")}
+                                className="w-full py-3 bg-transparent border border-white/20 hover:border-white rounded-full text-white font-bold text-xs tracking-wider uppercase transition-colors cursor-pointer"
+                            >
+                                View All Tiers
+                            </button>
+                        </div>
+
+                        {/* Wishlist Kreator */}
+                        <div className="bg-[#0c0c0c] border border-[#27272a] rounded-[24px] p-5 shadow-2xl">
+                            <div className="flex items-center gap-2 mb-4 text-gray-400">
+                                <span className="text-base select-none">🎁</span>
+                                <span className="text-[11px] font-bold tracking-wider uppercase">WISHLIST KREATOR</span>
                             </div>
 
-                            <div className="relative mb-4">
+                            <p className="text-xs text-gray-300 italic mb-3">
+                                "Bantu wujudkan wishlist-ku!"
+                            </p>
+                            <h4 className="font-black text-sm text-white mb-3">Studio lighting setup</h4>
+
+                            <div className="mb-2">
+                                <Progress value={wishProgress} className="h-1.5 bg-[#121214] overflow-hidden rounded-full">
+                                    <div className="h-full bg-[#d032e5] rounded-full" style={{ width: `${wishProgress}%` }} />
+                                </Progress>
+                            </div>
+
+                            <div className="flex justify-between text-[11px] font-black mb-4">
+                                <span className="text-gray-400">Rp {wishProgress === 90 ? "900.000" : (wishProgress * 10000).toLocaleString('id-ID')} / Rp 1.000.000</span>
+                                <span className="text-[#d032e5]">{wishProgress}%</span>
+                            </div>
+
+                            <div className="grid grid-cols-4 gap-1.5 mb-2.5">
+                                {[25000, 50000, 100000, 250000].map((num) => {
+                                    const label = num >= 1000 ? `${num / 1000}k` : num;
+                                    const isSel = wishAmt === num;
+                                    return (
+                                        <button 
+                                            key={num} 
+                                            onClick={() => setWishAmt(num)}
+                                            className={`border rounded-lg h-[36px] text-xs font-black transition-colors cursor-pointer select-none ${
+                                                isSel 
+                                                    ? "bg-[#d032e5] border-transparent text-white" 
+                                                    : "bg-[#121214] border-gray-800 text-gray-400 hover:text-white"
+                                            }`}
+                                        >
+                                            {label}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+
+                            <div className="relative mb-2.5">
                                 <input 
                                     type="text" 
-                                    placeholder="Send a message..." 
-                                    className="w-full bg-[#18181b] border border-gray-700 rounded-lg py-3 px-4 text-sm text-white focus:outline-none focus:border-[#d032e5] transition-colors"
+                                    placeholder="Tulis pesan..." 
+                                    value={wishMessage}
+                                    onChange={(e) => setWishMessage(e.target.value)}
+                                    className="w-full bg-[#121214] border border-gray-800 rounded-xl py-2.5 px-4 text-xs text-white focus:outline-none focus:border-[#d032e5] transition-colors placeholder-gray-500 font-medium"
                                 />
                             </div>
 
-                            <button className="w-full py-3 bg-white text-black rounded-full font-bold text-base hover:bg-gray-200 transition-all cursor-pointer shadow-lg shadow-white/10">
+                            <button 
+                                onClick={() => {
+                                    setWishProgress(prev => Math.min(100, prev + Math.floor(wishAmt / 10000)));
+                                    setWishMessage("");
+                                    alert(`Dukungan sebesar Rp ${wishAmt.toLocaleString('id-ID')} telah dikirim untuk mewujudkan wishlist ini! Terima kasih! ❤️`);
+                                }}
+                                className="w-full py-3 bg-[#a855f7] hover:bg-[#c084fc] text-white rounded-full font-black text-xs tracking-wider uppercase transition-all cursor-pointer shadow-lg shadow-purple-900/10"
+                            >
                                 Tip this Wishlist
                             </button>
                         </div>
 
                     </div>
+
                 </div>
             </div>
         )}
